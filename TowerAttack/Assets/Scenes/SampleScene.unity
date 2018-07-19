@@ -161,7 +161,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.08
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -200,6 +200,8 @@ GameObject:
   - component: {fileID: 1483083275}
   - component: {fileID: 1483083274}
   - component: {fileID: 1483083276}
+  - component: {fileID: 1483083277}
+  - component: {fileID: 1483083278}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -246,6 +248,30 @@ MonoBehaviour:
     type: 2}
   mapSizeX: 20
   mapSizeY: 20
-  nodePaddingX: 1
-  nodePaddingY: 1
+  nodePaddingX: 0.5
+  nodePaddingY: 0.5
   originPoint: {x: 0, y: 0}
+--- !u!114 &1483083277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1483083273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7d185e28ffa02e448215d066c14f369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1483083278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1483083273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71109c052d9234a4389ecec7eaee028d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab_tower: {fileID: 1224176132968950, guid: 0d2fe7f1794e64e458f074072f73c2fa,
+    type: 2}
