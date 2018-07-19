@@ -161,7 +161,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.08
+  orthographic size: 2.66
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -248,8 +248,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab_node: {fileID: 1845157693971650, guid: 99ae1a6648b316a4ea17ef1ac8bebf09,
     type: 2}
-  mapSizeX: 20
-  mapSizeY: 20
+  mapSizeX: 10
+  mapSizeY: 10
   nodePaddingX: 0.5
   nodePaddingY: 0.5
   originPoint: {x: 0, y: 0}
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   players:
   - name: wtf
-    color: {r: 1, g: 1, b: 1, a: 1}
+    color: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
   - name: zyf
     color: {r: 0, g: 1, b: 0, a: 1}
   - name: lemon

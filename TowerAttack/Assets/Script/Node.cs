@@ -9,9 +9,13 @@ public class Node : MonoBehaviour
     [HideInInspector]
     public GameObject tower;
 
+    Color originColor;
+
 	void Start () 
 	{
         animator = GetComponent<Animator>();
+
+        originColor = GetComponentInChildren<SpriteRenderer>().color;
 	}
 	
     private void OnMouseEnter()
@@ -29,6 +33,19 @@ public class Node : MonoBehaviour
         if(tower == null)
         {
             BuildManager.Instance().Build(gameObject, GameManager.Instance().player);
+        }
+    }
+
+    public void ChangeColor(Color _color = default(Color))
+    {
+        if(_color == default(Color))
+        {
+            GetComponentInChildren<SpriteRenderer>().color = originColor;
+        }
+        else
+        {
+            GetComponentInChildren<SpriteRenderer>().color = _color;
+
         }
     }
 }

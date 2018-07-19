@@ -5,10 +5,13 @@ using UnityEngine;
 public class Tower : MonoBehaviour 
 {
     public float range = 3;
-    public float hp = 3;
-    public float damage = 1;
+    public int hp = 3;
+    int currentHp;
+    public int damage = 1;
 
     public float rotationSpeed = 3;
+
+    public GameObject prefab_bullet;
 
     [HideInInspector]
     public int player;
@@ -21,7 +24,7 @@ public class Tower : MonoBehaviour
 
 	void Start () 
 	{
-        
+        currentHp = hp;
 	}
 
 	void Update () 
@@ -42,17 +45,41 @@ public class Tower : MonoBehaviour
                 //距离可攻击
                 if (Vector2.Distance(transform.position, item.position) < range)
                 {
-                    target = item.gameObject;
 
-                    Attack(item.gameObject);
+                    LockTarget(item.gameObject);
                 }
         }
     }
 
-    void Attack(GameObject _target)
+    void LockTarget(GameObject _target)
     {
-        FaceTarget2D(_target.transform.position);
+        target = _target;
 
+        FaceTarget2D(_target.transform.position);
+    }
+
+    public void Attack()
+    {
+        //GameObject go = Instantiate(prefab_bullet, transform.position, Quaternion.identity);
+
+        target.GetComponent<Tower>().TakeDamage(damage);
+    }
+
+    public void TakeDamage(int _amount)
+    {
+        currentHp -= _amount;
+        if(currentHp <= 0)
+        {
+            Death();
+        }
+    }
+
+    public void Death()
+    {
+        node.GetComponent<Node>().tower = null;
+        node.GetComponent<Node>().ChangeColor();
+
+        Destroy(gameObject);
     }
 
     void FaceTarget2D(Vector2 _target)
