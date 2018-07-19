@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 1483083276}
   - component: {fileID: 1483083277}
   - component: {fileID: 1483083278}
+  - component: {fileID: 1483083279}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -220,6 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 568a0aa7d31859048a7f07664f550fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 1
 --- !u!4 &1483083275
 Transform:
   m_ObjectHideFlags: 0
@@ -275,3 +277,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab_tower: {fileID: 1224176132968950, guid: 0d2fe7f1794e64e458f074072f73c2fa,
     type: 2}
+--- !u!114 &1483083279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1483083273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec63878289a765c43aee539827f724e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players:
+  - name: wtf
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: zyf
+    color: {r: 0, g: 1, b: 0, a: 1}
+  - name: lemon
+    color: {r: 0.90698564, g: 1, b: 0, a: 1}

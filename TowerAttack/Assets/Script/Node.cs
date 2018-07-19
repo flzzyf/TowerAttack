@@ -26,6 +26,9 @@ public class Node : MonoBehaviour
 
     private void OnMouseDown()
     {
-        BuildManager.Instance().Build(gameObject);
+        if(tower == null)
+        {
+            BuildManager.Instance().Build(gameObject, GameManager.Instance().player);
+        }
     }
 }
