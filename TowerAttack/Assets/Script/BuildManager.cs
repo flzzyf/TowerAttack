@@ -18,10 +18,10 @@ public class BuildManager : Singleton<BuildManager>
         foreach (Transform item in ParentManager.Instance().GetParent("Tower"))
         {
             //无目标则搜索目标
-            if(item.gameObject.GetComponent<Tower>().target == null)
-                item.gameObject.GetComponent<Tower>().SearchTarget();
-            else
-                item.gameObject.GetComponent<Tower>().Attack();
+            // if(item.gameObject.GetComponent<Tower>().target == null)
+            //     item.gameObject.GetComponent<Tower>().SearchTarget();
+            // else
+            //     item.gameObject.GetComponent<Tower>().Attack();
         }
 
         GameManager.Instance().player = (GameManager.Instance().player + 1) % 3;

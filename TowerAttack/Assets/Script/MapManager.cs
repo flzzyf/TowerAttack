@@ -20,11 +20,17 @@ public class MapManager : Singleton<MapManager>
         //生成节点
         for (int i = 0; i < mapSizeY; i++)
         {
+            float specialX = i % 2 == 0 ? 0 : nodePaddingX / 2;
+            Debug.Log(specialX);
+
             for (int j = 0; j < mapSizeX; j++)
             {
-                Vector2 pos = new Vector2(i * nodePaddingX, j * nodePaddingY);
+                float y = i * nodePaddingY;
+                Vector2 pos = new Vector2(j * nodePaddingX + specialX, y);
                 pos += originGeneratePoint;
                 GameObject go = Instantiate(prefab_node, pos, Quaternion.identity, ParentManager.Instance().GetParent("Nodes"));
+
+                go.GetComponentInChildren<SpriteRenderer>().sortingOrder = mapSizeY - i;
             }
         }
     }

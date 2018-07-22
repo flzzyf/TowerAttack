@@ -31,7 +31,7 @@ public class Tower : MonoBehaviour
 	{
         if(target != null)
         {
-            FaceTarget2D(target.transform.position);
+            //FaceTarget2D(target.transform.position);
 
         }
     }
@@ -55,7 +55,7 @@ public class Tower : MonoBehaviour
     {
         target = _target;
 
-        FaceTarget2D(_target.transform.position);
+        //FaceTarget2D(_target.transform.position);
     }
 
     public void Attack()
