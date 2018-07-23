@@ -9,11 +9,11 @@ public class BuildManager : Singleton<BuildManager>
 	public void Build(GameObject _node, int _player)
     {
         GameObject go = Instantiate(prefab_tower, _node.transform.position, Quaternion.identity, ParentManager.Instance().GetParent("Tower"));
-        _node.GetComponent<Node>().tower = go;
+        _node.GetComponent<Node_Ground>().tower = go;
         go.GetComponent<Tower>().node = _node;
         go.GetComponent<Tower>().player =_player;
 
-        _node.GetComponent<Node>().ChangeColor(TeamManager.Instance().players[_player].color);
+        _node.GetComponent<Node_Ground>().ChangeColor(TeamManager.Instance().players[_player].color);
 
         foreach (Transform item in ParentManager.Instance().GetParent("Tower"))
         {

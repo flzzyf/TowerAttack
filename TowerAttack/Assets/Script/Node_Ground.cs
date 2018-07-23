@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour 
+public class Node_Ground : MonoBehaviour
 {
     Animator animator;
 
@@ -11,13 +11,13 @@ public class Node : MonoBehaviour
 
     Color originColor;
 
-	void Start () 
-	{
+    void Start()
+    {
         animator = GetComponent<Animator>();
 
         originColor = GetComponentInChildren<SpriteRenderer>().color;
-	}
-	
+    }
+
     private void OnMouseEnter()
     {
         animator.SetBool("hovered", true);
@@ -30,7 +30,7 @@ public class Node : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(tower == null)
+        if (tower == null)
         {
             BuildManager.Instance().Build(gameObject, GameManager.Instance().player);
         }
@@ -38,7 +38,7 @@ public class Node : MonoBehaviour
 
     public void ChangeColor(Color _color = default(Color))
     {
-        if(_color == default(Color))
+        if (_color == default(Color))
         {
             GetComponentInChildren<SpriteRenderer>().color = originColor;
         }

@@ -118,9 +118,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4343785705010908}
-  - component: {fileID: 114876152840333448}
   - component: {fileID: 95989249160340678}
   - component: {fileID: 60772030797404628}
+  - component: {fileID: 114926684682153360}
   m_Layer: 0
   m_Name: Node
   m_TagString: Untagged
@@ -296,7 +296,7 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1991243368772714}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 8f92d7575b803fa43bb8cf902977e3d8, type: 2}
   m_CullingMode: 0
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114876152840333448
+--- !u!114 &114926684682153360
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -384,7 +384,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1845157693971650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5946fc77637602148af335c027535b35, type: 3}
+  m_Script: {fileID: 11500000, guid: d11812f80fcd29b4f821dd43a02759e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 0}

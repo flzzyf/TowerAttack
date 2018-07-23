@@ -26,7 +26,6 @@ public class Tower : MonoBehaviour
 	{
         currentHp = hp;
 	}
-
 	void Update () 
 	{
         if(target != null)
@@ -76,8 +75,8 @@ public class Tower : MonoBehaviour
 
     public void Death()
     {
-        node.GetComponent<Node>().tower = null;
-        node.GetComponent<Node>().ChangeColor();
+        node.GetComponent<Node_Ground>().tower = null;
+        node.GetComponent<Node_Ground>().ChangeColor();
 
         Destroy(gameObject);
     }
