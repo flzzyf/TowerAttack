@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NodeItem : MonoBehaviour
 {
@@ -13,6 +14,12 @@ public class NodeItem : MonoBehaviour
 
     [HideInInspector]
     public Vector2Int pos;
+
+    public Text text_force;
+
+    [HideInInspector]
+    public int[] playerForce = new int[8];
+    public GameObject[] borders;
 
     void Start()
     {
@@ -37,11 +44,46 @@ public class NodeItem : MonoBehaviour
         {
             BuildManager.Instance().Build(gameObject, GameManager.Instance().player);
 
-            for (int i = 0; i < 8; i++)
+            playerForce[0]++;
+
+            foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
             {
-                Destroy(MapManager.Instance().GetNode(MapManager.Instance().GetNodeItem(pos), i));
+                item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[0]++;
+            }
+
+            foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
+            {
+                item.GetComponent<NodeItem>().UpdateBorders();
+                item.GetComponent<NodeItem>().text_force.enabled = true;
+
+                foreach (var item2 in MapManager.Instance().GetNearbyNodeItems(item.GetComponent<NodeItem>().pos))
+                {
+                    item2.GetComponent<NodeItem>().UpdateBorders();
+
+                }
+            }
+
+            UpdateBorders();
+
+        }
+    }
+    int[] borderIndex = { 7, 1, 3, 5 };
+    public void UpdateBorders()
+    {
+        text_force.text = playerForce[0].ToString();
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (MapManager.Instance().GetNearbyNode(gameObject, borderIndex[i]).GetComponent<NodeItem>().playerForce[0] == 0)
+            {
+                borders[i].SetActive(true);
+            }
+            else
+            {
+                borders[i].SetActive(false);
             }
         }
+        
     }
 
     public void ChangeColor(Color _color = default(Color))

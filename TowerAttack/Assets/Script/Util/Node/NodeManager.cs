@@ -31,23 +31,43 @@ public class NodeManager : Singleton<NodeManager>
     }
     
     //获取节点周围节点
-    public Node GetNode(Node _node, int _index)
+    public Node GetNearbyNode(Node _node, int _index)
     {
         int evenOrUneven = _node.pos.x % 2 == 0 ? 0 : 1;
         Vector2Int targetOffset = _node.pos + nearbyNodeOffset[evenOrUneven, _index];
 
-        Node targetNode = nodes[targetOffset.x, targetOffset.y];
-        return targetNode;
+        Node tarGetNearbyNode = nodes[targetOffset.x, targetOffset.y];
+        return tarGetNearbyNode;
     }
 
-    public Node GetNode(int _x, int _y, int _index)
+    public Node GetNearbyNode(int _x, int _y, int _index)
     {
-        return GetNode(nodes[_x, _y], _index);
+        return GetNearbyNode(nodes[_x, _y], _index);
     }
 
-    public Node GetNode(Vector2Int _pos, int _index)
+    public Node GetNearbyNode(Vector2Int _pos, int _index)
     {
-        return GetNode(_pos.x, _pos.y, _index);
+        return GetNearbyNode(_pos.x, _pos.y, _index);
     }
 
+    public Node[] GetNearbyNodes(Node _node)
+    {
+        Node[] nodeList = new Node[8];
+        for (int i = 0; i < 8; i++)
+        {
+            nodeList[i] = GetNearbyNode(_node, i);
+        }
+
+        return nodeList;
+    }
+
+    public Node[] GetNearbyNodes(Vector2Int _pos)
+    {
+        return GetNearbyNodes(GetNode(_pos));
+    }
+
+    public Node GetNode(Vector2Int _pos)
+    {
+        return nodes[_pos.x, _pos.y];
+    }
 }

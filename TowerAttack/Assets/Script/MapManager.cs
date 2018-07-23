@@ -49,16 +49,30 @@ public class MapManager : Singleton<MapManager>
         }
     }
 
-    public GameObject GetNode(GameObject _go, int _index)
+    public GameObject GetNearbyNode(GameObject _go, int _index)
     {
         NodeItem nodeItem = _go.GetComponent<NodeItem>();
-        Node node = NodeManager.Instance().GetNode(nodeItem.pos, _index);
+        Node node = NodeManager.Instance().GetNearbyNode(nodeItem.pos, _index);
         return GetNodeItem(node.pos);
     }
 
     public GameObject GetNodeItem(Vector2Int _pos)
     {
         return nodeItems[_pos.x, _pos.y];
+    }
+
+    public GameObject[] GetNearbyNodeItems(Vector2Int _pos)
+    {
+        int a = 0;
+        GameObject[] nodeItemList = new GameObject[8];
+        foreach (var item in NodeManager.Instance().GetNearbyNodes(_pos))
+        {
+            nodeItemList[a] = GetNodeItem(item.pos);
+            a++;
+        }
+    
+
+        return nodeItemList;
     }
 
 }
