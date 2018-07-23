@@ -21,7 +21,6 @@ public class MapManager : Singleton<MapManager>
         for (int i = 0; i < mapSizeY; i++)
         {
             float specialX = i % 2 == 0 ? 0 : nodePaddingX / 2;
-            Debug.Log(specialX);
 
             for (int j = 0; j < mapSizeX; j++)
             {
@@ -29,6 +28,7 @@ public class MapManager : Singleton<MapManager>
                 Vector2 pos = new Vector2(j * nodePaddingX + specialX, y);
                 pos += originGeneratePoint;
                 GameObject go = Instantiate(prefab_node, pos, Quaternion.identity, ParentManager.Instance().GetParent("Nodes"));
+                go.name = "Node_" + i + "_" + j;
 
                 go.GetComponentInChildren<SpriteRenderer>().sortingOrder = mapSizeY - i;
             }
