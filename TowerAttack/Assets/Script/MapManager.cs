@@ -75,4 +75,19 @@ public class MapManager : Singleton<MapManager>
         return nodeItemList;
     }
 
+    public List<GameObject> GetAllNodeItems()
+    {
+        List<GameObject> nodeItemList = new List<GameObject>();
+        Debug.Log(nodeItems.Length);
+        for (int i = 0; i < NodeManager.Instance().nodeCountY; i++)
+        {
+            for (int j = 0; j < NodeManager.Instance().nodeCountX; j++)
+            {
+                nodeItemList.Add(nodeItems[i, j]);
+            }
+        }
+
+        return nodeItemList;
+    }
+
 }

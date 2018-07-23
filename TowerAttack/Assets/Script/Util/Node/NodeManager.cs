@@ -35,9 +35,14 @@ public class NodeManager : Singleton<NodeManager>
     {
         int evenOrUneven = _node.pos.x % 2 == 0 ? 0 : 1;
         Vector2Int targetOffset = _node.pos + nearbyNodeOffset[evenOrUneven, _index];
-
-        Node tarGetNearbyNode = nodes[targetOffset.x, targetOffset.y];
-        return tarGetNearbyNode;
+        
+        if(targetOffset.x >= 0 && targetOffset.y >= 0 && targetOffset.x < nodeCountX && targetOffset.y < nodeCountY)
+        {
+            Node tarGetNearbyNode = nodes[targetOffset.x, targetOffset.y];
+            return tarGetNearbyNode;
+        }
+        return null;
+        
     }
 
     public Node GetNearbyNode(int _x, int _y, int _index)

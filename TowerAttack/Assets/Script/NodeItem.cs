@@ -56,14 +56,14 @@ public class NodeItem : MonoBehaviour
                 item.GetComponent<NodeItem>().UpdateBorders();
                 item.GetComponent<NodeItem>().text_force.enabled = true;
 
-                foreach (var item2 in MapManager.Instance().GetNearbyNodeItems(item.GetComponent<NodeItem>().pos))
-                {
-                    item2.GetComponent<NodeItem>().UpdateBorders();
-
-                }
+                
             }
 
             UpdateBorders();
+            //foreach (var item2 in MapManager.Instance().GetAllNodeItems())
+            //{
+            //    item2.GetComponent<NodeItem>().UpdateBorders();
+            //}
 
         }
     }
@@ -74,6 +74,9 @@ public class NodeItem : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
+            if (NodeManager.Instance().GetNearbyNode(pos, borderIndex[i]) == null)
+                continue;
+
             if (MapManager.Instance().GetNearbyNode(gameObject, borderIndex[i]).GetComponent<NodeItem>().playerForce[0] == 0)
             {
                 borders[i].SetActive(true);
