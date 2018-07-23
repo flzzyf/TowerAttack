@@ -75,8 +75,8 @@ public class Tower : MonoBehaviour
 
     public void Death()
     {
-        node.GetComponent<Node_Ground>().tower = null;
-        node.GetComponent<Node_Ground>().ChangeColor();
+        node.GetComponent<NodeItem>().tower = null;
+        node.GetComponent<NodeItem>().ChangeColor();
 
         Destroy(gameObject);
     }

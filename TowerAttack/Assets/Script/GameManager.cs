@@ -17,6 +17,7 @@ public class GameManager : Singleton<GameManager>
     {
         NodeManager.Instance().GenerateNodes();
         MapManager.Instance().GenerateMap();
+
     }
 	
 	void Update () 

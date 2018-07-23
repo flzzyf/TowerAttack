@@ -12,14 +12,14 @@ public class MapManager : Singleton<MapManager>
     public float evenLineOffsetX;
 
     [HideInInspector]
-    GameObject[,] nodeItems;
+    public GameObject[,] nodeItems;
 
     public void GenerateMap()
     {
         int mapSizeX = NodeManager.Instance().nodeCountX;
         int mapSizeY = NodeManager.Instance().nodeCountY;
 
-        nodeItems = new GameObject[mapSizeX, mapSizeY];
+        nodeItems = new GameObject[mapSizeY, mapSizeX];
 
         // 生成节点的真正源点
         Vector2 originGeneratePoint;
@@ -41,11 +41,24 @@ public class MapManager : Singleton<MapManager>
                 pos += originGeneratePoint;
                 GameObject go = Instantiate(prefab_node, pos, Quaternion.identity, ParentManager.Instance().GetParent("Nodes"));
                 go.name = "Node_" + i + "_" + j;
-                nodeItems[j, i] = go;
+                nodeItems[i, j] = go;
+                go.GetComponent<NodeItem>().pos = new Vector2Int(i, j);
 
                 go.GetComponentInChildren<SpriteRenderer>().sortingOrder = mapSizeY - i;
             }
         }
     }
-    
+
+    public GameObject GetNode(GameObject _go, int _index)
+    {
+        NodeItem nodeItem = _go.GetComponent<NodeItem>();
+        Node node = NodeManager.Instance().GetNode(nodeItem.pos, _index);
+        return GetNodeItem(node.pos);
+    }
+
+    public GameObject GetNodeItem(Vector2Int _pos)
+    {
+        return nodeItems[_pos.x, _pos.y];
+    }
+
 }
