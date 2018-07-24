@@ -13,6 +13,8 @@ public class Tower : MonoBehaviour
 
     public GameObject prefab_bullet;
 
+    public GameObject flag;
+
     [HideInInspector]
     public int player;
 
@@ -25,6 +27,7 @@ public class Tower : MonoBehaviour
 	void Start () 
 	{
         currentHp = hp;
+
 	}
 	void Update () 
 	{
@@ -33,6 +36,12 @@ public class Tower : MonoBehaviour
             //FaceTarget2D(target.transform.position);
 
         }
+    }
+
+    public void Init()
+    {
+        flag.GetComponent<SpriteRenderer>().color = TeamManager.Instance().players[player].color;
+
     }
 
     public void SearchTarget()

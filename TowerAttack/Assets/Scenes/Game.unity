@@ -819,9 +819,9 @@ MonoBehaviour:
   - name: wtf
     color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   - name: zyf
-    color: {r: 0, g: 1, b: 0, a: 1}
+    color: {r: 1, g: 0, b: 0.009897232, a: 1}
   - name: lemon
-    color: {r: 0.90698564, g: 1, b: 0, a: 1}
+    color: {r: 0, g: 0.0572505, b: 1, a: 1}
 --- !u!114 &1483083280
 MonoBehaviour:
   m_ObjectHideFlags: 0

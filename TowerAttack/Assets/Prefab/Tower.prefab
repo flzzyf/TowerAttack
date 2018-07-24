@@ -312,6 +312,7 @@ MonoBehaviour:
   rotationSpeed: 6
   prefab_bullet: {fileID: 1121596807494292, guid: 9b2c92f69375674458397b1d538ad081,
     type: 2}
+  flag: {fileID: 1277827607812692}
   player: 0
   target: {fileID: 0}
   node: {fileID: 0}

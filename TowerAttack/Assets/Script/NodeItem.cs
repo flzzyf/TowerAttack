@@ -42,31 +42,28 @@ public class NodeItem : MonoBehaviour
     {
         if (tower == null)
         {
-            GameObject go = BuildManager.Instance().Build(gameObject, GameManager.Instance().player);
-            go.GetComponent<Tower>().SetOrderInLayer(GetComponentInChildren<SpriteRenderer>().sortingOrder);
-
-            playerForce[0]++;
-
-            foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
-            {
-                //Destroy(item);
-                item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[0]++;
-            }
-
-            foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
-            {
-                item.GetComponent<NodeItem>().UpdateBorders();
-                if(item.GetComponent<NodeItem>().tower == null)
-                    item.GetComponent<NodeItem>().UpdateForceText();
-            }
-
-            UpdateBorders();
-            //foreach (var item2 in MapManager.Instance().GetAllNodeItems())
-            //{
-            //    item2.GetComponent<NodeItem>().UpdateBorders();
-            //}
+            BuildManager.Instance().Build(MapManager.Instance().GetNodeItem(pos), GameManager.Instance().player);
 
         }
+    }
+
+    public void BuildSetting()
+    {
+        playerForce[0]++;
+
+        foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
+        {
+            item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[0]++;
+        }
+
+        foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
+        {
+            item.GetComponent<NodeItem>().UpdateBorders();
+            if (item.GetComponent<NodeItem>().tower == null)
+                item.GetComponent<NodeItem>().UpdateForceText();
+        }
+
+        UpdateBorders();
     }
 
     int[] borderIndex = { 7, 1, 3, 5 };

@@ -10,11 +10,13 @@ public class BuildManager : Singleton<BuildManager>
     {
         GameObject go = Instantiate(prefab_tower, _node.transform.position, Quaternion.identity, ParentManager.Instance().GetParent("Tower"));
         _node.GetComponent<NodeItem>().tower = go;
+        _node.GetComponent<NodeItem>().BuildSetting();
         go.GetComponent<Tower>().node = _node;
         go.GetComponent<Tower>().player =_player;
+        go.GetComponent<Tower>().SetOrderInLayer(_node.GetComponentInChildren<SpriteRenderer>().sortingOrder);
+        go.GetComponent<Tower>().Init();
 
-        _node.GetComponent<NodeItem>().ChangeColor(TeamManager.Instance().players[_player].color);
-
+        //切换玩家
         GameManager.Instance().player = (GameManager.Instance().player + 1) % 3;
 
         return go;
