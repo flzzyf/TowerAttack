@@ -42,25 +42,25 @@ public class NodeItem : MonoBehaviour
     {
         if (tower == null)
         {
-            BuildManager.Instance().Build(gameObject, GameManager.Instance().player);
+            GameObject go = BuildManager.Instance().Build(gameObject, GameManager.Instance().player);
+            go.GetComponent<Tower>().SetOrderInLayer(GetComponentInChildren<SpriteRenderer>().sortingOrder);
 
             playerForce[0]++;
 
             foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
             {
-                Destroy(item);
-                //item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[0]++;
+                //Destroy(item);
+                item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[0]++;
             }
 
-            //foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
-            //{
-            //    item.GetComponent<NodeItem>().UpdateBorders();
-            //    item.GetComponent<NodeItem>().text_force.enabled = true;
+            foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
+            {
+                item.GetComponent<NodeItem>().UpdateBorders();
+                if(item.GetComponent<NodeItem>().tower == null)
+                    item.GetComponent<NodeItem>().UpdateForceText();
+            }
 
-
-            //}
-
-            //UpdateBorders();
+            UpdateBorders();
             //foreach (var item2 in MapManager.Instance().GetAllNodeItems())
             //{
             //    item2.GetComponent<NodeItem>().UpdateBorders();
@@ -68,17 +68,15 @@ public class NodeItem : MonoBehaviour
 
         }
     }
+
     int[] borderIndex = { 7, 1, 3, 5 };
+    //更新边界
     public void UpdateBorders()
     {
-        text_force.text = playerForce[0].ToString();
-
         for (int i = 0; i < 4; i++)
         {
-            if (NodeManager.Instance().GetNearbyNode(pos, borderIndex[i]) == null)
-                continue;
-
-            if (MapManager.Instance().GetNearbyNode(gameObject, borderIndex[i]).GetComponent<NodeItem>().playerForce[0] == 0)
+            if (NodeManager.Instance().GetNearbyNode(pos, borderIndex[i]) == null ||
+                MapManager.Instance().GetNearbyNode(gameObject, borderIndex[i]).GetComponent<NodeItem>().playerForce[0] == 0)
             {
                 borders[i].SetActive(true);
             }
@@ -87,7 +85,14 @@ public class NodeItem : MonoBehaviour
                 borders[i].SetActive(false);
             }
         }
-        
+    }
+    public void UpdateForceText()
+    {
+        if(!text_force.enabled)
+            text_force.enabled = true;
+
+        text_force.text = playerForce[0].ToString();
+
     }
 
     public void ChangeColor(Color _color = default(Color))

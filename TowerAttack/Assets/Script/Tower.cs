@@ -105,4 +105,12 @@ public class Tower : MonoBehaviour
         }
     }
 
+    public void SetOrderInLayer(int _order)
+    {
+        foreach (var item in GetComponentsInChildren<SpriteRenderer>())
+        {
+            item.sortingOrder = _order;
+        }
+    }
+
 }
