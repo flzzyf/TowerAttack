@@ -35,14 +35,16 @@ public class NodeManager : Singleton<NodeManager>
     {
         int evenOrUneven = _node.pos.x % 2 == 0 ? 0 : 1;
         Vector2Int targetOffset = _node.pos + nearbyNodeOffset[evenOrUneven, _index];
-        
-        if(targetOffset.x >= 0 && targetOffset.y >= 0 && targetOffset.x < nodeCountX && targetOffset.y < nodeCountY)
+        if (targetOffset.x >= 0 && targetOffset.y >= 0 && targetOffset.x < nodeCountY && targetOffset.y < nodeCountX)
         {
             Node tarGetNearbyNode = nodes[targetOffset.x, targetOffset.y];
+
             return tarGetNearbyNode;
         }
         return null;
-        
+
+
+
     }
 
     public Node GetNearbyNode(int _x, int _y, int _index)
@@ -55,18 +57,19 @@ public class NodeManager : Singleton<NodeManager>
         return GetNearbyNode(_pos.x, _pos.y, _index);
     }
 
-    public Node[] GetNearbyNodes(Node _node)
+    public List<Node> GetNearbyNodes(Node _node)
     {
-        Node[] nodeList = new Node[8];
+        List<Node> nodeList = new List<Node>();
         for (int i = 0; i < 8; i++)
         {
-            nodeList[i] = GetNearbyNode(_node, i);
+            if(GetNearbyNode(_node, i) != null)
+                nodeList.Add(GetNearbyNode(_node, i));
         }
 
         return nodeList;
     }
 
-    public Node[] GetNearbyNodes(Vector2Int _pos)
+    public List<Node> GetNearbyNodes(Vector2Int _pos)
     {
         return GetNearbyNodes(GetNode(_pos));
     }

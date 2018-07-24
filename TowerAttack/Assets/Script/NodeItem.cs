@@ -48,18 +48,19 @@ public class NodeItem : MonoBehaviour
 
             foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
             {
-                item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[0]++;
+                Destroy(item);
+                //item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[0]++;
             }
 
-            foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
-            {
-                item.GetComponent<NodeItem>().UpdateBorders();
-                item.GetComponent<NodeItem>().text_force.enabled = true;
+            //foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
+            //{
+            //    item.GetComponent<NodeItem>().UpdateBorders();
+            //    item.GetComponent<NodeItem>().text_force.enabled = true;
 
-                
-            }
 
-            UpdateBorders();
+            //}
+
+            //UpdateBorders();
             //foreach (var item2 in MapManager.Instance().GetAllNodeItems())
             //{
             //    item2.GetComponent<NodeItem>().UpdateBorders();

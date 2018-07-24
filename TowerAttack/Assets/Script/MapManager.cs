@@ -61,17 +61,14 @@ public class MapManager : Singleton<MapManager>
         return nodeItems[_pos.x, _pos.y];
     }
 
-    public GameObject[] GetNearbyNodeItems(Vector2Int _pos)
+    public List<GameObject> GetNearbyNodeItems(Vector2Int _pos)
     {
-        int a = 0;
-        GameObject[] nodeItemList = new GameObject[8];
-        foreach (var item in NodeManager.Instance().GetNearbyNodes(_pos))
+        List<GameObject> nodeItemList = new List<GameObject>();
+        foreach (var item2 in NodeManager.Instance().GetNearbyNodes(_pos))
         {
-            nodeItemList[a] = GetNodeItem(item.pos);
-            a++;
+            nodeItemList.Add(GetNodeItem(item2.pos));
         }
     
-
         return nodeItemList;
     }
 
