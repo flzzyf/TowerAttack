@@ -29,7 +29,10 @@ public class Tower : MonoBehaviour
     [HideInInspector]
     public GameObject node;
 
-	void Start () 
+    public Vector2 impactAreaCenter;
+    public Vector2 impactAreaSize = new Vector2(1 ,1);
+
+    void Start () 
 	{
         currentHp = hp;
 
@@ -49,7 +52,6 @@ public class Tower : MonoBehaviour
 
         }
 
-       
     }
 
     public void Init()
@@ -104,6 +106,22 @@ public class Tower : MonoBehaviour
         {
             item.sortingOrder = _order;
         }
+    }
+
+    //获取轰击点
+    public Vector2 GetImpactPoint()
+    {
+        Vector2 point;
+        point.x = Random.Range(impactAreaCenter.x - impactAreaSize.x / 2, impactAreaCenter.x + impactAreaSize.x / 2);
+        point.y = Random.Range(impactAreaCenter.y - impactAreaSize.y / 2, impactAreaCenter.y + impactAreaSize.y / 2);
+
+        return point;
+    }
+
+    //绘制线框
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(impactAreaCenter, impactAreaSize);
     }
 
 }

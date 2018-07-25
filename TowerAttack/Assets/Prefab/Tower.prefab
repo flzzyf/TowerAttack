@@ -347,6 +347,8 @@ MonoBehaviour:
   player: 0
   target: {fileID: 0}
   node: {fileID: 0}
+  impactAreaCenter: {x: 0, y: 0.33}
+  impactAreaSize: {x: 0.23, y: 0.44}
 --- !u!212 &212073858726202680
 SpriteRenderer:
   m_ObjectHideFlags: 1

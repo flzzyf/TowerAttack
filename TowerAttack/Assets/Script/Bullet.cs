@@ -19,11 +19,12 @@ public class Bullet : MonoBehaviour
 
     IEnumerator LaunchMissile()
     {
+        Vector2 targetPoint = (Vector2)target.transform.position + target.GetComponent<Tower>().GetImpactPoint();
 
         while (target != null &&
-                Vector2.Distance(target.transform.position, transform.position) > speed * Time.deltaTime)
+                Vector2.Distance(targetPoint, transform.position) > speed * Time.deltaTime)
         {
-            Vector2 dir = target.transform.position - transform.position;
+            Vector2 dir = targetPoint - (Vector2)transform.position;
             dir.Normalize();
             transform.Translate(dir * speed * Time.deltaTime);
 
