@@ -79,7 +79,9 @@ public class Tower : MonoBehaviour
     {
         GameObject go = Instantiate(prefab_bullet, launchPos.position, Quaternion.identity);
 
-        go.GetComponent<Bullet>().Launch(_target, damage);
+        float fixedDamage = damage * attackCD;
+
+        go.GetComponent<Bullet>().Launch(_target, fixedDamage);
     }
 
 

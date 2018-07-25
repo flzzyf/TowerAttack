@@ -21,12 +21,14 @@ public class Bullet : MonoBehaviour
     {
         Vector2 targetPoint = (Vector2)target.transform.position + target.GetComponent<Tower>().GetImpactPoint();
 
+        FaceTarget2D(targetPoint);
+
         while (target != null &&
                 Vector2.Distance(targetPoint, transform.position) > speed * Time.deltaTime)
         {
             Vector2 dir = targetPoint - (Vector2)transform.position;
             dir.Normalize();
-            transform.Translate(dir * speed * Time.deltaTime);
+            transform.Translate(dir * speed * Time.deltaTime, Space.World);
 
             yield return null;
         }
@@ -36,4 +38,15 @@ public class Bullet : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    void FaceTarget2D(Vector2 _target)
+    {
+        Vector3 direction = _target - (Vector2)transform.position;
+        direction.z = 0f;
+        direction.Normalize();
+        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        targetAngle -= 90;
+        transform.rotation = Quaternion.Euler(0, 0, targetAngle);
+    }
+
 }
