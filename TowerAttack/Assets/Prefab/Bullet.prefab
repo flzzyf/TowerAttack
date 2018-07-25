@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4772628691348556}
+  - component: {fileID: 114137437387121596}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -36,7 +37,7 @@ GameObject:
   - component: {fileID: 4018870648893210}
   - component: {fileID: 212446722532922878}
   m_Layer: 0
-  m_Name: WhiteCube
+  m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,6 +70,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114137437387121596
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1121596807494292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d18e63fb2b7bbc4b94ddac968c790fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  damage: 1
+  target: {fileID: 0}
 --- !u!212 &212446722532922878
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -101,8 +116,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1414339689
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: eaff3afca3e800c42bce96157a392fc3, type: 3}
   m_Color: {r: 0.7924528, g: 0.32053462, b: 0, a: 1}

@@ -60,7 +60,7 @@ public class MapManager : Singleton<MapManager>
     {
         return nodeItems[_pos.x, _pos.y];
     }
-
+    //获取相邻所有节点
     public List<GameObject> GetNearbyNodeItems(Vector2Int _pos)
     {
         List<GameObject> nodeItemList = new List<GameObject>();

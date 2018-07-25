@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour 
 {
-    public float range = 3;
-    public int hp = 3;
-    int currentHp;
+    public int range = 2;
+    public float hp = 3;
+    float currentHp;
     public int damage = 1;
-
-    public float rotationSpeed = 3;
 
     public GameObject prefab_bullet;
 
     public GameObject flag;
+
+    public float searchTargetCD = 0.5f;
+
+    public float attackCD = 0.5f;
+    float currentAttackCD;
+
+    public Transform launchPos;
 
     [HideInInspector]
     public int player;
@@ -28,14 +33,23 @@ public class Tower : MonoBehaviour
 	{
         currentHp = hp;
 
-	}
-	void Update () 
+        InvokeRepeating("SearchTarget", 0, searchTargetCD);
+    }
+    void Update () 
 	{
-        if(target != null)
+        if (currentAttackCD > 0)
+            currentAttackCD -= Time.deltaTime;
+        else
         {
-            //FaceTarget2D(target.transform.position);
+            if (target != null)
+            {
+                currentAttackCD = attackCD;
+                Attack(target);
+            }
 
         }
+
+       
     }
 
     public void Init()
@@ -46,34 +60,28 @@ public class Tower : MonoBehaviour
 
     public void SearchTarget()
     {
-        foreach (Transform item in ParentManager.Instance().GetParent("Tower"))
+        if (target != null)
+            return;
+
+        foreach (var item in MapManager.Instance().GetNearbyNodeItems(node.GetComponent<NodeItem>().pos))
         {
-            //不同玩家
-            if(item.gameObject.GetComponent<Tower>().player != player)
-                //距离可攻击
-                if (Vector2.Distance(transform.position, item.position) < range)
-                {
+            if (item.GetComponent<NodeItem>().tower != null)
+                if (item.GetComponent<NodeItem>().tower.GetComponent<Tower>().player != player)
+                    target = item.GetComponent<NodeItem>().tower;
 
-                    LockTarget(item.gameObject);
-                }
         }
+
     }
 
-    void LockTarget(GameObject _target)
+    public void Attack(GameObject _target)
     {
-        target = _target;
+        GameObject go = Instantiate(prefab_bullet, launchPos.position, Quaternion.identity);
 
-        //FaceTarget2D(_target.transform.position);
+        go.GetComponent<Bullet>().Launch(_target, damage);
     }
 
-    public void Attack()
-    {
-        //GameObject go = Instantiate(prefab_bullet, transform.position, Quaternion.identity);
 
-        target.GetComponent<Tower>().TakeDamage(damage);
-    }
-
-    public void TakeDamage(int _amount)
+    public void TakeDamage(float _amount)
     {
         currentHp -= _amount;
         if(currentHp <= 0)
@@ -88,30 +96,6 @@ public class Tower : MonoBehaviour
         node.GetComponent<NodeItem>().ChangeColor();
 
         Destroy(gameObject);
-    }
-
-    void FaceTarget2D(Vector2 _target)
-    {
-        Vector3 direction = _target - (Vector2)transform.position;
-        direction.z = 0f;
-        direction.Normalize();
-        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        targetAngle -= 90;
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle), rotationSpeed * Time.deltaTime);
-
-        //StartCoroutine(RotateToAngle(targetAngle));
-    }
-
-    IEnumerator RotateToAngle(float _angle)
-    {
-        while(Mathf.Abs(transform.rotation.eulerAngles.z - _angle) > 1)
-        {
-            //Debug.Log(transform.rotation.eulerAngles.z);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, _angle), rotationSpeed * Time.deltaTime);
-
-            yield return null;
-        }
     }
 
     public void SetOrderInLayer(int _order)
