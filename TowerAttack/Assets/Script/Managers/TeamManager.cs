@@ -12,10 +12,3 @@ public class TeamManager : Singleton<TeamManager>
     }
 
 }
-
-[System.Serializable]
-public class Player
-{
-    public string name = "unknown";
-    public Color color;
-}
