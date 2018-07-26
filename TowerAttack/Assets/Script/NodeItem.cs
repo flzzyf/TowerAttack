@@ -15,7 +15,7 @@ public class NodeItem : MonoBehaviour
     [HideInInspector]
     public Vector2Int pos;
 
-    public Text text_force;
+    public GameObject text_force;
 
     [HideInInspector]
     public int[] playerForce = new int[8];
@@ -85,10 +85,10 @@ public class NodeItem : MonoBehaviour
     }
     public void UpdateForceText()
     {
-        if(!text_force.enabled)
-            text_force.enabled = true;
+        if (!text_force.activeSelf)
+            text_force.SetActive(true);
 
-        text_force.text = playerForce[0].ToString();
+        text_force.GetComponent<Text>().text = playerForce[0].ToString();
 
     }
 
