@@ -32,6 +32,9 @@ public class Tower : MonoBehaviour
     public Vector2 impactAreaCenter;
     public Vector2 impactAreaSize = new Vector2(1 ,1);
 
+    public GameObject gfx_tower;
+    public GameObject gfx_building;
+
     void Start () 
 	{
         currentHp = hp;
@@ -51,7 +54,25 @@ public class Tower : MonoBehaviour
             }
 
         }
+    }
 
+    public void Building()
+    {
+        gfx_building.SetActive(true);
+        gfx_tower.SetActive(false);
+    }
+
+    public void BuildingFinish()
+    {
+        Init();
+
+        foreach (var item in GetComponentsInChildren<ParticleSystem>())
+        {
+            item.Stop();
+        }
+
+        //gfx_building.SetActive(false);
+        gfx_tower.SetActive(true);
     }
 
     public void Init()

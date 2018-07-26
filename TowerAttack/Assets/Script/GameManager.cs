@@ -18,8 +18,8 @@ public class GameManager : Singleton<GameManager>
         NodeManager.Instance().GenerateNodes();
         MapManager.Instance().GenerateMap();
 
-        BuildManager.Instance().Build(MapManager.Instance().nodeItems[2, 3], 1);
-        BuildManager.Instance().Build(MapManager.Instance().nodeItems[8, 6], 2);
+        //BuildManager.Instance().Build(MapManager.Instance().nodeItems[2, 3], 1);
+        //BuildManager.Instance().Build(MapManager.Instance().nodeItems[8, 6], 2);
 
     }
 

@@ -443,7 +443,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 1.41
+  orthographic size: 0.87
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -580,7 +580,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 555.5, y: -71}
+  m_AnchoredPosition: {x: 905.5, y: -71}
   m_SizeDelta: {x: 201.36, y: 99.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &937146697
@@ -688,7 +688,7 @@ GameObject:
   - component: {fileID: 1065328857}
   - component: {fileID: 1065328856}
   m_Layer: 5
-  m_Name: Panel (1)
+  m_Name: Panel_Money
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -832,6 +832,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab_tower: {fileID: 1224176132968950, guid: 0d2fe7f1794e64e458f074072f73c2fa,
     type: 2}
+  buildingTime: 2
+  buildingSpeed: []
 --- !u!114 &1483083279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -977,7 +979,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 331.34, y: -71}
+  m_AnchoredPosition: {x: 681.34, y: -71}
   m_SizeDelta: {x: 201.36, y: 99.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1713323995
@@ -1259,7 +1261,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 779.66, y: -71}
+  m_AnchoredPosition: {x: 1129.66, y: -71}
   m_SizeDelta: {x: 201.36, y: 99.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2072251932
