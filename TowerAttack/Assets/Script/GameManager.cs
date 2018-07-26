@@ -1,53 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
     public int player = 1;
 
-	public Text text_money;
-	int money = 0;
-
-	public float moneyIncreaseTime = 10;
-	float moneyIncreaseCD = 0;
-
 	void Start ()
+    {
+     
+
+    }
+    int a = 0;
+
+    private void Update()
+    {
+       
+    }
+
+    public void GameStart()
     {
         NodeManager.Instance().GenerateNodes();
         MapManager.Instance().GenerateMap();
 
         //BuildManager.Instance().Build(MapManager.Instance().nodeItems[2, 3], 1);
         //BuildManager.Instance().Build(MapManager.Instance().nodeItems[8, 6], 2);
-
     }
 
-    void Update () 
-	{
-		if(moneyIncreaseCD <= 0)
-		{
-			moneyIncreaseCD = moneyIncreaseTime;
-
-			IncreaseMoney();
-		}
-		else
-		{
-			moneyIncreaseCD -= Time.deltaTime;
-		}
-	}
-
-	void IncreaseMoney()
-	{
-		if(money == 0)
-		{
-			money++;
-		}
-		else
-		{
-			money *= 2;
-		}
-
-		text_money.text = money.ToString();
-	}
 }

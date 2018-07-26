@@ -11,16 +11,6 @@ public class TeamManager : Singleton<TeamManager>
         get { return players.Length; }
     }
 
-	void Start () 
-	{
-		
-	}
-	
-
-	void Update () 
-	{
-		
-	}
 }
 
 [System.Serializable]
