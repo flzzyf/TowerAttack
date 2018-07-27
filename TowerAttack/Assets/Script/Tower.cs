@@ -135,8 +135,8 @@ public class Tower : MonoBehaviour
     public Vector2 GetImpactPoint()
     {
         Vector2 point;
-        point.x = Random.Range(impactAreaCenter.x - impactAreaSize.x / 2, impactAreaCenter.x + impactAreaSize.x / 2);
-        point.y = Random.Range(impactAreaCenter.y - impactAreaSize.y / 2, impactAreaCenter.y + impactAreaSize.y / 2);
+        point.x = impactAreaCenter.x + Random.Range(-1, 1) * impactAreaSize.x / 2;
+        point.y = impactAreaCenter.y + Random.Range(-1, 1) * impactAreaSize.y / 2;
 
         return point;
     }
