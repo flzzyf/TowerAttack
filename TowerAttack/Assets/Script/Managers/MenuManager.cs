@@ -14,24 +14,17 @@ public class MenuManager : MonoBehaviour
     float playSoundCD = 0.2f;
     float currentPlaySoundCD = 0.2f;
 
-    public Dropdown dropdown_resolution;
-
     Resolution[] resolutions;
 
     public Slider slider_volume_bgm;
     public Slider slider_volume_effect;
+    public Toggle toggle_fullScreen;
+    public Dropdown dropdown_resolution;
+    public Dropdown dropdown_quality;
 
     public void Start()
     {
         SoundManager.Instance().Play("BGM");
-
-        //根据用户数据进行初始设置
-        Screen.fullScreen = PlayerPrefs.GetInt("fullScreen") == 1;
-        audioMixer.SetFloat("volume_bgm", PlayerPrefs.GetFloat("volume_bgm"));
-        slider_volume_bgm.value = PlayerPrefs.GetFloat("volume_bgm");
-        audioMixer.SetFloat("volume_effect", PlayerPrefs.GetFloat("volume_effect"));
-        slider_volume_effect.value = PlayerPrefs.GetFloat("volume_effect");
-
 
         //添加分辨率选项
         resolutions = Screen.resolutions;
@@ -45,7 +38,7 @@ public class MenuManager : MonoBehaviour
             string option = resolutions[i].width + " X " + resolutions[i].height;
             options.Add(option);
 
-            if(resolutions[i].width == Screen.currentResolution.width &&
+            if (resolutions[i].width == Screen.currentResolution.width &&
                resolutions[i].height == Screen.currentResolution.height)
             {
                 currentResolutionIndex = i;
@@ -53,7 +46,17 @@ public class MenuManager : MonoBehaviour
         }
 
         dropdown_resolution.AddOptions(options);
-        dropdown_resolution.value = currentResolutionIndex;
+        //dropdown_resolution.value = currentResolutionIndex;
+
+        //根据用户数据进行初始设置
+        toggle_fullScreen.isOn = PlayerPrefs.GetInt("fullScreen") == 1;
+        slider_volume_bgm.value = PlayerPrefs.GetFloat("volume_bgm");
+        slider_volume_effect.value = PlayerPrefs.GetFloat("volume_effect");
+        dropdown_resolution.value = PlayerPrefs.GetInt("resolution");
+        dropdown_quality.value = PlayerPrefs.GetInt("quality");
+
+
+        
     }
 
     private void Update()
@@ -115,6 +118,7 @@ public class MenuManager : MonoBehaviour
     public void SetQuality(int _value)
     {
         QualitySettings.SetQualityLevel(_value);
+        PlayerPrefs.SetInt("quality", _value);
     }
     //设置全屏
     public void SetFullScreen(bool _isFullScreen)
@@ -128,5 +132,6 @@ public class MenuManager : MonoBehaviour
     {
         Resolution resolution = resolutions[_value];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        PlayerPrefs.SetInt("resolution", _value);
     }
 }

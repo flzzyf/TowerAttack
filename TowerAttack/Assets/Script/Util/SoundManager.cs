@@ -13,8 +13,6 @@ public class SoundManager : Singleton<SoundManager>
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
-            s.source.playOnAwake = false;
-
             if (s.audioMixerGroup != null)
                 s.source.outputAudioMixerGroup = s.audioMixerGroup;
             s.source.clip = s.clip;

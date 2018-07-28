@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 68543297}
   - component: {fileID: 68543298}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Toggle_FullScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3270,9 +3270,11 @@ MonoBehaviour:
   panel_loading: {fileID: 445551941}
   slider_loading: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: 6c04d0f62c1bbb4489375bd89c168e41, type: 2}
-  dropdown_resolution: {fileID: 969604756}
   slider_volume_bgm: {fileID: 1107038644}
   slider_volume_effect: {fileID: 1048237629}
+  toggle_fullScreen: {fileID: 68543298}
+  dropdown_resolution: {fileID: 969604756}
+  dropdown_quality: {fileID: 1020189249}
 --- !u!1 &875990417
 GameObject:
   m_ObjectHideFlags: 0
