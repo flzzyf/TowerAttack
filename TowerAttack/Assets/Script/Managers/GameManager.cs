@@ -8,6 +8,9 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector]
     public bool gaming;
 
+    //镜头操控方式：RTS式，触屏拖动式
+    public int cameraControlMode = 0;
+
 	void Start ()
     {
 

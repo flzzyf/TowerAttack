@@ -19,6 +19,9 @@ public class CameraControl_RTS : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance().cameraControlMode != 0)
+            return;
+
         float x = 0, y = 0;
 
         if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)

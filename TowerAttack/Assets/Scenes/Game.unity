@@ -629,6 +629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ba8f11026d5cb4eaefd41804f1486e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraSensitivity: 2
 --- !u!1 &651017131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,6 +1108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: 1
   gaming: 0
+  cameraControlMode: 1
 --- !u!4 &1483083275
 Transform:
   m_ObjectHideFlags: 0
