@@ -8,23 +8,33 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour 
 {
     public GameObject panel_loading;
-    public Slider slider;
+    public Slider slider_loading;
     public AudioMixer audioMixer;
 
     float playSoundCD = 0.2f;
-    float currentPlaySoundCD;
+    float currentPlaySoundCD = 0.2f;
 
     public Dropdown dropdown_resolution;
 
     Resolution[] resolutions;
 
+    public Slider slider_volume_bgm;
+    public Slider slider_volume_effect;
+
     public void Start()
     {
         SoundManager.Instance().Play("BGM");
 
-        resolutions = Screen.resolutions;
+        //根据用户数据进行初始设置
+        Screen.fullScreen = PlayerPrefs.GetInt("fullScreen") == 1;
+        audioMixer.SetFloat("volume_bgm", PlayerPrefs.GetFloat("volume_bgm"));
+        slider_volume_bgm.value = PlayerPrefs.GetFloat("volume_bgm");
+        audioMixer.SetFloat("volume_effect", PlayerPrefs.GetFloat("volume_effect"));
+        slider_volume_effect.value = PlayerPrefs.GetFloat("volume_effect");
+
 
         //添加分辨率选项
+        resolutions = Screen.resolutions;
         dropdown_resolution.ClearOptions();
 
         List<string> options = new List<string>();
@@ -66,7 +76,7 @@ public class MenuManager : MonoBehaviour
         while(!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / .9f);
-            slider.value = progress;
+            slider_loading.value = progress;
 
             yield return null;
         }
@@ -80,34 +90,40 @@ public class MenuManager : MonoBehaviour
     public void SetVolumeBGM(float _value)
     {
         audioMixer.SetFloat("volume_bgm", _value);
-    }
+        PlayerPrefs.SetFloat("volume_bgm", _value);
 
+    }
+    //设置音效音量
     public void SetVolumeEffect(float _value)
     {
         audioMixer.SetFloat("volume_effect", _value);
-
-        if(currentPlaySoundCD <= 0)
+        PlayerPrefs.SetFloat("volume_effect", _value);
+        if (currentPlaySoundCD <= 0)
         {
             currentPlaySoundCD = playSoundCD;
             SoundManager.Instance().Play("Boom");
         }
     }
 
+    //点击按钮，所有按钮都加上该事件
     public void ClickButton()
     {
         SoundManager.Instance().Play("Boom");
     }
 
+    //设置画面质量
     public void SetQuality(int _value)
     {
         QualitySettings.SetQualityLevel(_value);
     }
-
+    //设置全屏
     public void SetFullScreen(bool _isFullScreen)
     {
         Screen.fullScreen = _isFullScreen;
+        int bool2Int = _isFullScreen ? 1 : 0;
+        PlayerPrefs.SetInt("fullScreen", bool2Int);
     }
-
+    //设置分辨率
     public void SetResolution(int _value)
     {
         Resolution resolution = resolutions[_value];
