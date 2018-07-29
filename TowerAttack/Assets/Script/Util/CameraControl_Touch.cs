@@ -2,27 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraControl_Touch : MonoBehaviour 
+public class CameraControl_Touch : Singleton<CameraControl_Touch>
 {
     Vector2 mouseClickPoint;
     Vector3 cameraOriginPos;
 
     public float cameraSensitivity = 1;
 
-	void Start () 
-	{
-#if UNITY_STANDALONE
-        Debug.Log("PC版");
-
-        //this.enabled = false;
-#endif
-    }
-
     void Update () 
 	{
-        if (GameManager.Instance().cameraControlMode != 1)
-            return;
-
         if(Input.GetMouseButtonDown(0))
         {
             mouseClickPoint = Input.mousePosition;

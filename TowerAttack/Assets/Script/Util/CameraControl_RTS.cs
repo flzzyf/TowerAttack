@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraControl_RTS : MonoBehaviour 
+public class CameraControl_RTS : Singleton<CameraControl_RTS>
 {
     public float panSpeed = 20f;
     public float panBorderThickness = 10f;
@@ -10,18 +10,8 @@ public class CameraControl_RTS : MonoBehaviour
 
     public bool mode_2D;
 
-    void Start () 
-	{
-#if UNITY_IOS || UNITY_ANDROID
-        this.enabled = false;
-#endif
-    }
-
     void Update()
     {
-        if (GameManager.Instance().cameraControlMode != 0)
-            return;
-
         float x = 0, y = 0;
 
         if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)

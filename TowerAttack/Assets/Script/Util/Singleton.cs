@@ -20,7 +20,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
             if (instance == null)
             {
                 string instanceName = typeof(T).Name;
-                throw new Exception("没有现有脚本");
+                throw new Exception(typeof(T).Name + "没有现有脚本");
             }
         }
 
