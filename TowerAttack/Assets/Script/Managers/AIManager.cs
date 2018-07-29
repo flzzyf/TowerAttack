@@ -24,7 +24,7 @@ public class AIManager : Singleton<AIManager>
 
     IEnumerator AIStartAction(int _player)
     {
-        while(GameManager.Instance().gaming)
+        while(GameManager.gaming)
         {
 
 

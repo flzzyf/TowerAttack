@@ -6,7 +6,7 @@ public class GameManager : Singleton<GameManager>
 {
     public int player = 1;
     [HideInInspector]
-    public bool gaming;
+    public static bool gaming;
 
 	void Start ()
     {
