@@ -12,6 +12,11 @@ public class zyf
         Debug.Log(_msg);
     }
 
+    public static void Out(float _msg)
+    {
+        Debug.Log(_msg);
+    }
+
     //获取实际游戏世界屏幕尺寸
     public static Vector2 GetWorldScreenSize()
     {

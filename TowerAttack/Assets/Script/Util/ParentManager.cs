@@ -6,7 +6,8 @@ public class ParentManager : Singleton<ParentManager>
 {
     Dictionary<string, GameObject> parentDictionary = new Dictionary<string, GameObject>();
 
-    Transform grandparent;
+    [HideInInspector]
+    public Transform grandparent;
 
     private void Awake()
     {
