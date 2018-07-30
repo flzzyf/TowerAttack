@@ -12,7 +12,7 @@ public class NodeItem : MonoBehaviour
 
     Color originColor;
 
-    [HideInInspector]
+    //[HideInInspector]
     public Vector2Int pos;
 
     public GameObject text_force;
@@ -20,6 +20,11 @@ public class NodeItem : MonoBehaviour
     [HideInInspector]
     public int[] playerForce = new int[8];
     public GameObject[] borders;
+
+    public SpriteRenderer gfx;
+
+    float clickConfirmDelay = .2f;
+    float mouseDownTime;
 
     void Start()
     {
@@ -40,11 +45,19 @@ public class NodeItem : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (tower == null)
-        {
-            if(BuildManager.Instance() != null)
-                BuildManager.Instance().Build(MapManager.Instance().GetNodeItem(pos), GameManager.Instance().player);
+        mouseDownTime = Time.time;
+    }
 
+    private void OnMouseUp()
+    {
+        if(Time.time - mouseDownTime < clickConfirmDelay)
+        {
+            if (tower == null)
+            {
+                if (BuildManager.Instance() != null)
+                    BuildManager.Instance().Build(MapManager.Instance().GetNodeItem(pos), GameManager.Instance().player);
+
+            }
         }
     }
 

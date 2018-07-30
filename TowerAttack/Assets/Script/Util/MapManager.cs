@@ -39,7 +39,7 @@ public class MapManager : Singleton<MapManager>
                 float y = i * nodePaddingY;
                 Vector2 pos = new Vector2(j * nodePaddingX + specialX, y);
                 pos += originGeneratePoint;
-                GameObject go = Instantiate(prefab_node, pos, Quaternion.identity, ParentManager.Instance().GetParent("Nodes"));
+                GameObject go = Instantiate(prefab_node, pos, Quaternion.identity, ParentManager.Instance().GetParent("Node"));
                 go.name = "Node_" + i + "_" + j;
                 nodeItems[i, j] = go;
                 go.GetComponent<NodeItem>().pos = new Vector2Int(i, j);

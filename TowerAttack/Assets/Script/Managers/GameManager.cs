@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager>
 
 	void Start ()
     {
-        CameraControl_RTS.Instance().enabled = false;
+        //CameraControl_RTS.Instance().enabled = false;
         //CameraControl_Touch.Instance().enabled = false;
 
     }

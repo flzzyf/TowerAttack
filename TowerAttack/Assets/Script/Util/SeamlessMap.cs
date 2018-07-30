@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SeamlessMap : MonoBehaviour 
+public class SeamlessMap : Singleton<SeamlessMap>
 {
     public Transform worldObject;
 
@@ -11,13 +11,15 @@ public class SeamlessMap : MonoBehaviour
 
     public float cameraSensitivity = 1;
 
-    public Vector2Int mapCenter = new Vector2Int(2, 2);
     Vector2 mapOrigin;
+
+    public bool even;
 
     void Start () 
 	{
         worldObject = ParentManager.Instance().grandparent;
-	}
+        //worldObject = ParentManager.Instance().GetParent("Node");
+    }
 
 	void Update () 
 	{
@@ -43,6 +45,7 @@ public class SeamlessMap : MonoBehaviour
             //镜头右移
             if (Mathf.Abs(offset2.x) > MapManager.Instance().nodePaddingX)
             {
+                print("右移");
                 mapOrigin.x = Input.mousePosition.x;
 
                 if(offset2.x < 0)
@@ -87,7 +90,10 @@ public class SeamlessMap : MonoBehaviour
             //镜头上移
             if (Mathf.Abs(offset2.y) > MapManager.Instance().nodePaddingY)
             {
+                print("上移");
                 mapOrigin.y = Input.mousePosition.y;
+
+                even = !even;
 
                 if (offset2.y > 0)
                 {
@@ -128,14 +134,32 @@ public class SeamlessMap : MonoBehaviour
                     }
                 }
 
+                //改变节点层级
                 for (int i = 0; i < NodeManager.Instance().nodeCountY; i++)
                 {
                     for (int j = 0; j < NodeManager.Instance().nodeCountX; j++)
                     {
-                        MapManager.Instance().nodeItems[i, j].GetComponentInChildren<SpriteRenderer>().sortingOrder = NodeManager.Instance().nodeCountY - i;
+                        MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().gfx.sortingOrder = NodeManager.Instance().nodeCountY - i;
 
+                        //改变塔层级
+                        if(MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().tower != null)
+                            MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().tower.GetComponent<Tower>().SetOrderInLayer(NodeManager.Instance().nodeCountY - i);
+                        
                     }
+                }
+            }
 
+            for (int i = 0; i < NodeManager.Instance().nodeCountY; i++)
+            {
+                for (int j = 0; j < NodeManager.Instance().nodeCountX; j++)
+                {
+                    //改变节点储存位置
+                    MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().pos = new Vector2Int(i, j);
+
+                    //Node temp = NodeManager.Instance().nodes[i, 0];
+                    //NodeManager.Instance().nodes[i, j] = MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().pos;
+
+                    NodeManager.Instance().nodes[i, j].pos = MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().pos;
                 }
             }
         }

@@ -8,7 +8,7 @@ public class NodeManager : Singleton<NodeManager>
     public int nodeCountY = 20;
 
     [HideInInspector]
-    Node[,] nodes;
+    public Node[,] nodes;
 
     //顺序：从12点钟开始顺时针
     Vector2Int[,] nearbyNodeOffset = { { new Vector2Int(2, 0), new Vector2Int(1, 0), new Vector2Int(0, 1), new Vector2Int(-1, 0),
@@ -34,6 +34,12 @@ public class NodeManager : Singleton<NodeManager>
     public Node GetNearbyNode(Node _node, int _index)
     {
         int evenOrUneven = _node.pos.x % 2 == 0 ? 0 : 1;
+        //无缝地图偏移Y
+        if(SeamlessMap.Instance().even)
+        {
+            evenOrUneven++;
+            evenOrUneven %= 2;
+        }
         Vector2Int targetOffset = _node.pos + nearbyNodeOffset[evenOrUneven, _index];
         if (targetOffset.x >= 0 && targetOffset.y >= 0 && targetOffset.x < nodeCountY && targetOffset.y < nodeCountX)
         {
@@ -42,8 +48,6 @@ public class NodeManager : Singleton<NodeManager>
             return tarGetNearbyNode;
         }
         return null;
-
-
 
     }
 
