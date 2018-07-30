@@ -224,9 +224,9 @@ MonoBehaviour:
   prefab_node: {fileID: 1845157693971650, guid: 99ae1a6648b316a4ea17ef1ac8bebf09,
     type: 2}
   nodePaddingX: 0.49
-  nodePaddingY: 0.49
+  nodePaddingY: 0.128
   originPoint: {x: 0, y: 0}
-  evenLineOffsetX: 0
+  evenLineOffsetX: 0.5
 --- !u!114 &1356237164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,8 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51860d45678a8b6448f60086dd8cc066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeCountX: 11
-  nodeCountY: 5
+  nodeCountX: 15
+  nodeCountY: 10
 --- !u!114 &1356237165
 MonoBehaviour:
   m_ObjectHideFlags: 0

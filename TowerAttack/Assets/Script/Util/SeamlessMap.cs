@@ -128,6 +128,15 @@ public class SeamlessMap : MonoBehaviour
                     }
                 }
 
+                for (int i = 0; i < NodeManager.Instance().nodeCountY; i++)
+                {
+                    for (int j = 0; j < NodeManager.Instance().nodeCountX; j++)
+                    {
+                        MapManager.Instance().nodeItems[i, j].GetComponentInChildren<SpriteRenderer>().sortingOrder = NodeManager.Instance().nodeCountY - i;
+
+                    }
+
+                }
             }
         }
     }

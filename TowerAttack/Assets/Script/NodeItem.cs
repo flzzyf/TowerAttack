@@ -42,7 +42,8 @@ public class NodeItem : MonoBehaviour
     {
         if (tower == null)
         {
-            BuildManager.Instance().Build(MapManager.Instance().GetNodeItem(pos), GameManager.Instance().player);
+            if(BuildManager.Instance() != null)
+                BuildManager.Instance().Build(MapManager.Instance().GetNodeItem(pos), GameManager.Instance().player);
 
         }
     }
