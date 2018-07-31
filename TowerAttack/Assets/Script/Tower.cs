@@ -117,6 +117,8 @@ public class Tower : MonoBehaviour
 
     public void Death()
     {
+        SoundManager.Instance().Play("Boom");
+
         node.GetComponent<NodeItem>().tower = null;
         node.GetComponent<NodeItem>().ChangeColor();
 

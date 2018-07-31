@@ -12,7 +12,7 @@ public class MenuManager : MonoBehaviour
     public AudioMixer audioMixer;
 
     float playSoundCD = 0.2f;
-    float currentPlaySoundCD = 0.2f;
+    float currentPlaySoundCD = 0;
 
     Resolution[] resolutions;
 
@@ -22,9 +22,18 @@ public class MenuManager : MonoBehaviour
     public Dropdown dropdown_resolution;
     public Dropdown dropdown_quality;
 
+    public Transform panel_players;
+    public GameObject prefab_playerItem;
+
     public void Start()
     {
         SoundManager.Instance().Play("BGM");
+
+        //玩家名获取
+        if(PlayerPrefs.GetString("Username") == "")
+        {
+            PlayerPrefs.SetString("Username", "战斗之软泥怪");
+        }
 
         //添加分辨率选项
         resolutions = Screen.resolutions;
@@ -55,14 +64,6 @@ public class MenuManager : MonoBehaviour
         dropdown_resolution.value = PlayerPrefs.GetInt("resolution");
         dropdown_quality.value = PlayerPrefs.GetInt("quality");
 
-
-        
-    }
-
-    private void Update()
-    {
-        if (currentPlaySoundCD > 0)
-            currentPlaySoundCD -= Time.deltaTime;
     }
 
     public void LoadScene(string _name)
@@ -101,9 +102,9 @@ public class MenuManager : MonoBehaviour
     {
         audioMixer.SetFloat("volume_effect", _value);
         PlayerPrefs.SetFloat("volume_effect", _value);
-        if (currentPlaySoundCD <= 0)
+        if (Time.time - currentPlaySoundCD > playSoundCD)
         {
-            currentPlaySoundCD = playSoundCD;
+            currentPlaySoundCD = Time.time;
             SoundManager.Instance().Play("Boom");
         }
     }
@@ -133,5 +134,34 @@ public class MenuManager : MonoBehaviour
         Resolution resolution = resolutions[_value];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         PlayerPrefs.SetInt("resolution", _value);
+    }
+
+    //进入大厅
+    public void EnterLobby()
+    {
+        ClearLobby();
+        AddPlayerItem("玩家1", 0, 2);
+    }
+
+    void ClearLobby()
+    {
+        for (int i = panel_players.childCount; i > 0; i--)
+        {
+            DestroyImmediate(panel_players.GetChild(i - 1).gameObject);
+        }
+    }
+
+    public void AddComputer()
+    {
+        AddPlayerItem("电脑", 0, 0);
+    }
+
+    public void AddPlayerItem(string _name, int _skin, int _team)
+    {
+        GameObject go = Instantiate(prefab_playerItem, panel_players);
+        go.GetComponent<PlayerItem>().text_name.text = _name;
+        go.GetComponent<PlayerItem>().dropdown_skin.value = _skin;
+        go.GetComponent<PlayerItem>().dropdown_team.value = _team;
+        go.GetComponent<PlayerItem>().dropdown_color.value = panel_players.childCount - 1;
     }
 }

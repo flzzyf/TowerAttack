@@ -25,6 +25,8 @@ public class BuildManager : Singleton<BuildManager>
 
     public GameObject Build(GameObject _node, int _player)
     {
+        SoundManager.Instance().Play("Shoot");
+
         GameObject go = Instantiate(prefab_tower, _node.transform.position, Quaternion.identity, _node.transform);
         _node.GetComponent<NodeItem>().tower = go;
         _node.GetComponent<NodeItem>().BuildSetting();
