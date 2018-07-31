@@ -41,14 +41,20 @@ public class NodeManager : Singleton<NodeManager>
             evenOrUneven %= 2;
         }
         Vector2Int targetOffset = _node.pos + nearbyNodeOffset[evenOrUneven, _index];
-        if (targetOffset.x >= 0 && targetOffset.y >= 0 && targetOffset.x < nodeCountY && targetOffset.y < nodeCountX)
-        {
-            Node tarGetNearbyNode = nodes[targetOffset.x, targetOffset.y];
 
-            return tarGetNearbyNode;
-        }
-        return null;
+        //循环节点X和Y
+        targetOffset.x %= nodeCountY;
+        if (targetOffset.x < 0)
+            targetOffset.x += nodeCountY;
 
+        targetOffset.y %= nodeCountX;
+        if (targetOffset.y < 0)
+            targetOffset.y += nodeCountX;
+
+
+        Node tarGetNearbyNode = nodes[targetOffset.x, targetOffset.y];
+
+        return tarGetNearbyNode;
     }
 
     public Node GetNearbyNode(int _x, int _y, int _index)

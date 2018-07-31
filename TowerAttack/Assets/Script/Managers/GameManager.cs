@@ -29,7 +29,7 @@ public class GameManager : Singleton<GameManager>
         gaming = true;
 
         NodeManager.Instance().nodeCountX = PlayerManager.Instance().playerNumber * 7;
-        NodeManager.Instance().nodeCountY = PlayerManager.Instance().playerNumber * 13;
+        NodeManager.Instance().nodeCountY = PlayerManager.Instance().playerNumber * 12;
 
         NodeManager.Instance().GenerateNodes();
         MapManager.Instance().GenerateMap();

@@ -39,7 +39,7 @@ public class Tower : MonoBehaviour
 	{
         currentHp = hp;
 
-        InvokeRepeating("SearchTarget", 0, searchTargetCD);
+        //InvokeRepeating("SearchTarget", 0, searchTargetCD);
     }
     void Update () 
 	{
