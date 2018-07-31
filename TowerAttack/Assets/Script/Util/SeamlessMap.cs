@@ -37,32 +37,34 @@ public class SeamlessMap : Singleton<SeamlessMap>
             Vector2 offset = (Vector2)Input.mousePosition - mouseClickPoint;
             offset *= zyf.GetWorldScreenSize().x / Screen.width;
             offset *= cameraSensitivity;
-            worldObject.position = cameraOriginPos - (Vector3)offset;
+            //worldObject.position = cameraOriginPos - (Vector3)offset;
 
             //移动到镜头边缘
             Vector2 offset2 = (Vector2)Input.mousePosition - mapOrigin;
             offset2 *= zyf.GetWorldScreenSize().x / Screen.width;
             offset2 *= cameraSensitivity;
+            //worldObject.position = cameraOriginPos + (Vector3)Vector2.left * (offset2.x % MapManager.Instance().nodePaddingX) * MapManager.Instance().nodePaddingX;
+            //worldObject.position = cameraOriginPos - (Vector3)offset;
 
             //镜头左右移动
             if (Mathf.Abs(offset2.x) > MapManager.Instance().nodePaddingX)
             {
                 mapOrigin.x = Input.mousePosition.x;
 
-                if(offset2.x > 0)
+                int repeatTime = (int)Mathf.Abs((offset2.x / MapManager.Instance().nodePaddingX));
+
+                for (int i = 0; i < repeatTime; i++)
                 {
-                    print("右移");
-                    int repeatTime = (int)(offset2.x / MapManager.Instance().nodePaddingX);
-                    for (int i = 0; i < repeatTime; i++)
+                    if (offset2.x > 0)
                     {
-                        print(repeatTime);
                         MoveRight();
                     }
+                    else
+                    {
+                        MoveLeft();
+                    }
                 }
-                else
-                {
-                    MoveLeft();
-                }
+                worldObject.Translate(-Mathf.Sign(offset2.x) * Vector2.right * repeatTime * MapManager.Instance().nodePaddingX);
             }
 
             //镜头上下移动
@@ -71,16 +73,21 @@ public class SeamlessMap : Singleton<SeamlessMap>
                 //print("上移");
                 mapOrigin.y = Input.mousePosition.y;
 
-                even = !even;
 
-                if (offset2.y > 0)
+                int repeatTime = (int)Mathf.Abs((offset2.y / MapManager.Instance().nodePaddingY));
+                for (int i = 0; i < repeatTime; i++)
                 {
-                    MoveUp();
+                even = !even;
+                    if (offset2.y > 0)
+                    {
+                        MoveUp();
+                    }
+                    else
+                    {
+                        MoveDown();
+                    }
                 }
-                else
-                {
-                    MoveDown();
-                }
+                worldObject.Translate(-Mathf.Sign(offset2.y) * Vector2.up * repeatTime * MapManager.Instance().nodePaddingY);
 
                 //改变节点层级
                 for (int i = 0; i < NodeManager.Instance().nodeCountY; i++)
