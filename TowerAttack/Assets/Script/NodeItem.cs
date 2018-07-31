@@ -54,8 +54,15 @@ public class NodeItem : MonoBehaviour
         {
             if (tower == null)
             {
-                if (BuildManager.Instance() != null)
+                if(BuildManager.desiredBuildTarget != gameObject)
+                {
+                    BuildManager.desiredBuildTarget = gameObject;
+                }
+                else
+                {
+                    //确认建造
                     BuildManager.Instance().Build(gameObject, GameManager.Instance().player);
+                }
 
             }
         }

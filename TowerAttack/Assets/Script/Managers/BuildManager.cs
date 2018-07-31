@@ -11,10 +11,11 @@ public class BuildManager : Singleton<BuildManager>
     [HideInInspector]
     public float[] buildingSpeed;
 
-    [HideInInspector]
-    public GameObject desiredBuildTarget;
+    public static GameObject desiredBuildTarget;
 
-    private void Start()
+    public static List<GameObject> towers = new List<GameObject>();
+
+    public void Init()
     {
         //初始化所有玩家建造速度
         int playerNumber = PlayerManager.Instance().playerNumber;
@@ -24,6 +25,11 @@ public class BuildManager : Singleton<BuildManager>
         {
             buildingSpeed[i] = 1;
         }
+    }
+
+    private void OnDestroy()
+    {
+        towers.Clear();
     }
 
     public GameObject Build(GameObject _node, int _player)
@@ -37,7 +43,15 @@ public class BuildManager : Singleton<BuildManager>
         go.GetComponent<Tower>().player =_player;
         go.GetComponent<Tower>().SetOrderInLayer(_node.GetComponentInChildren<SpriteRenderer>().sortingOrder);
 
+        towers.Add(go);
+
         StartCoroutine(Building(go));
+
+        //所有塔开始搜索目标
+        for (int i = 0; i < towers.Count; i++)
+        {
+            towers[i].GetComponent<Tower>().SearchTarget();
+        }
 
         //切换玩家
         //GameManager.Instance().player = (GameManager.Instance().player + 1) % 3;

@@ -39,6 +39,7 @@ public class Tower : MonoBehaviour
 	{
         currentHp = hp;
 
+        
         //InvokeRepeating("SearchTarget", 0, searchTargetCD);
     }
     void Update () 
@@ -115,6 +116,7 @@ public class Tower : MonoBehaviour
         }
     }
 
+    //塔被摧毁
     public void Death()
     {
         SoundManager.Instance().Play("Boom");
@@ -122,7 +124,9 @@ public class Tower : MonoBehaviour
         node.GetComponent<NodeItem>().tower = null;
         node.GetComponent<NodeItem>().ChangeColor();
 
-        Destroy(gameObject);
+        BuildManager.towers.Remove(gameObject);
+
+        DestroyImmediate(gameObject);
     }
 
     public void SetOrderInLayer(int _order)

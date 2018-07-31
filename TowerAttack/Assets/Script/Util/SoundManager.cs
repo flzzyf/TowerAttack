@@ -8,7 +8,12 @@ public class SoundManager : Singleton<SoundManager>
 {
     public Sound[] sounds = new Sound[1];
 
-    void Start () 
+    private void Awake()
+    {
+        Init();
+    }
+
+    public void Init() 
 	{
         foreach (Sound s in sounds)
         {

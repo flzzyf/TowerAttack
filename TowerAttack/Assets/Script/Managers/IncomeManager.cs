@@ -13,7 +13,7 @@ public class IncomeManager : Singleton<IncomeManager>
 
     public Slider paybackTimeSlider;
 
-    private void Start()
+    public void Init()
     {
         paybackTime = new float[PlayerManager.Instance().playerNumber];
         paybackTimeIncreaseAmount = new float[PlayerManager.Instance().playerNumber];

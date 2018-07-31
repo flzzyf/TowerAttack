@@ -5,23 +5,25 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public int player = 0;
-    [HideInInspector]
     public static bool gaming;
+    public static bool paused;
+
+    public GameObject panel_menu;
 
 	void Start ()
     {
-        //CameraControl_RTS.Instance().enabled = false;
-        //CameraControl_Touch.Instance().enabled = false;
+        BuildManager.Instance().Init();
+        IncomeManager.Instance().Init();
+        SoundManager.Instance().Init();
+        SeamlessMap.Instance().Init();
+
+        GameStart();
 
     }
 
     private void Update()
     {
-        //延时开始游戏，等其他Manager初始化完成
-       if(!gaming && Time.timeSinceLevelLoad > Time.deltaTime)
-        {
-            GameStart();
-        }
+
     }
 
     public void GameStart()
@@ -48,6 +50,30 @@ public class GameManager : Singleton<GameManager>
                 AIManager.Instance().AIStart(PlayerManager.Instance().players[i].id);
             }
         }
+    }
+
+    public void OpenMenu()
+    {
+        Time.timeScale = 0;
+        panel_menu.SetActive(true);
+        paused = true;
+    }
+
+    public void CloseMenu()
+    {
+        Time.timeScale = 1;
+        panel_menu.SetActive(false);
+        paused = false;
+    }
+
+    public void QuitToMainMenu()
+    {
+        Time.timeScale = 1;
+
+        Destroy(GameObject.Find("DontDestroyOnLoad"));
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Intro");
+
     }
 
 }

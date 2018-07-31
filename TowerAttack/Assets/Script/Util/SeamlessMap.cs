@@ -15,7 +15,7 @@ public class SeamlessMap : Singleton<SeamlessMap>
     [HideInInspector]
     public bool even;
 
-    void Start () 
+    public void Init() 
 	{
         worldObject = ParentManager.Instance().grandparent;
         //worldObject = ParentManager.Instance().GetParent("Node");
