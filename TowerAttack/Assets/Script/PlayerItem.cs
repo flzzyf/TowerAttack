@@ -9,4 +9,5 @@ public class PlayerItem : MonoBehaviour {
     public Dropdown dropdown_skin;
     public Dropdown dropdown_team;
     public Dropdown dropdown_color;
+    public bool isAI;
 }

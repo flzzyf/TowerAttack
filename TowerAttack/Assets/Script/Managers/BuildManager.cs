@@ -11,10 +11,13 @@ public class BuildManager : Singleton<BuildManager>
     [HideInInspector]
     public float[] buildingSpeed;
 
+    [HideInInspector]
+    public GameObject desiredBuildTarget;
+
     private void Start()
     {
         //初始化所有玩家建造速度
-        int playerNumber = TeamManager.Instance().playerNumber;
+        int playerNumber = PlayerManager.Instance().playerNumber;
         buildingSpeed = new float[playerNumber];
 
         for (int i = 0; i < playerNumber; i++)
@@ -37,7 +40,7 @@ public class BuildManager : Singleton<BuildManager>
         StartCoroutine(Building(go));
 
         //切换玩家
-        GameManager.Instance().player = (GameManager.Instance().player + 1) % 3;
+        //GameManager.Instance().player = (GameManager.Instance().player + 1) % 3;
 
         return go;
     }

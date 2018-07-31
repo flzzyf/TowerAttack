@@ -34,6 +34,10 @@ public class AIManager : Singleton<AIManager>
 
     public class AI
     {
+        /*AI战斗风格
+            探险家：随机八个方向建造
+            野性生长：永远只朝一个方向前进
+        */
         public string style = "yandere";
         public float difficulty = 1;
     }

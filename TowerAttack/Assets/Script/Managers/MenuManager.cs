@@ -25,6 +25,8 @@ public class MenuManager : MonoBehaviour
     public Transform panel_players;
     public GameObject prefab_playerItem;
 
+    public List<Color> playerColor;
+
     public void Start()
     {
         SoundManager.Instance().Play("BGM");
@@ -142,7 +144,7 @@ public class MenuManager : MonoBehaviour
         ClearLobby();
         AddPlayerItem("玩家1", 0, 2);
     }
-
+    //清空已有玩家
     void ClearLobby()
     {
         for (int i = panel_players.childCount; i > 0; i--)
@@ -153,15 +155,31 @@ public class MenuManager : MonoBehaviour
 
     public void AddComputer()
     {
-        AddPlayerItem("电脑", 0, 0);
+        AddPlayerItem("电脑", 0, 0, true);
     }
-
-    public void AddPlayerItem(string _name, int _skin, int _team)
+    //添加玩家项
+    public void AddPlayerItem(string _name, int _skin, int _team, bool _isAI = false)
     {
         GameObject go = Instantiate(prefab_playerItem, panel_players);
         go.GetComponent<PlayerItem>().text_name.text = _name;
         go.GetComponent<PlayerItem>().dropdown_skin.value = _skin;
         go.GetComponent<PlayerItem>().dropdown_team.value = _team;
         go.GetComponent<PlayerItem>().dropdown_color.value = panel_players.childCount - 1;
+        go.GetComponent<PlayerItem>().isAI = _isAI;
     }
+
+    //游戏开始
+    public void GameStart()
+    {
+        PlayerManager.Instance().players.Clear();
+
+        for (int i = 0; i < panel_players.childCount; i++)
+        {
+            PlayerItem item = panel_players.GetChild(i).GetComponent<PlayerItem>();
+            Player player = new Player(i, item.dropdown_team.value, playerColor[item.dropdown_color.value], new Vector2Int(13 * (i + 1) / 2,  8 * (i + 1) / 2), item.isAI);
+            PlayerManager.Instance().players.Add(player);
+        }
+        LoadScene("Game");
+    }
+
 }

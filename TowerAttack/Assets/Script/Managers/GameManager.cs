@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public int player = 1;
+    public int player = 0;
     [HideInInspector]
     public static bool gaming;
 
@@ -28,11 +28,26 @@ public class GameManager : Singleton<GameManager>
     {
         gaming = true;
 
+        NodeManager.Instance().nodeCountX = PlayerManager.Instance().playerNumber * 7;
+        NodeManager.Instance().nodeCountY = PlayerManager.Instance().playerNumber * 13;
+
         NodeManager.Instance().GenerateNodes();
         MapManager.Instance().GenerateMap();
 
-        BuildManager.Instance().Build(MapManager.Instance().nodeItems[2, 3], 1);
-        BuildManager.Instance().Build(MapManager.Instance().nodeItems[8, 6], 2);
+        //建造初始炮塔
+        for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
+        {
+            BuildManager.Instance().Build(MapManager.Instance().GetNodeItem(PlayerManager.Instance().players[i].startingPoint), i);
+        }
+
+        //开启AI
+        for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
+        {
+            if(PlayerManager.Instance().players[i].isAI)
+            {
+                AIManager.Instance().AIStart(PlayerManager.Instance().players[i].id);
+            }
+        }
     }
 
 }

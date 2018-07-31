@@ -77,7 +77,7 @@ public class Tower : MonoBehaviour
 
     public void Init()
     {
-        flag.GetComponent<SpriteRenderer>().color = TeamManager.Instance().players[player].color;
+        flag.GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[player].color;
 
     }
 

@@ -6,41 +6,53 @@ using UnityEngine.UI;
 public class IncomeManager : Singleton<IncomeManager>
 {
     public Text text_money;
-    int[] money;
 
-    public float moneyIncreaseTime = 10;
-    float moneyIncreaseCD = 0;
+    public float globalPayBackTime = 10;
+    float[] paybackTime;
+    public float[] paybackTimeIncreaseAmount;
 
-    void Start () 
-	{
-        money = new int[TeamManager.Instance().playerNumber];
-	}
+    public Slider paybackTimeSlider;
+
+    private void Start()
+    {
+        paybackTime = new float[PlayerManager.Instance().playerNumber];
+        paybackTimeIncreaseAmount = new float[PlayerManager.Instance().playerNumber];
+    }
 
     void Update()
     {
-        if (moneyIncreaseCD <= 0)
+        for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
         {
-            moneyIncreaseCD = moneyIncreaseTime;
+            paybackTimeSlider.value = paybackTime[i];
 
-            IncreaseMoney();
+            if (paybackTime[i] >= 1)
+            {
+                paybackTime[i] = 0;
+
+                IncreaseMoney(i);
+            }
+            else
+            {
+                paybackTime[i] += (1 + paybackTimeIncreaseAmount[i]) * Time.deltaTime / globalPayBackTime;
+            }
+        }
+        
+    }
+
+    void IncreaseMoney(int _player)
+    {
+        if (PlayerManager.Instance().players[_player].money == 0)
+        {
+            PlayerManager.Instance().players[_player].money++;
         }
         else
         {
-            moneyIncreaseCD -= Time.deltaTime;
+            PlayerManager.Instance().players[_player].money *= 2;
         }
+        //现在只考虑单机模式，即玩家1才更新UI
+        if(_player == GameManager.Instance().player)
+            text_money.text = PlayerManager.Instance().players[_player].money.ToString();
     }
 
-    void IncreaseMoney()
-    {
-        //if (money == 0)
-        //{
-        //    money++;
-        //}
-        //else
-        //{
-        //    money *= 2;
-        //}
 
-        //text_money.text = money.ToString();
-    }
 }
