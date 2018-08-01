@@ -114,7 +114,7 @@ public class SeamlessMap : Singleton<SeamlessMap>
                     //Node temp = NodeManager.Instance().nodes[i, 0];
                     //NodeManager.Instance().nodes[i, j] = MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().pos;
 
-                    NodeManager.Instance().nodes[i, j].pos = MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().pos;
+                    NodeManager.Instance().nodes[i, j].pos = new Vector2Int(i, j);
                 }
             }
         }

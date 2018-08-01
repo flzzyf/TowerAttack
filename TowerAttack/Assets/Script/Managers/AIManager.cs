@@ -24,11 +24,22 @@ public class AIManager : Singleton<AIManager>
 
     IEnumerator AIStartAction(int _player)
     {
+        Vector2Int startingPoint = PlayerManager.Instance().players[_player].startingPoint;
+
         while(GameManager.gaming)
         {
+            foreach (GameObject item in MapManager.Instance().GetNearbyNodesInRange(MapManager.Instance().GetNodeItem(startingPoint), 2))
+            {
+                if (item.GetComponent<NodeItem>().tower == null)
+                {
+                    BuildManager.Instance().Build(item, _player);
+
+                    break;
+                }
+            }
 
 
-            yield return null;
+            yield return new WaitForSeconds(3);
         }
     }
 

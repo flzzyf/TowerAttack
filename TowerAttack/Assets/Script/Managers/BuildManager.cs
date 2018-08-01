@@ -15,6 +15,8 @@ public class BuildManager : Singleton<BuildManager>
     [HideInInspector]
     public List<GameObject> towers = new List<GameObject>();
 
+    public int towerPrice = 5;
+
     public void Init()
     {
         //初始化所有玩家建造速度
@@ -50,9 +52,11 @@ public class BuildManager : Singleton<BuildManager>
 
     public GameObject Build(GameObject _node, int _player)
     {
+        print(NodeManager.Instance().GetNode(_node.GetComponent<NodeItem>().pos).pos);
+
         SoundManager.Instance().Play("Shoot");
 
-        GameObject go =  BuildInstantly(_node, _player);
+        GameObject go = BuildInstantly(_node, _player);
 
         StartCoroutine(Building(go, _player));
 
@@ -79,5 +83,38 @@ public class BuildManager : Singleton<BuildManager>
             _tower.GetComponent<Tower>().BuildingFinish();
 
         IncomeManager.Instance().SetIncomeRate(_player, 0.5f);
+    }
+
+    public void ClickNode(GameObject _node, int _player)
+    {
+        //确认二次点击
+        if (desiredBuildTarget != gameObject)
+        {
+            if (desiredBuildTarget != null)
+            {
+                desiredBuildTarget.GetComponent<NodeItem>().towerPlacement.SetActive(false);
+            }
+
+            desiredBuildTarget = gameObject;
+
+            _node.GetComponent<NodeItem>().towerPlacement.SetActive(true);
+        }
+        else
+        {
+            if (PlayerManager.Instance().players[_player].money < towerPrice)
+            {
+                print("金钱不足!");
+                return;
+            }
+
+            IncomeManager.Instance().ModifyMoney(_player, -towerPrice);
+
+            _node.GetComponent<NodeItem>().towerPlacement.SetActive(false);
+
+            desiredBuildTarget = null;
+
+            //确认建造
+            Build(_node, GameManager.Instance().player);
+        }
     }
 }

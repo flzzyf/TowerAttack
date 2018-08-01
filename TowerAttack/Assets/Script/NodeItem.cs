@@ -26,6 +26,10 @@ public class NodeItem : MonoBehaviour
     float clickConfirmDelay = .2f;
     float mouseDownTime;
 
+    public GameObject towerPlacement;
+
+    public GameObject fog;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -56,16 +60,7 @@ public class NodeItem : MonoBehaviour
         {
             if (tower == null)
             {
-                //确认二次点击
-                if (BuildManager.desiredBuildTarget != gameObject)
-                {
-                    BuildManager.desiredBuildTarget = gameObject;
-                }
-                else
-                {
-                    //确认建造
-                    BuildManager.Instance().Build(gameObject, GameManager.Instance().player);
-                }
+                BuildManager.Instance().ClickNode(gameObject, GameManager.Instance().player);
 
             }
         }

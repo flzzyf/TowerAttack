@@ -69,7 +69,11 @@ public class IncomeManager : Singleton<IncomeManager>
 
         }
     }
+    public void ModifyMoney(int _player, int _amount)
+    {
+        SetMoney(_player, (PlayerManager.Instance().players[_player].money + _amount));
 
+    }
     public void ModifyMoney(int _player, float _multiple)
     {
         SetMoney(_player, (int)(PlayerManager.Instance().players[_player].money * _multiple));

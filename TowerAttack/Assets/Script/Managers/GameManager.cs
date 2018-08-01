@@ -51,11 +51,12 @@ public class GameManager : Singleton<GameManager>
         //开启AI
         for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
         {
-            if(PlayerManager.Instance().players[i].isAI)
+            if (PlayerManager.Instance().players[i].isAI)
             {
                 AIManager.Instance().AIStart(PlayerManager.Instance().players[i].id);
             }
         }
+
     }
 
     public void OpenMenu()

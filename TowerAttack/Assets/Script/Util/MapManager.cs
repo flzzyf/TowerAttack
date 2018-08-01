@@ -87,4 +87,18 @@ public class MapManager : Singleton<MapManager>
         return nodeItemList;
     }
 
+    //获取范围内所有节点
+    public List<GameObject> GetNearbyNodesInRange(GameObject _go, int _range)
+    {
+        List<GameObject> list = new List<GameObject>();
+
+        foreach (Node item in NodeManager.Instance().GetNearbyNodesInRange(NodeManager.Instance().FindNode(_go.GetComponent<NodeItem>().pos), _range))
+        {
+            GameObject go = GetNodeItem(item.pos);
+            list.Add(go);
+        }
+
+        return list;
+    }
+
 }

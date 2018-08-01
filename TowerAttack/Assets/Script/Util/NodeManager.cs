@@ -57,6 +57,7 @@ public class NodeManager : Singleton<NodeManager>
         return tarGetNearbyNode;
     }
 
+    //获取相邻节点
     public Node GetNearbyNode(int _x, int _y, int _index)
     {
         return GetNearbyNode(nodes[_x, _y], _index);
@@ -66,7 +67,7 @@ public class NodeManager : Singleton<NodeManager>
     {
         return GetNearbyNode(_pos.x, _pos.y, _index);
     }
-
+    //获取周围所有节点
     public List<Node> GetNearbyNodes(Node _node)
     {
         List<Node> nodeList = new List<Node>();
@@ -88,12 +89,50 @@ public class NodeManager : Singleton<NodeManager>
     {
         return nodes[_pos.x, _pos.y];
     }
+
+    public List<Node> GetNearbyNodesInRange(Node _node, int _range)
+    {
+        List<Node> nodeList;
+        if(_range == 1)
+        {
+            nodeList = GetNearbyNodes(_node);
+        }
+        else
+        {
+            nodeList = GetNearbyNodesInRange(_node, _range - 1);
+            int listCount = nodeList.Count;
+            for (int i = 0; i < listCount; i++)
+            {
+                foreach (Node item in GetNearbyNodes(nodeList[i]))
+                {
+                    if (!nodeList.Contains(item))
+                        nodeList.Add(item);
+
+                }
+            }
+        }
+
+        return nodeList;
+    }
+
+    public Node FindNode(Vector2Int _pos)
+    {
+        for (int i = 0; i < nodeCountY; i++)
+        {
+            for (int j = 0; j < nodeCountX; j++)
+            {
+                if (nodes[i, j].pos == _pos)
+                    return nodes[i, j];
+            }
+        }
+
+        return null;
+    }
 }
 
 
 public class Node
 {
-    [HideInInspector]
     public Vector2Int pos;  //行列
 
     public Node(int _x, int _y)
