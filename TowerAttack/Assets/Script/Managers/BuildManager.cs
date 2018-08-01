@@ -62,6 +62,8 @@ public class BuildManager : Singleton<BuildManager>
     //开始建造
     IEnumerator Building(GameObject _tower)
     {
+        IncomeManager.Instance().SetIncomeRate(_tower.GetComponent<Tower>().player, -0.5f);
+
         _tower.GetComponent<Tower>().Building();
 
         float buildingProgress = 0;
@@ -75,6 +77,6 @@ public class BuildManager : Singleton<BuildManager>
 
         _tower.GetComponent<Tower>().BuildingFinish();
 
-
+        IncomeManager.Instance().SetIncomeRate(_tower.GetComponent<Tower>().player, 0.5f);
     }
 }

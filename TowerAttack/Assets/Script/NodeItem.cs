@@ -35,7 +35,8 @@ public class NodeItem : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        animator.SetBool("hovered", true);
+        if (animator != null)
+            animator.SetBool("hovered", true);
     }
 
     private void OnMouseExit()
@@ -50,11 +51,13 @@ public class NodeItem : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if(Time.time - mouseDownTime < clickConfirmDelay)
+        //非拖动的快速点击
+        if (Time.time - mouseDownTime < clickConfirmDelay)
         {
             if (tower == null)
             {
-                if(BuildManager.desiredBuildTarget != gameObject)
+                //确认二次点击
+                if (BuildManager.desiredBuildTarget != gameObject)
                 {
                     BuildManager.desiredBuildTarget = gameObject;
                 }

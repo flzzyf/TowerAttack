@@ -57,7 +57,7 @@ public class MenuManager : MonoBehaviour
         }
 
         dropdown_resolution.AddOptions(options);
-        //dropdown_resolution.value = currentResolutionIndex;
+        dropdown_resolution.value = currentResolutionIndex;
 
         //根据用户数据进行初始设置
         toggle_fullScreen.isOn = PlayerPrefs.GetInt("fullScreen") == 1;

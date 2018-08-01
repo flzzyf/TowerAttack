@@ -6,34 +6,38 @@ using UnityEngine.UI;
 public class IncomeManager : Singleton<IncomeManager>
 {
     public Text text_money;
+    public Text text_rate;
+    public Text text_income;
 
-    public float globalPayBackTime = 10;
-    float[] paybackTime;
-    public float[] paybackTimeIncreaseAmount;
+    public float globalIncomeTime = 10;
+    float[] incomeTimeCounter;
+    public float[] incomeTimeIncreaseRates;
 
     public Slider paybackTimeSlider;
 
     public void Init()
     {
-        paybackTime = new float[PlayerManager.Instance().playerNumber];
-        paybackTimeIncreaseAmount = new float[PlayerManager.Instance().playerNumber];
+        incomeTimeCounter = new float[PlayerManager.Instance().playerNumber];
+        incomeTimeIncreaseRates = new float[PlayerManager.Instance().playerNumber];
+
     }
 
     void Update()
     {
         for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
         {
-            paybackTimeSlider.value = paybackTime[i];
+            if (i == GameManager.Instance().player)
+                paybackTimeSlider.value = incomeTimeCounter[i];
 
-            if (paybackTime[i] >= 1)
+            if (incomeTimeCounter[i] >= 1)
             {
-                paybackTime[i] = 0;
+                incomeTimeCounter[i] = 0;
 
                 IncreaseMoney(i);
             }
             else
             {
-                paybackTime[i] += (1 + paybackTimeIncreaseAmount[i]) * Time.deltaTime / globalPayBackTime;
+                incomeTimeCounter[i] += (1 + incomeTimeIncreaseRates[i]) * Time.deltaTime / globalIncomeTime;
             }
         }
         
@@ -43,16 +47,38 @@ public class IncomeManager : Singleton<IncomeManager>
     {
         if (PlayerManager.Instance().players[_player].money == 0)
         {
-            PlayerManager.Instance().players[_player].money++;
+            SetMoney(_player, 1);
         }
         else
         {
-            PlayerManager.Instance().players[_player].money *= 2;
+            ModifyMoney(_player, 1.5f);
         }
-        //现在只考虑单机模式，即玩家1才更新UI
-        if(_player == GameManager.Instance().player)
-            text_money.text = PlayerManager.Instance().players[_player].money.ToString();
+        
     }
 
+    //设置玩家金钱
+    public void SetMoney(int _player, int _amount)
+    {
+        PlayerManager.Instance().players[_player].money = _amount;
+
+        //现在只考虑单机模式，即玩家1才更新UI
+        if (_player == GameManager.Instance().player)
+        {
+            text_money.text = _amount.ToString();
+            text_income.text = (int)(_amount * 0.5f) + "";
+
+        }
+    }
+
+    public void ModifyMoney(int _player, float _multiple)
+    {
+        SetMoney(_player, (int)(PlayerManager.Instance().players[_player].money * _multiple));
+    }
+
+    public void SetIncomeRate(int _player, float _amount)
+    {
+        incomeTimeIncreaseRates[_player] += _amount;
+        text_rate.text = (1 + incomeTimeIncreaseRates[_player]) * 100 + "%";
+    }
 
 }

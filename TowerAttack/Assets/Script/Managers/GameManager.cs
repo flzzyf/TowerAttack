@@ -36,6 +36,12 @@ public class GameManager : Singleton<GameManager>
         NodeManager.Instance().GenerateNodes();
         MapManager.Instance().GenerateMap();
 
+        //设置玩家初始金钱
+        for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
+        {
+            IncomeManager.Instance().SetMoney(i, 10);
+        }
+
         //建造初始炮塔
         for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
         {
