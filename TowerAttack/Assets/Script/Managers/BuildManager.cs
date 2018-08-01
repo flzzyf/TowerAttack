@@ -12,8 +12,8 @@ public class BuildManager : Singleton<BuildManager>
     public float[] buildingSpeed;
 
     public static GameObject desiredBuildTarget;
-
-    public static List<GameObject> towers = new List<GameObject>();
+    [HideInInspector]
+    public List<GameObject> towers = new List<GameObject>();
 
     public void Init()
     {
@@ -27,40 +27,40 @@ public class BuildManager : Singleton<BuildManager>
         }
     }
 
-    private void OnDestroy()
+    public GameObject BuildInstantly(GameObject _node, int _player)
     {
-        towers.Clear();
+        GameObject go = Instantiate(prefab_tower, _node.transform.position, Quaternion.identity, _node.transform);
+        _node.GetComponent<NodeItem>().tower = go;
+        _node.GetComponent<NodeItem>().BuildSetting();
+        go.GetComponent<Tower>().node = _node;
+        go.GetComponent<Tower>().player = _player;
+        go.GetComponent<Tower>().SetOrderInLayer(_node.GetComponent<NodeItem>().gfx.sortingOrder);
+
+        towers.Add(go);
+
+        //所有塔开始搜索目标
+        for (int i = 0; i < towers.Count; i++)
+        {
+            if (!towers[i].GetComponent<Tower>().building)
+                towers[i].GetComponent<Tower>().SearchTarget();
+        }
+
+        return go;
     }
 
     public GameObject Build(GameObject _node, int _player)
     {
         SoundManager.Instance().Play("Shoot");
 
-        GameObject go = Instantiate(prefab_tower, _node.transform.position, Quaternion.identity, _node.transform);
-        _node.GetComponent<NodeItem>().tower = go;
-        _node.GetComponent<NodeItem>().BuildSetting();
-        go.GetComponent<Tower>().node = _node;
-        go.GetComponent<Tower>().player =_player;
-        go.GetComponent<Tower>().SetOrderInLayer(_node.GetComponentInChildren<SpriteRenderer>().sortingOrder);
+        GameObject go =  BuildInstantly(_node, _player);
 
-        towers.Add(go);
-
-        StartCoroutine(Building(go));
-
-        //所有塔开始搜索目标
-        for (int i = 0; i < towers.Count; i++)
-        {
-            towers[i].GetComponent<Tower>().SearchTarget();
-        }
-
-        //切换玩家
-        //GameManager.Instance().player = (GameManager.Instance().player + 1) % 3;
+        StartCoroutine(Building(go, _player));
 
         return go;
     }
 
     //开始建造
-    IEnumerator Building(GameObject _tower)
+    IEnumerator Building(GameObject _tower, int _player)
     {
         IncomeManager.Instance().SetIncomeRate(_tower.GetComponent<Tower>().player, -0.5f);
 
@@ -68,15 +68,16 @@ public class BuildManager : Singleton<BuildManager>
 
         float buildingProgress = 0;
 
-        while (buildingProgress < buildingTime)
+        while (_tower != null && buildingProgress < buildingTime)
         {
             buildingProgress += buildingSpeed[0] *  Time.deltaTime;
 
             yield return null;
         }
+        //还没被打爆
+        if(_tower != null)
+            _tower.GetComponent<Tower>().BuildingFinish();
 
-        _tower.GetComponent<Tower>().BuildingFinish();
-
-        IncomeManager.Instance().SetIncomeRate(_tower.GetComponent<Tower>().player, 0.5f);
+        IncomeManager.Instance().SetIncomeRate(_player, 0.5f);
     }
 }

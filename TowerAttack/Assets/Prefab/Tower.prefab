@@ -224,7 +224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1917497636476148
 GameObject:
   m_ObjectHideFlags: 1
@@ -239,7 +239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1993393034790536
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +550,7 @@ MonoBehaviour:
   impactAreaSize: {x: 0.23, y: 0.44}
   gfx_tower: {fileID: 1917497636476148}
   gfx_building: {fileID: 1913780449441780}
+  building: 0
 --- !u!198 &198421910419176350
 ParticleSystem:
   m_ObjectHideFlags: 1

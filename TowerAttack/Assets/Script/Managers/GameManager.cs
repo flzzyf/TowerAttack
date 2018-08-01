@@ -45,7 +45,7 @@ public class GameManager : Singleton<GameManager>
         //建造初始炮塔
         for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
         {
-            BuildManager.Instance().Build(MapManager.Instance().GetNodeItem(PlayerManager.Instance().players[i].startingPoint), i);
+            BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItem(PlayerManager.Instance().players[i].startingPoint), i);
         }
 
         //开启AI

@@ -35,11 +35,15 @@ public class Tower : MonoBehaviour
     public GameObject gfx_tower;
     public GameObject gfx_building;
 
+    [HideInInspector]
+    public bool building;
+
     void Start () 
 	{
         currentHp = hp;
 
-        
+        flag.GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[player].color;
+
         //InvokeRepeating("SearchTarget", 0, searchTargetCD);
     }
     void Update () 
@@ -61,12 +65,12 @@ public class Tower : MonoBehaviour
     {
         gfx_building.SetActive(true);
         gfx_tower.SetActive(false);
+
+        building = true;
     }
 
     public void BuildingFinish()
     {
-        Init();
-
         foreach (var item in GetComponentsInChildren<ParticleSystem>())
         {
             item.Stop();
@@ -74,12 +78,10 @@ public class Tower : MonoBehaviour
 
         //gfx_building.SetActive(false);
         gfx_tower.SetActive(true);
-    }
 
-    public void Init()
-    {
-        flag.GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[player].color;
+        building = false;
 
+        SearchTarget();
     }
 
     public void SearchTarget()
@@ -124,17 +126,18 @@ public class Tower : MonoBehaviour
         node.GetComponent<NodeItem>().tower = null;
         node.GetComponent<NodeItem>().ChangeColor();
 
-        BuildManager.towers.Remove(gameObject);
+        BuildManager.Instance().towers.Remove(gameObject);
 
         DestroyImmediate(gameObject);
     }
 
     public void SetOrderInLayer(int _order)
     {
-        foreach (var item in GetComponentsInChildren<SpriteRenderer>())
+        foreach (var item in GetComponentsInChildren<SpriteRenderer>(true))
         {
             item.sortingOrder = _order;
         }
+
     }
 
     //获取轰击点

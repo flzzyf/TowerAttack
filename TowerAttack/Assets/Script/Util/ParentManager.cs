@@ -12,7 +12,6 @@ public class ParentManager : Singleton<ParentManager>
     private void Awake()
     {
         grandparent = new GameObject("ParentManager").transform;
-        print("parent");
     }
 
     //创建父级
