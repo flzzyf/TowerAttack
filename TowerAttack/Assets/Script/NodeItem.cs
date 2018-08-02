@@ -35,6 +35,8 @@ public class NodeItem : MonoBehaviour
         animator = GetComponent<Animator>();
 
         originColor = GetComponentInChildren<SpriteRenderer>().color;
+
+        //ToggleFogOfWar(true);
     }
 
     private void OnMouseEnter()
@@ -120,6 +122,20 @@ public class NodeItem : MonoBehaviour
         {
             GetComponentInChildren<SpriteRenderer>().color = _color;
 
+        }
+    }
+
+    public void ToggleFogOfWar(bool _show)
+    {
+        fog.SetActive(_show);
+
+    }
+
+    public void SetOrderInLayer(int _order)
+    {
+        foreach (var item in GetComponentsInChildren<SpriteRenderer>())
+        {
+            item.sortingOrder = _order;
         }
     }
 }

@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
         IncomeManager.Instance().Init();
         SoundManager.Instance().Init();
         SeamlessMap.Instance().Init();
+        FogOfWarManager.Instance().Init();
 
         GameStart();
 
@@ -25,7 +26,7 @@ public class GameManager : Singleton<GameManager>
     {
         if(Input.GetKeyDown(KeyCode.D))
         {
-            foreach (GameObject item in MapManager.Instance().GetNearbyNodesInRange(new Vector2Int(6, 6), 2))
+            foreach (GameObject item in MapManager.Instance().GetNearbyNodesWithinRange(new Vector2Int(6, 6), 2))
             {
                 item.SetActive(false);
             }
@@ -56,15 +57,13 @@ public class GameManager : Singleton<GameManager>
         }
 
         //开启AI
-        //for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
-        //{
-        //    if (PlayerManager.Instance().players[i].isAI)
-        //    {
-        //        AIManager.Instance().AIStart(PlayerManager.Instance().players[i].id);
-        //    }
-        //}
-
-
+        for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
+        {
+            if (PlayerManager.Instance().players[i].isAI)
+            {
+                AIManager.Instance().AIStart(PlayerManager.Instance().players[i].id);
+            }
+        }
 
     }
 

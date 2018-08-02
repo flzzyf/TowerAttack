@@ -40,25 +40,25 @@ public class BuildManager : Singleton<BuildManager>
 
         towers.Add(go);
 
-        //所有塔开始搜索目标
-        for (int i = 0; i < towers.Count; i++)
-        {
-            if (!towers[i].GetComponent<Tower>().building)
-                towers[i].GetComponent<Tower>().SearchTarget();
-        }
+        FogOfWarManager.Instance().AddNodesWithinRangeToPlayerVision(_player, _node, 2);
 
         return go;
     }
 
     public GameObject Build(GameObject _node, int _player)
     {
-        print(NodeManager.Instance().GetNode(_node.GetComponent<NodeItem>().pos).pos);
-
         SoundManager.Instance().Play("Shoot");
 
         GameObject go = BuildInstantly(_node, _player);
 
         StartCoroutine(Building(go, _player));
+
+        //所有塔开始搜索目标
+        for (int i = 0; i < towers.Count; i++)
+        {
+            if (!towers[i].GetComponent<Tower>().building)
+                towers[i].GetComponent<Tower>().SearchTarget();
+        }
 
         return go;
     }

@@ -28,7 +28,7 @@ public class AIManager : Singleton<AIManager>
 
         while(GameManager.gaming)
         {
-            foreach (GameObject item in MapManager.Instance().GetNearbyNodesInRange(startingPoint, 2))
+            foreach (GameObject item in MapManager.Instance().GetNearbyNodesWithinRange(startingPoint, 2))
             {
                 if (item.GetComponent<NodeItem>().tower == null)
                 {
