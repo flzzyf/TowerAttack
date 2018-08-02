@@ -6,106 +6,35 @@ public class SeamlessMap : Singleton<SeamlessMap>
 {
     public Transform worldObject;
 
-    Vector2 mouseClickPoint;
-    Vector3 cameraOriginPos;
-
     public float cameraSensitivity = 1;
 
-    Vector2 mapOrigin;
     [HideInInspector]
     public bool even;
+
+    Vector2 mouseOrigin;
 
     public void Init() 
 	{
         worldObject = ParentManager.Instance().grandparent;
-        //worldObject = ParentManager.Instance().GetParent("Node");
     }
 
 	void Update () 
 	{
         if (Input.GetMouseButtonDown(0))
         {
-            mouseClickPoint = Input.mousePosition;
-            cameraOriginPos = worldObject.position;
-
-            mapOrigin = Input.mousePosition;
+            mouseOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
 
         if (Input.GetMouseButton(0))
         {
-            //移动世界物体
-            Vector2 offset = (Vector2)Input.mousePosition - mouseClickPoint;
-            offset *= zyf.GetWorldScreenSize().x / Screen.width;
-            offset *= cameraSensitivity;
-            //worldObject.position = cameraOriginPos - (Vector3)offset;
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mouseOffset = mousePos - mouseOrigin;
+            mouseOffset *= cameraSensitivity;
 
-            //移动到镜头边缘
-            Vector2 offset2 = (Vector2)Input.mousePosition - mapOrigin;
-            offset2 *= zyf.GetWorldScreenSize().x / Screen.width;
-            offset2 *= cameraSensitivity;
-            //worldObject.position = cameraOriginPos + (Vector3)Vector2.left * (offset2.x % MapManager.Instance().nodePaddingX) * MapManager.Instance().nodePaddingX;
-            //worldObject.position = cameraOriginPos - (Vector3)offset;
-
-            //镜头左右移动
-            if (Mathf.Abs(offset2.x) > MapManager.Instance().nodePaddingX)
-            {
-                mapOrigin.x = Input.mousePosition.x;
-
-                int repeatTime = (int)Mathf.Abs((offset2.x / MapManager.Instance().nodePaddingX));
-
-                for (int i = 0; i < repeatTime; i++)
-                {
-                    if (offset2.x > 0)
-                    {
-                        MoveRight();
-                    }
-                    else
-                    {
-                        MoveLeft();
-                    }
-                }
-                worldObject.Translate(-Mathf.Sign(offset2.x) * Vector2.right * repeatTime * MapManager.Instance().nodePaddingX);
-            }
-
-            //镜头上下移动
-            if (Mathf.Abs(offset2.y) > MapManager.Instance().nodePaddingY)
-            {
-                //print("上移");
-                mapOrigin.y = Input.mousePosition.y;
-
-                int repeatTime = (int)Mathf.Abs((offset2.y / MapManager.Instance().nodePaddingY));
-                for (int i = 0; i < repeatTime; i++)
-                {
-                    even = !even;
-
-                    if (offset2.y > 0)
-                    {
-                        MoveUp();
-                    }
-                    else
-                    {
-                        MoveDown();
-                    }
-                }
-                worldObject.Translate(-Mathf.Sign(offset2.y) * Vector2.up * repeatTime * MapManager.Instance().nodePaddingY);
-
-                //改变节点层级
-                for (int i = 0; i < NodeManager.Instance().nodeCountY; i++)
-                {
-                    for (int j = 0; j < NodeManager.Instance().nodeCountX; j++)
-                    {
-                        MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().SetOrderInLayer(2 * (NodeManager.Instance().nodeCountY - i));
-
-                        //改变塔层级
-                        GameObject tower = MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().tower;
-
-                        if (tower != null)
-                            tower.GetComponent<Tower>().SetOrderInLayer(NodeManager.Instance().nodeCountY - i);
-                        
-                    }
-                }
-            }
-
+            mouseOrigin = mousePos;
+            MoveRight(mouseOffset.x);
+            MoveUp(mouseOffset.y);
+            
             //改变节点储存位置
             for (int i = 0; i < NodeManager.Instance().nodeCountY; i++)
             {
@@ -113,15 +42,86 @@ public class SeamlessMap : Singleton<SeamlessMap>
                 {
                     MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().pos = new Vector2Int(i, j);
 
-                    //Node temp = NodeManager.Instance().nodes[i, 0];
-                    //NodeManager.Instance().nodes[i, j] = MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().pos;
-
-                    //NodeManager.Instance().nodes[i, j].pos = new Vector2Int(i, j);
                 }
             }
         }
     }
 
+    float offsetX;
+    void MoveRight(float _amount)
+    {
+        offsetX += _amount;
+
+        //移动整个世界物体
+        worldObject.Translate(-Vector2.right * _amount);
+
+        //移动节点
+        if (Mathf.Abs(offsetX) > MapManager.Instance().nodePaddingX)
+        {
+            int repeatTime = (int)(Mathf.Abs(offsetX) / MapManager.Instance().nodePaddingX);
+
+            offsetX %= MapManager.Instance().nodePaddingX;
+
+            for (int i = 0; i < repeatTime; i++)
+            {
+                if (_amount > 0)
+                {
+                    MoveRight();
+                }
+                else
+                {
+                    MoveLeft();
+                }
+            }
+        }
+    }
+
+    float offsetY;
+    void MoveUp(float _amount)
+    {
+        offsetY += _amount;
+
+        //移动整个世界物体
+        worldObject.Translate(-Vector2.up * _amount);
+
+        //移动节点
+        if (Mathf.Abs(offsetY) > MapManager.Instance().nodePaddingY)
+        {
+            int repeatTime = (int)(Mathf.Abs(offsetY) / MapManager.Instance().nodePaddingY);
+
+            offsetY %= MapManager.Instance().nodePaddingY;
+
+            for (int i = 0; i < repeatTime; i++)
+            {
+                even = !even;
+
+                if (_amount > 0)
+                {
+                    MoveUp();
+                }
+                else
+                {
+                    MoveDown();
+                }
+            }
+
+            //改变节点层级
+            for (int i = 0; i < NodeManager.Instance().nodeCountY; i++)
+            {
+                for (int j = 0; j < NodeManager.Instance().nodeCountX; j++)
+                {
+                    MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().SetOrderInLayer(2 * (NodeManager.Instance().nodeCountY - i));
+
+                    //改变塔层级
+                    GameObject tower = MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().tower;
+
+                    if (tower != null)
+                        tower.GetComponent<Tower>().SetOrderInLayer(NodeManager.Instance().nodeCountY - i);
+
+                }
+            }
+        }
+    }
 
     void MoveRight()
     {
