@@ -23,7 +23,14 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            foreach (GameObject item in MapManager.Instance().GetNearbyNodesInRange(new Vector2Int(6, 6), 2))
+            {
+                item.SetActive(false);
+            }
+        }
+        
     }
 
     public void GameStart()
@@ -49,13 +56,15 @@ public class GameManager : Singleton<GameManager>
         }
 
         //开启AI
-        for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
-        {
-            if (PlayerManager.Instance().players[i].isAI)
-            {
-                AIManager.Instance().AIStart(PlayerManager.Instance().players[i].id);
-            }
-        }
+        //for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
+        //{
+        //    if (PlayerManager.Instance().players[i].isAI)
+        //    {
+        //        AIManager.Instance().AIStart(PlayerManager.Instance().players[i].id);
+        //    }
+        //}
+
+
 
     }
 

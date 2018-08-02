@@ -89,7 +89,7 @@ public class Tower : MonoBehaviour
         if (target != null)
             return;
 
-        foreach (var item in MapManager.Instance().GetNearbyNodeItems(node.GetComponent<NodeItem>().pos))
+        foreach (var item in MapManager.Instance().GetNearbyNodeItems(node))
         {
             if (item.GetComponent<NodeItem>().tower != null)
                 if (item.GetComponent<NodeItem>().tower.GetComponent<Tower>().player != player)

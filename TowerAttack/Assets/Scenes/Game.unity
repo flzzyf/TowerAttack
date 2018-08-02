@@ -1616,6 +1616,7 @@ MonoBehaviour:
   buildingTime: 3
   buildingSpeed: []
   towers: []
+  towerPrice: 2
 --- !u!114 &1483083279
 MonoBehaviour:
   m_ObjectHideFlags: 0

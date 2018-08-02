@@ -73,11 +73,11 @@ public class SeamlessMap : Singleton<SeamlessMap>
                 //print("上移");
                 mapOrigin.y = Input.mousePosition.y;
 
-
                 int repeatTime = (int)Mathf.Abs((offset2.y / MapManager.Instance().nodePaddingY));
                 for (int i = 0; i < repeatTime; i++)
                 {
-                even = !even;
+                    even = !even;
+
                     if (offset2.y > 0)
                     {
                         MoveUp();
@@ -114,7 +114,7 @@ public class SeamlessMap : Singleton<SeamlessMap>
                     //Node temp = NodeManager.Instance().nodes[i, 0];
                     //NodeManager.Instance().nodes[i, j] = MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().pos;
 
-                    NodeManager.Instance().nodes[i, j].pos = new Vector2Int(i, j);
+                    //NodeManager.Instance().nodes[i, j].pos = new Vector2Int(i, j);
                 }
             }
         }

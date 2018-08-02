@@ -35,11 +35,11 @@ public class NodeManager : Singleton<NodeManager>
     {
         int evenOrUneven = _node.pos.x % 2 == 0 ? 0 : 1;
         //无缝地图偏移Y
-        if(SeamlessMap.Instance().even)
-        {
-            evenOrUneven++;
-            evenOrUneven %= 2;
-        }
+        //if(SeamlessMap.Instance().even)
+        //{
+        //    evenOrUneven++;
+        //    evenOrUneven %= 2;
+        //}
         Vector2Int targetOffset = _node.pos + nearbyNodeOffset[evenOrUneven, _index];
 
         //循环节点X和Y
@@ -58,14 +58,9 @@ public class NodeManager : Singleton<NodeManager>
     }
 
     //获取相邻节点
-    public Node GetNearbyNode(int _x, int _y, int _index)
-    {
-        return GetNearbyNode(nodes[_x, _y], _index);
-    }
-
     public Node GetNearbyNode(Vector2Int _pos, int _index)
     {
-        return GetNearbyNode(_pos.x, _pos.y, _index);
+        return GetNearbyNode(nodes[_pos.x, _pos.y], _index);
     }
     //获取周围所有节点
     public List<Node> GetNearbyNodes(Node _node)
@@ -73,8 +68,7 @@ public class NodeManager : Singleton<NodeManager>
         List<Node> nodeList = new List<Node>();
         for (int i = 0; i < 8; i++)
         {
-            if(GetNearbyNode(_node, i) != null)
-                nodeList.Add(GetNearbyNode(_node, i));
+            nodeList.Add(GetNearbyNode(_node, i));
         }
 
         return nodeList;
@@ -90,6 +84,7 @@ public class NodeManager : Singleton<NodeManager>
         return nodes[_pos.x, _pos.y];
     }
 
+    //获取范围内所有节点
     public List<Node> GetNearbyNodesInRange(Node _node, int _range)
     {
         List<Node> nodeList;

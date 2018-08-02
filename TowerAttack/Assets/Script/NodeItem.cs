@@ -12,8 +12,8 @@ public class NodeItem : MonoBehaviour
 
     Color originColor;
 
-    //[HideInInspector]
     public Vector2Int pos;
+    public Vector2Int absPos;
 
     public GameObject text_force;
 
@@ -70,12 +70,12 @@ public class NodeItem : MonoBehaviour
     {
         playerForce[0]++;
 
-        foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
+        foreach (var item in MapManager.Instance().GetNearbyNodeItems(gameObject))
         {
             item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[0]++;
         }
 
-        foreach (var item in MapManager.Instance().GetNearbyNodeItems(pos))
+        foreach (var item in MapManager.Instance().GetNearbyNodeItems(gameObject))
         {
             item.GetComponent<NodeItem>().UpdateBorders();
             if (item.GetComponent<NodeItem>().tower == null)
@@ -91,8 +91,7 @@ public class NodeItem : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            if (NodeManager.Instance().GetNearbyNode(pos, borderIndex[i]) == null ||
-                MapManager.Instance().GetNearbyNode(gameObject, borderIndex[i]).GetComponent<NodeItem>().playerForce[0] == 0)
+            if (MapManager.Instance().GetNearbyNode(gameObject, borderIndex[i]).GetComponent<NodeItem>().playerForce[0] == 0)
             {
                 borders[i].SetActive(true);
             }

@@ -43,6 +43,7 @@ public class MapManager : Singleton<MapManager>
                 go.name = "Node_" + i + "_" + j;
                 nodeItems[i, j] = go;
                 go.GetComponent<NodeItem>().pos = new Vector2Int(i, j);
+                go.GetComponent<NodeItem>().absPos = new Vector2Int(i, j);
 
                 go.GetComponentInChildren<SpriteRenderer>().sortingOrder = mapSizeY - i;
             }
@@ -52,26 +53,42 @@ public class MapManager : Singleton<MapManager>
     public GameObject GetNearbyNode(GameObject _go, int _index)
     {
         NodeItem nodeItem = _go.GetComponent<NodeItem>();
-        Node node = NodeManager.Instance().GetNearbyNode(nodeItem.pos, _index);
-        return GetNodeItem(node.pos);
+        Node node = NodeManager.Instance().GetNearbyNode(nodeItem.absPos, _index);
+        return GetNodeItemFromAbsPos(node.pos);
     }
 
     public GameObject GetNodeItem(Vector2Int _pos)
     {
         return nodeItems[_pos.x, _pos.y];
     }
-    //获取相邻所有节点
-    public List<GameObject> GetNearbyNodeItems(Vector2Int _pos)
+
+    public GameObject GetNodeItemFromAbsPos(Vector2Int _pos)
     {
-        List<GameObject> nodeItemList = new List<GameObject>();
-        foreach (var item2 in NodeManager.Instance().GetNearbyNodes(_pos))
+        for (int i = 0; i < NodeManager.Instance().nodeCountY; i++)
         {
-            nodeItemList.Add(GetNodeItem(item2.pos));
+            for (int j = 0; j < NodeManager.Instance().nodeCountX; j++)
+            {
+                if (nodeItems[i, j].GetComponent<NodeItem>().absPos == _pos)
+                    return nodeItems[i, j];
+            }
+        }
+        return null;
+    }
+    //获取相邻所有节点
+    public List<GameObject> GetNearbyNodeItems(GameObject _go)
+    {
+        Vector2Int pos = _go.GetComponent<NodeItem>().absPos;
+
+        List<GameObject> nodeItemList = new List<GameObject>();
+        foreach (var item2 in NodeManager.Instance().GetNearbyNodes(pos))
+        {
+            nodeItemList.Add(GetNodeItemFromAbsPos(item2.pos));
         }
     
         return nodeItemList;
     }
 
+    //获取所有节点
     public List<GameObject> GetAllNodeItems()
     {
         List<GameObject> nodeItemList = new List<GameObject>();
@@ -88,13 +105,14 @@ public class MapManager : Singleton<MapManager>
     }
 
     //获取范围内所有节点
-    public List<GameObject> GetNearbyNodesInRange(GameObject _go, int _range)
+    public List<GameObject> GetNearbyNodesInRange(Vector2Int _pos, int _range)
     {
         List<GameObject> list = new List<GameObject>();
+        Node node = NodeManager.Instance().GetNode(_pos);
 
-        foreach (Node item in NodeManager.Instance().GetNearbyNodesInRange(NodeManager.Instance().FindNode(_go.GetComponent<NodeItem>().pos), _range))
+        foreach (Node item in NodeManager.Instance().GetNearbyNodesInRange(node, _range))
         {
-            GameObject go = GetNodeItem(item.pos);
+            GameObject go = GetNodeItemFromAbsPos(item.pos);
             list.Add(go);
         }
 

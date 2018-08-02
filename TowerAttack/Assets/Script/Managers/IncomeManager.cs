@@ -15,11 +15,13 @@ public class IncomeManager : Singleton<IncomeManager>
 
     public Slider paybackTimeSlider;
 
+    int[] income;
+
     public void Init()
     {
         incomeTimeCounter = new float[PlayerManager.Instance().playerNumber];
         incomeTimeIncreaseRates = new float[PlayerManager.Instance().playerNumber];
-
+        income = new int[PlayerManager.Instance().playerNumber];
     }
 
     void Update()
@@ -45,15 +47,8 @@ public class IncomeManager : Singleton<IncomeManager>
 
     void IncreaseMoney(int _player)
     {
-        if (PlayerManager.Instance().players[_player].money == 0)
-        {
-            SetMoney(_player, 1);
-        }
-        else
-        {
-            ModifyMoney(_player, 1.5f);
-        }
-        
+        ModifyMoney(_player, income[_player]);
+
     }
 
     //设置玩家金钱
@@ -61,11 +56,16 @@ public class IncomeManager : Singleton<IncomeManager>
     {
         PlayerManager.Instance().players[_player].money = _amount;
 
+        if (_amount <= 1)
+            income[_player] = 1;
+        else
+            income[_player] = (int)(_amount * 0.5f);
+
         //现在只考虑单机模式，即玩家1才更新UI
         if (_player == GameManager.Instance().player)
         {
             text_money.text = _amount.ToString();
-            text_income.text = (int)(_amount * 0.5f) + "";
+            text_income.text = income[_player] + "";
 
         }
     }
