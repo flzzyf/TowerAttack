@@ -31,7 +31,7 @@ public class BuildManager : Singleton<BuildManager>
 
     public GameObject BuildInstantly(GameObject _node, int _player)
     {
-        GameObject go = Instantiate(prefab_tower, _node.transform.position, Quaternion.identity, _node.transform);
+        GameObject go = Instantiate(prefab_tower, _node.transform.position, Quaternion.identity, _node.GetComponent<NodeItem>().towerParent);
         _node.GetComponent<NodeItem>().tower = go;
         _node.GetComponent<NodeItem>().BuildSetting();
         go.GetComponent<Tower>().node = _node;

@@ -7,6 +7,7 @@ public class NodeItem : MonoBehaviour
 {
     Animator animator;
 
+    public Transform towerParent;
     [HideInInspector]
     public GameObject tower;
 
@@ -134,6 +135,13 @@ public class NodeItem : MonoBehaviour
     public void ToggleFogOfWar(bool _show)
     {
         fog.SetActive(_show);
+
+        towerParent.gameObject.SetActive(!_show);
+
+        if(_show)
+        {
+
+        }
 
     }
 

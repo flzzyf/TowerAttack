@@ -122,10 +122,9 @@ public class SeamlessMap : Singleton<SeamlessMap>
             }
         }
     }
-
+    //方块向右移动
     void MoveRight()
     {
-        //方块向右移动
         for (int i = 0; i < NodeManager.Instance().nodeCountY; i++)
         {
             Vector2 movingDir = Vector2.right * MapManager.Instance().nodePaddingX * NodeManager.Instance().nodeCountX;
@@ -142,7 +141,7 @@ public class SeamlessMap : Singleton<SeamlessMap>
             MapManager.Instance().nodeItems[i, NodeManager.Instance().nodeCountX - 1] = temp;
         }
     }
-
+    //方块向左移动
     void MoveLeft()
     {
         for (int i = 0; i < NodeManager.Instance().nodeCountY; i++)
@@ -161,10 +160,9 @@ public class SeamlessMap : Singleton<SeamlessMap>
             MapManager.Instance().nodeItems[i, 0] = temp;
         }
     }
-
+    //方块向上移动
     void MoveUp()
     {
-        //方块向上移动
         for (int i = 0; i < NodeManager.Instance().nodeCountX; i++)
         {
             Vector2 movingDir = Vector2.up * MapManager.Instance().nodePaddingY * NodeManager.Instance().nodeCountY;
@@ -181,10 +179,9 @@ public class SeamlessMap : Singleton<SeamlessMap>
             MapManager.Instance().nodeItems[NodeManager.Instance().nodeCountY - 1, i] = temp;
         }
     }
-
+    //方块向下移动
     void MoveDown()
     {
-        //方块向下移动
         for (int i = 0; i < NodeManager.Instance().nodeCountX; i++)
         {
             Vector2 movingDir = -Vector2.up * MapManager.Instance().nodePaddingY * NodeManager.Instance().nodeCountY;

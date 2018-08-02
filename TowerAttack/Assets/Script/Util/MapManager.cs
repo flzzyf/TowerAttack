@@ -45,6 +45,9 @@ public class MapManager : Singleton<MapManager>
                 go.GetComponent<NodeItem>().pos = new Vector2Int(i, j);
                 go.GetComponent<NodeItem>().absPos = new Vector2Int(i, j);
                 go.GetComponent<NodeItem>().SetOrderInLayer(2 * (mapSizeY - i));
+
+                go.GetComponent<NodeItem>().ToggleFogOfWar(true);
+
             }
         }
     }
