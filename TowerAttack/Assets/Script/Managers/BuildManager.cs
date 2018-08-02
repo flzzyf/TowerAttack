@@ -88,14 +88,14 @@ public class BuildManager : Singleton<BuildManager>
     public void ClickNode(GameObject _node, int _player)
     {
         //确认二次点击
-        if (desiredBuildTarget != gameObject)
+        if (desiredBuildTarget != _node)
         {
             if (desiredBuildTarget != null)
             {
                 desiredBuildTarget.GetComponent<NodeItem>().towerPlacement.SetActive(false);
             }
 
-            desiredBuildTarget = gameObject;
+            desiredBuildTarget = _node;
 
             _node.GetComponent<NodeItem>().towerPlacement.SetActive(true);
         }

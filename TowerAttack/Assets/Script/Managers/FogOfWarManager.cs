@@ -14,7 +14,7 @@ public class FogOfWarManager : Singleton<FogOfWarManager>
             playerVisionNodes[i] = new List<GameObject>();
         }
     }
-
+    //添加节点到玩家视野
     public void AddNodeToPlayerVision(int _player, GameObject _go)
     {
         playerVisionNodes[_player].Add(_go);
@@ -25,6 +25,7 @@ public class FogOfWarManager : Singleton<FogOfWarManager>
         }
     }
 
+    //添加范围内节点到玩家视野
     public void AddNodesWithinRangeToPlayerVision(int _player, GameObject _go, int _range)
     {
         foreach (GameObject item in MapManager.Instance().GetNearbyNodesWithinRange(_go, _range))
@@ -34,5 +35,16 @@ public class FogOfWarManager : Singleton<FogOfWarManager>
                 AddNodeToPlayerVision(_player, item);
             }
         }
+    }
+
+    //节点对玩家可见
+    public bool NodeVisible(GameObject _go, int _player)
+    {
+        if (playerVisionNodes[_player].Contains(_go))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

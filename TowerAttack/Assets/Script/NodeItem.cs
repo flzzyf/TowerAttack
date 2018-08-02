@@ -36,6 +36,8 @@ public class NodeItem : MonoBehaviour
 
         originColor = GetComponentInChildren<SpriteRenderer>().color;
 
+        towerPlacement.SetActive(false);
+
         //ToggleFogOfWar(true);
     }
 
@@ -60,11 +62,15 @@ public class NodeItem : MonoBehaviour
         //非拖动的快速点击
         if (Time.time - mouseDownTime < clickConfirmDelay)
         {
-            if (tower == null)
+            if(FogOfWarManager.Instance().NodeVisible(gameObject, GameManager.Instance().player))
             {
-                BuildManager.Instance().ClickNode(gameObject, GameManager.Instance().player);
+                if (tower == null)
+                {
+                    BuildManager.Instance().ClickNode(gameObject, GameManager.Instance().player);
 
+                }
             }
+          
         }
     }
 
@@ -137,5 +143,7 @@ public class NodeItem : MonoBehaviour
         {
             item.sortingOrder = _order;
         }
+
+        fog.GetComponentInChildren<SpriteRenderer>().sortingOrder = _order + 1;
     }
 }
