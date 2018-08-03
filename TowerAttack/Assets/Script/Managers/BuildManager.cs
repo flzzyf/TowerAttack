@@ -47,7 +47,8 @@ public class BuildManager : Singleton<BuildManager>
 
     public GameObject Build(GameObject _node, int _player)
     {
-        SoundManager.Instance().Play("Shoot");
+        if(_player == GameManager.Instance().player)
+            SoundManager.Instance().Play("Shoot");
 
         GameObject go = BuildInstantly(_node, _player);
 

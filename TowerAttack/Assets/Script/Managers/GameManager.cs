@@ -52,8 +52,22 @@ public class GameManager : Singleton<GameManager>
         //建造初始炮塔
         for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
         {
-            BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItem(PlayerManager.Instance().players[i].startingPoint), i);
+            Vector2Int pos = PlayerManager.Instance().players[i].startingPoint;
+            BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItem(pos), i);
         }
+
+        //移动镜头到出生点
+
+        Vector2Int pos2 = PlayerManager.Instance().players[0].startingPoint;
+        float centerPosX = NodeManager.Instance().nodeCountX / 2;
+        float x = centerPosX - pos2.x;
+        x *= MapManager.Instance().nodePaddingX;
+        SeamlessMap.Instance().MoveRight(-x);
+
+        float centerPosY = NodeManager.Instance().nodeCountY / 2;
+        float y = centerPosX - pos2.y;
+        y *= MapManager.Instance().nodePaddingY;
+        SeamlessMap.Instance().MoveUp(-y);
 
         //开启AI
         for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)

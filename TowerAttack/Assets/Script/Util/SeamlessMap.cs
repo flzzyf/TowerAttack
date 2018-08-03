@@ -48,7 +48,7 @@ public class SeamlessMap : Singleton<SeamlessMap>
     }
 
     float offsetX;
-    void MoveRight(float _amount)
+    public void MoveRight(float _amount)
     {
         offsetX += _amount;
 
@@ -77,7 +77,7 @@ public class SeamlessMap : Singleton<SeamlessMap>
     }
 
     float offsetY;
-    void MoveUp(float _amount)
+    public void MoveUp(float _amount)
     {
         offsetY += _amount;
 
