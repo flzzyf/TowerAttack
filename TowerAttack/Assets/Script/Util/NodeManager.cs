@@ -85,16 +85,17 @@ public class NodeManager : Singleton<NodeManager>
     }
 
     //获取范围内所有节点
-    public List<Node> GetNearbyNodesInRange(Node _node, int _range)
+    public List<Node> GetNodesWithinRange(Node _node, int _range)
     {
         List<Node> nodeList;
         if(_range == 1)
         {
             nodeList = GetNearbyNodes(_node);
+            nodeList.Add(_node);
         }
         else
         {
-            nodeList = GetNearbyNodesInRange(_node, _range - 1);
+            nodeList = GetNodesWithinRange(_node, _range - 1);
             int listCount = nodeList.Count;
             for (int i = 0; i < listCount; i++)
             {
@@ -109,19 +110,13 @@ public class NodeManager : Singleton<NodeManager>
 
         return nodeList;
     }
-
-    public Node FindNode(Vector2Int _pos)
+    //获取范围内所有节点，除了中心
+    public List<Node> GetNearbyNodesInRange(Node _node, int _range)
     {
-        for (int i = 0; i < nodeCountY; i++)
-        {
-            for (int j = 0; j < nodeCountX; j++)
-            {
-                if (nodes[i, j].pos == _pos)
-                    return nodes[i, j];
-            }
-        }
+        List<Node> nodeList = GetNodesWithinRange(_node, _range);
+        nodeList.Remove(_node);
 
-        return null;
+        return nodeList;
     }
 }
 

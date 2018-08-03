@@ -7,7 +7,7 @@ public class NodeItem : MonoBehaviour
 {
     Animator animator;
 
-    public Transform towerParent;
+    public Transform invisibleThingsParent;
     [HideInInspector]
     public GameObject tower;
 
@@ -71,27 +71,36 @@ public class NodeItem : MonoBehaviour
 
                 }
             }
-          
         }
     }
 
-    public void BuildSetting()
+    public void BuildSetting(int _player)
     {
-        playerForce[0]++;
-
-        foreach (var item in MapManager.Instance().GetNearbyNodeItems(gameObject))
+        //增加周围节点战力
+        foreach (var item in MapManager.Instance().GetNodesWithinRange(gameObject, 1))
         {
-            item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[0]++;
+            item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[_player]++;
         }
-
-        foreach (var item in MapManager.Instance().GetNearbyNodeItems(gameObject))
+        //更新边界和战力数字
+        foreach (var item in MapManager.Instance().GetNodesWithinRange(gameObject, 2))
         {
             item.GetComponent<NodeItem>().UpdateBorders();
-            if (item.GetComponent<NodeItem>().tower == null)
-                item.GetComponent<NodeItem>().UpdateForceText();
+            item.GetComponent<NodeItem>().UpdateForceText(_player);
         }
-
-        UpdateBorders();
+    }
+    //塔被打掉
+    public void TowerDestoryed(int _player)
+    {
+        foreach (var item in MapManager.Instance().GetNodesWithinRange(gameObject, 1))
+        {
+            item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[_player]--;
+        }
+        //更新边界和战力数字
+        foreach (var item in MapManager.Instance().GetNodesWithinRange(gameObject, 2))
+        {
+            item.GetComponent<NodeItem>().UpdateBorders();
+            item.GetComponent<NodeItem>().UpdateForceText(_player);
+        }
     }
 
     int[] borderIndex = { 7, 1, 3, 5 };
@@ -100,23 +109,47 @@ public class NodeItem : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            if (MapManager.Instance().GetNearbyNode(gameObject, borderIndex[i]).GetComponent<NodeItem>().playerForce[0] == 0)
+            for (int j = 0; j < PlayerManager.Instance().playerNumber; j++)
             {
-                borders[i].SetActive(true);
-            }
-            else
-            {
-                borders[i].SetActive(false);
+                if (playerForce[j] != 0 && MapManager.Instance().GetNearbyNode(gameObject, borderIndex[i]).GetComponent<NodeItem>().playerForce[j] == 0)
+                {
+                    borders[i].SetActive(true);
+                    borders[i].GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[j].color;
+                    break;
+                }
+                else
+                {
+                    borders[i].SetActive(false);
+                }
             }
         }
     }
-    public void UpdateForceText()
+    public void UpdateForceText(int _player)
     {
-        if (!text_force.activeSelf)
-            text_force.SetActive(true);
+        if(tower != null)
+        {
+            //有塔
+            text_force.SetActive(false);
+        }
+        else
+        {
+            //统计其他玩家在该节点的总战力
+            int power = 0;
+            for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
+            {
+                //非当前玩家
+                if (i != GameManager.Instance().player)
+                    power += playerForce[i];
+            }
+            if (_player != GameManager.Instance().player)
+                text_force.GetComponent<Text>().text = power.ToString();
 
-        text_force.GetComponent<Text>().text = playerForce[0].ToString();
-
+            if (power == 0)
+                text_force.SetActive(false);
+            else
+                if (!text_force.activeSelf)
+                text_force.SetActive(true);
+        }
     }
 
     public void ChangeColor(Color _color = default(Color))
@@ -136,12 +169,7 @@ public class NodeItem : MonoBehaviour
     {
         fog.SetActive(_show);
 
-        towerParent.gameObject.SetActive(!_show);
-
-        if(_show)
-        {
-
-        }
+        invisibleThingsParent.gameObject.SetActive(!_show);
 
     }
 

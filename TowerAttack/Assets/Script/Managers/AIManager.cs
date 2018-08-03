@@ -28,7 +28,13 @@ public class AIManager : Singleton<AIManager>
 
         while(GameManager.gaming)
         {
-            foreach (GameObject item in MapManager.Instance().GetNearbyNodesWithinRange(startingPoint, 2))
+            yield return new WaitForSeconds(1);
+
+            //获取视野内随机节点
+            int index = Random.Range(0, FogOfWarManager.Instance().playerVisionNodes[_player].Count - 1);
+            GameObject node = FogOfWarManager.Instance().playerVisionNodes[_player][index];
+            //在它周围可用点建造
+            foreach (GameObject item in MapManager.Instance().GetNearbyNodesWithinRange(node, 2))
             {
                 if (item.GetComponent<NodeItem>().tower == null)
                 {
@@ -37,7 +43,6 @@ public class AIManager : Singleton<AIManager>
                     break;
                 }
             }
-
 
             yield return new WaitForSeconds(3);
         }

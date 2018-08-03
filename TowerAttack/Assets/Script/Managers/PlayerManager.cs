@@ -32,7 +32,7 @@ public class Player
 
     public Player(int _id, int _team, Color _color, Vector2Int _startingPoint, bool _isAI)
     {
-        _id = id;
+        id = _id;
         team = _team;
         color = _color;
         startingPoint = _startingPoint;

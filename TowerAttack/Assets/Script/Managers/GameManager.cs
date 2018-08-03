@@ -19,7 +19,6 @@ public class GameManager : Singleton<GameManager>
         FogOfWarManager.Instance().Init();
 
         GameStart();
-
     }
 
     private void Update()

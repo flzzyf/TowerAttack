@@ -128,6 +128,8 @@ public class Tower : MonoBehaviour
 
         BuildManager.Instance().towers.Remove(gameObject);
 
+        node.GetComponent<NodeItem>().TowerDestoryed(player);
+
         DestroyImmediate(gameObject);
     }
 

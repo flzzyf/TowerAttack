@@ -28,7 +28,7 @@ public class FogOfWarManager : Singleton<FogOfWarManager>
     //添加范围内节点到玩家视野
     public void AddNodesWithinRangeToPlayerVision(int _player, GameObject _go, int _range)
     {
-        foreach (GameObject item in MapManager.Instance().GetNearbyNodesWithinRange(_go, _range))
+        foreach (GameObject item in MapManager.Instance().GetNodesWithinRange(_go, _range))
         {
             if(!playerVisionNodes[_player].Contains(item))
             {

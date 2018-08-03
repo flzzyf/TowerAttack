@@ -82,7 +82,11 @@ public class IncomeManager : Singleton<IncomeManager>
     public void SetIncomeRate(int _player, float _amount)
     {
         incomeTimeIncreaseRates[_player] += _amount;
-        text_rate.text = (1 + incomeTimeIncreaseRates[_player]) * 100 + "%";
+        //现在只考虑单机模式，即玩家1才更新UI
+        if (_player == GameManager.Instance().player)
+        {
+            text_rate.text = (1 + incomeTimeIncreaseRates[_player]) * 100 + "%";
+        }
     }
 
 }

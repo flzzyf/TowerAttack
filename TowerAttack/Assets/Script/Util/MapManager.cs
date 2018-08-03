@@ -106,14 +106,14 @@ public class MapManager : Singleton<MapManager>
     }
 
     //获取范围内所有节点
-    public List<GameObject> GetNearbyNodesWithinRange(GameObject _go, int _range)
+    public List<GameObject> GetNodesWithinRange(GameObject _go, int _range)
     {
         List<GameObject> list = new List<GameObject>();
         Vector2Int pos = _go.GetComponent<NodeItem>().absPos;
 
         Node node = NodeManager.Instance().GetNode(pos);
 
-        foreach (Node item in NodeManager.Instance().GetNearbyNodesInRange(node, _range))
+        foreach (Node item in NodeManager.Instance().GetNodesWithinRange(node, _range))
         {
             GameObject go = GetNodeItemFromAbsPos(item.pos);
             list.Add(go);
@@ -122,10 +122,18 @@ public class MapManager : Singleton<MapManager>
         return list;
     }
 
+    public List<GameObject> GetNearbyNodesWithinRange(GameObject _go, int _range)
+    {
+        List<GameObject> list = GetNearbyNodesWithinRange(_go.GetComponent<NodeItem>().absPos, _range);
+        list.Remove(_go);
+
+        return list;
+    }
+
     public List<GameObject> GetNearbyNodesWithinRange(Vector2Int _pos, int _range)
     {
         GameObject go = GetNodeItemFromAbsPos(_pos);
-        return GetNearbyNodesWithinRange(go, _range);
+        return GetNodesWithinRange(go, _range);
     }
 
 }
