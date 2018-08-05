@@ -37,9 +37,11 @@ public class BuildManager : Singleton<BuildManager>
         go.GetComponent<Tower>().node = _node;
         go.GetComponent<Tower>().player = _player;
         go.GetComponent<Tower>().SetOrderInLayer(_node.GetComponent<NodeItem>().gfx.sortingOrder);
+        
+        towers.Add(go);
+
         //开视野
         FogOfWarManager.Instance().AddNodesWithinRangeToPlayerVision(_player, _node, 2);
-        towers.Add(go);
 
         return go;
     }
@@ -97,6 +99,7 @@ public class BuildManager : Singleton<BuildManager>
         }
 
         IncomeManager.Instance().SetIncomeRate(_player, 0.5f);
+
     }
 
     public void ClickNode(GameObject _node, int _player)

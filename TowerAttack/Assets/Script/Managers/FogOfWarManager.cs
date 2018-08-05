@@ -30,9 +30,29 @@ public class FogOfWarManager : Singleton<FogOfWarManager>
     {
         foreach (GameObject item in MapManager.Instance().GetNodesWithinRange(_go, _range))
         {
-            if(!playerVisionNodes[_player].Contains(item))
+            item.GetComponent<NodeItem>().playerVision[_player]++;
+            //目前未包含
+            if (!playerVisionNodes[_player].Contains(item))
             {
                 AddNodeToPlayerVision(_player, item);
+            }
+        }
+    }
+
+    public void RemoveNodesWithinRangeToPlayerVision(int _player, GameObject _go, int _range)
+    {
+        foreach (GameObject item in MapManager.Instance().GetNodesWithinRange(_go, _range))
+        {
+            item.GetComponent<NodeItem>().playerVision[_player]--;
+            if (playerVisionNodes[_player].Contains(item))
+            {
+                if(item.GetComponent<NodeItem>().playerVision[_player] <= 0)
+                {
+                    playerVisionNodes[_player].Remove(item);
+                    if (_player == GameManager.Instance().player)
+                        item.GetComponent<NodeItem>().ToggleFogOfWar(true);
+
+                }
             }
         }
     }

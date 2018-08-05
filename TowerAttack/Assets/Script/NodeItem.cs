@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class NodeItem : MonoBehaviour
 {
-    Animator animator;
-
     public Transform invisibleThingsParent;
     [HideInInspector]
     public GameObject tower;
@@ -16,8 +14,8 @@ public class NodeItem : MonoBehaviour
 
     public GameObject text_force;
 
-    [HideInInspector]
-    public int[] playerForce = new int[8];
+    //在此节点的玩家战力
+    public int[] playerForce;
     public GameObject[] borders;
 
     public SpriteRenderer gfx;
@@ -29,13 +27,19 @@ public class NodeItem : MonoBehaviour
 
     public GameObject fog;
 
-    void Start()
+    //在此节点的玩家视野
+    public int[] playerVision;
+
+    Animator animator;
+
+    public void Init()
     {
         animator = GetComponent<Animator>();
 
         towerPlacement.SetActive(false);
 
-        //ToggleFogOfWar(true);
+        playerForce = new int[PlayerManager.Instance().playerNumber];
+        playerVision = new int[PlayerManager.Instance().playerNumber];
     }
 
     private void OnMouseEnter()
@@ -100,6 +104,9 @@ public class NodeItem : MonoBehaviour
             item.GetComponent<NodeItem>().UpdateBorders();
             item.GetComponent<NodeItem>().UpdateForceText(_player);
         }
+
+        FogOfWarManager.Instance().RemoveNodesWithinRangeToPlayerVision(_player, gameObject, 2);
+
     }
 
     int[] borderIndex = { 7, 1, 3, 5 };

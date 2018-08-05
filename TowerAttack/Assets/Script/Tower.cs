@@ -38,6 +38,8 @@ public class Tower : MonoBehaviour
     [HideInInspector]
     public bool building;
 
+    bool isDead;
+
     void Start () 
 	{
         currentHp = hp;
@@ -112,8 +114,9 @@ public class Tower : MonoBehaviour
     public void TakeDamage(float _amount)
     {
         currentHp -= _amount;
-        if(currentHp <= 0)
+        if(!isDead && currentHp <= 0)
         {
+            isDead = true;
             Death();
         }
     }
@@ -127,7 +130,8 @@ public class Tower : MonoBehaviour
 
         BuildManager.Instance().towers.Remove(gameObject);
 
-        node.GetComponent<NodeItem>().TowerDestoryed(player);
+        if(!building)
+            node.GetComponent<NodeItem>().TowerDestoryed(player);
 
         DestroyImmediate(gameObject);
     }
