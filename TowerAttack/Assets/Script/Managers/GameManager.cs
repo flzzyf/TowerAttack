@@ -25,12 +25,25 @@ public class GameManager : Singleton<GameManager>
     {
         if(Input.GetKeyDown(KeyCode.D))
         {
-            foreach (GameObject item in MapManager.Instance().GetNearbyNodesWithinRange(new Vector2Int(6, 6), 2))
-            {
-                item.SetActive(false);
-            }
+            //foreach (GameObject item in MapManager.Instance().GetNearbyNodesWithinRange(new Vector2Int(6, 6), 2))
+            //{
+            //    item.SetActive(false);
+            //}
+
+            
         }
         
+    }
+    //移动镜头到节点
+    public void CameraMoveToPoint(Vector2Int _pos)
+    {
+        Vector2Int center = new Vector2Int(NodeManager.Instance().nodeCountY / 2, NodeManager.Instance().nodeCountX / 2);
+        float x = (_pos.x - center.x) * MapManager.Instance().nodePaddingY;
+        float y = (_pos.y - center.y) * MapManager.Instance().nodePaddingX;
+        x += 2 * MapManager.Instance().nodePaddingY;
+
+        SeamlessMap.Instance().MoveRight(y);
+        SeamlessMap.Instance().MoveUp(x);
     }
 
     public void GameStart()
@@ -57,17 +70,8 @@ public class GameManager : Singleton<GameManager>
         }
 
         //移动镜头到出生点
-
-        Vector2Int pos2 = PlayerManager.Instance().players[0].startingPoint;
-        float centerPosX = NodeManager.Instance().nodeCountX / 2;
-        float x = centerPosX - pos2.x;
-        x *= MapManager.Instance().nodePaddingX;
-        SeamlessMap.Instance().MoveRight(-x);
-
-        float centerPosY = NodeManager.Instance().nodeCountY / 2;
-        float y = centerPosX - pos2.y;
-        y *= MapManager.Instance().nodePaddingY;
-        SeamlessMap.Instance().MoveUp(-y);
+        Vector2Int startingPoint = PlayerManager.Instance().players[0].startingPoint;
+        CameraMoveToPoint(startingPoint);
 
         //开启AI
         for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)

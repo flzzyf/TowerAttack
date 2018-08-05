@@ -57,7 +57,7 @@ public class MenuManager : MonoBehaviour
         }
 
         dropdown_resolution.AddOptions(options);
-        dropdown_resolution.value = currentResolutionIndex;
+        //dropdown_resolution.value = currentResolutionIndex;
 
         //根据用户数据进行初始设置
         toggle_fullScreen.isOn = PlayerPrefs.GetInt("fullScreen") == 1;
@@ -176,7 +176,7 @@ public class MenuManager : MonoBehaviour
         for (int i = 0; i < panel_players.childCount; i++)
         {
             PlayerItem item = panel_players.GetChild(i).GetComponent<PlayerItem>();
-            Player player = new Player(i, item.dropdown_team.value, playerColor[item.dropdown_color.value], new Vector2Int(13 * (i + 1) / 2,  8 * (i + 1) / 2), item.isAI);
+            Player player = new Player(i, item.dropdown_team.value, playerColor[item.dropdown_color.value], new Vector2Int(8 * (i + 1) / 2,  13 * (i + 1) / 2), item.isAI);
             PlayerManager.Instance().players.Add(player);
         }
         LoadScene("Game");

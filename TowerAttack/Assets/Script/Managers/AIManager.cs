@@ -24,7 +24,7 @@ public class AIManager : Singleton<AIManager>
 
     IEnumerator AIStartAction(int _player)
     {
-        Vector2Int startingPoint = PlayerManager.Instance().players[_player].startingPoint;
+        //Vector2Int startingPoint = PlayerManager.Instance().players[_player].startingPoint;
 
         while(GameManager.gaming)
         {

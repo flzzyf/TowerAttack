@@ -23,9 +23,16 @@ public class MapManager : Singleton<MapManager>
 
         // 生成节点的真正源点
         Vector2 originGeneratePoint;
-        originGeneratePoint.x = originPoint.x - (float)mapSizeX / 2 * nodePaddingX + nodePaddingX / 2;
-        originGeneratePoint.y = originPoint.y - (float)mapSizeY / 2 * nodePaddingY + nodePaddingY / 2;
-
+        originGeneratePoint.x = originPoint.x - mapSizeX / 2 * nodePaddingX;
+        if(mapSizeX % 2 == 0)
+        {
+            //originGeneratePoint.x -= nodePaddingX / 2;
+        }
+        originGeneratePoint.y = originPoint.y - mapSizeY / 2 * nodePaddingY;
+        if (mapSizeY % 2 == 0)
+        {
+            //originGeneratePoint.y -= nodePaddingY / 2;
+        }
         for (int i = 0; i < mapSizeY; i++)
         {
             float specialX = 0;
