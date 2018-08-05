@@ -1303,9 +1303,9 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: "\u654C\u5BF9"
-      m_Image: {fileID: 0}
     - m_Text: "\u4E2D\u7ACB"
+      m_Image: {fileID: 0}
+    - m_Text: "\u654C\u5BF9"
       m_Image: {fileID: 0}
     - m_Text: "\u961F\u4F0D1"
       m_Image: {fileID: 0}

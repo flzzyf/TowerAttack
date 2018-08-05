@@ -73,12 +73,12 @@ public class Tower : MonoBehaviour
 
     public void BuildingFinish()
     {
-        foreach (var item in GetComponentsInChildren<ParticleSystem>())
+        foreach (var item in GetComponentsInChildren<ParticleSystem>(true))
         {
             item.Stop();
+            item.enableEmission = false;
         }
 
-        //gfx_building.SetActive(false);
         gfx_tower.SetActive(true);
 
         building = false;
@@ -86,24 +86,23 @@ public class Tower : MonoBehaviour
         SearchTarget();
     }
 
+    //塔搜索目标
     public void SearchTarget()
     {
         if (target != null)
             return;
 
-        foreach (var item in MapManager.Instance().GetNearbyNodeItems(node))
+        foreach (var item in MapManager.Instance().GetNearbyNodesWithinRange(node, range))
         {
             if (item.GetComponent<NodeItem>().tower != null)
-                if (item.GetComponent<NodeItem>().tower.GetComponent<Tower>().player != player)
+                if (PlayerManager.Instance().isEnemy(item.GetComponent<NodeItem>().tower.GetComponent<Tower>().player, player))
                     target = item.GetComponent<NodeItem>().tower;
-
         }
-
     }
 
     public void Attack(GameObject _target)
     {
-        GameObject go = Instantiate(prefab_bullet, launchPos.position, Quaternion.identity);
+        GameObject go = Instantiate(prefab_bullet, launchPos.position, Quaternion.identity, ParentManager.Instance().GetParent("Bullet"));
 
         float fixedDamage = damage * attackCD;
 

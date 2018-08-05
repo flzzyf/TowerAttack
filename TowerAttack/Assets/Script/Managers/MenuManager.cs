@@ -153,9 +153,10 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    //添加电脑玩家
     public void AddComputer()
     {
-        AddPlayerItem("电脑", 0, 0, true);
+        AddPlayerItem("电脑", 0, 1, true);
     }
     //添加玩家项
     public void AddPlayerItem(string _name, int _skin, int _team, bool _isAI = false)
