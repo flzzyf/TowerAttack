@@ -43,7 +43,7 @@ public class MenuManager : MonoBehaviour
 
         List<string> options = new List<string>();
 
-        int currentResolutionIndex = 0;
+        //int currentResolutionIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + " X " + resolutions[i].height;
@@ -52,7 +52,7 @@ public class MenuManager : MonoBehaviour
             if (resolutions[i].width == Screen.currentResolution.width &&
                resolutions[i].height == Screen.currentResolution.height)
             {
-                currentResolutionIndex = i;
+                //currentResolutionIndex = i;
             }
         }
 

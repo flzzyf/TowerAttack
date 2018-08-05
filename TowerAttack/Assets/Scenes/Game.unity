@@ -1041,63 +1041,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 780376314}
   m_CullTransparentMesh: 0
---- !u!1 &785506144
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 785506146}
-  - component: {fileID: 785506145}
-  m_Layer: 0
-  m_Name: DontDestroyOnLoad
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &785506145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 785506144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c0698c5cebb0cb4c92c0e7c75f50830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  players:
-  - id: 0
-    username: 
-    skin: 0
-    team: 0
-    color: {r: 1, g: 0, b: 0, a: 1}
-    isAI: 0
-    startingPoint: {x: 6, y: 4}
-    money: 0
-  - id: 1
-    username: 
-    skin: 0
-    team: 0
-    color: {r: 0, g: 0.023826122, b: 1, a: 1}
-    isAI: 1
-    startingPoint: {x: 12, y: 8}
-    money: 0
---- !u!4 &785506146
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 785506144}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &889186212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,7 +1483,6 @@ GameObject:
   - component: {fileID: 1483083278}
   - component: {fileID: 1483083281}
   - component: {fileID: 1483083283}
-  - component: {fileID: 1483083284}
   - component: {fileID: 1483083279}
   - component: {fileID: 1483083282}
   m_Layer: 0
@@ -1688,42 +1630,6 @@ MonoBehaviour:
   worldObject: {fileID: 0}
   cameraSensitivity: 1.5
   even: 0
---- !u!114 &1483083284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1483083273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2584713a147f39241bf5e124fa9330cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: BGM
-    clip: {fileID: 8300000, guid: 07f40f62ee6e18f4bb2673b0d7d8782a, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 1
-    source: {fileID: 0}
-    audioMixerGroup: {fileID: 243254895852386828, guid: 6c04d0f62c1bbb4489375bd89c168e41,
-      type: 2}
-  - name: Boom
-    clip: {fileID: 8300000, guid: 394ec16c35413144aa14645c2e0470ff, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-    audioMixerGroup: {fileID: 243257731429557786, guid: 6c04d0f62c1bbb4489375bd89c168e41,
-      type: 2}
-  - name: Shoot
-    clip: {fileID: 8300000, guid: 70467b1332cb8b34a9d6d8df825bf71b, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-    audioMixerGroup: {fileID: 243257731429557786, guid: 6c04d0f62c1bbb4489375bd89c168e41,
-      type: 2}
 --- !u!1 &1626697011
 GameObject:
   m_ObjectHideFlags: 0
@@ -2591,6 +2497,100 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2072251930}
   m_CullTransparentMesh: 0
+--- !u!1 &2081773044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2081773053}
+  - component: {fileID: 2081773052}
+  - component: {fileID: 2081773051}
+  m_Layer: 0
+  m_Name: DontDestroyOnLoad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2081773051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2081773044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2584713a147f39241bf5e124fa9330cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: BGM
+    clip: {fileID: 8300000, guid: 07f40f62ee6e18f4bb2673b0d7d8782a, type: 3}
+    volume: 0.466
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+    audioMixerGroup: {fileID: 243254895852386828, guid: 6c04d0f62c1bbb4489375bd89c168e41,
+      type: 2}
+  - name: Boom
+    clip: {fileID: 8300000, guid: 394ec16c35413144aa14645c2e0470ff, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    audioMixerGroup: {fileID: 243257731429557786, guid: 6c04d0f62c1bbb4489375bd89c168e41,
+      type: 2}
+  - name: Shoot
+    clip: {fileID: 8300000, guid: 70467b1332cb8b34a9d6d8df825bf71b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    audioMixerGroup: {fileID: 243257731429557786, guid: 6c04d0f62c1bbb4489375bd89c168e41,
+      type: 2}
+--- !u!114 &2081773052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2081773044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c0698c5cebb0cb4c92c0e7c75f50830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players:
+  - id: 0
+    username: 
+    skin: 0
+    team: 2
+    color: {r: 1, g: 0, b: 0, a: 1}
+    isAI: 0
+    startingPoint: {x: 4, y: 6}
+    money: 10
+  - id: 1
+    username: 
+    skin: 0
+    team: 0
+    color: {r: 1, g: 0.99997795, b: 0, a: 1}
+    isAI: 1
+    startingPoint: {x: 8, y: 13}
+    money: 10
+--- !u!4 &2081773053
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2081773044}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2121691533
 GameObject:
   m_ObjectHideFlags: 0

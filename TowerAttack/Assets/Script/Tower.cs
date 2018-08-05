@@ -124,7 +124,6 @@ public class Tower : MonoBehaviour
         SoundManager.Instance().Play("Boom");
 
         node.GetComponent<NodeItem>().tower = null;
-        node.GetComponent<NodeItem>().ChangeColor();
 
         BuildManager.Instance().towers.Remove(gameObject);
 

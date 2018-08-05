@@ -37,10 +37,9 @@ public class BuildManager : Singleton<BuildManager>
         go.GetComponent<Tower>().node = _node;
         go.GetComponent<Tower>().player = _player;
         go.GetComponent<Tower>().SetOrderInLayer(_node.GetComponent<NodeItem>().gfx.sortingOrder);
-
-        towers.Add(go);
-
+        //开视野
         FogOfWarManager.Instance().AddNodesWithinRangeToPlayerVision(_player, _node, 2);
+        towers.Add(go);
 
         return go;
     }
@@ -50,9 +49,16 @@ public class BuildManager : Singleton<BuildManager>
         if(_player == GameManager.Instance().player)
             SoundManager.Instance().Play("Shoot");
 
-        GameObject go = BuildInstantly(_node, _player);
+        //创建塔
+        GameObject go = Instantiate(prefab_tower, _node.transform.position, Quaternion.identity, _node.GetComponent<NodeItem>().invisibleThingsParent);
+        _node.GetComponent<NodeItem>().tower = go;
+        go.GetComponent<Tower>().node = _node;
+        go.GetComponent<Tower>().player = _player;
+        go.GetComponent<Tower>().SetOrderInLayer(_node.GetComponent<NodeItem>().gfx.sortingOrder);
 
-        StartCoroutine(Building(go, _player));
+        towers.Add(go);
+
+        StartCoroutine(Building(go, _player, _node));
 
         //所有塔开始搜索目标
         for (int i = 0; i < towers.Count; i++)
@@ -65,7 +71,7 @@ public class BuildManager : Singleton<BuildManager>
     }
 
     //开始建造
-    IEnumerator Building(GameObject _tower, int _player)
+    IEnumerator Building(GameObject _tower, int _player, GameObject _node)
     {
         IncomeManager.Instance().SetIncomeRate(_tower.GetComponent<Tower>().player, -0.5f);
 
@@ -79,9 +85,16 @@ public class BuildManager : Singleton<BuildManager>
 
             yield return null;
         }
-        //还没被打爆
+        //建造完成，还没被打爆
         if(_tower != null)
+        {
             _tower.GetComponent<Tower>().BuildingFinish();
+
+            _node.GetComponent<NodeItem>().BuildSetting(_player);
+            //开视野
+            FogOfWarManager.Instance().AddNodesWithinRangeToPlayerVision(_player, _node, 2);
+
+        }
 
         IncomeManager.Instance().SetIncomeRate(_player, 0.5f);
     }

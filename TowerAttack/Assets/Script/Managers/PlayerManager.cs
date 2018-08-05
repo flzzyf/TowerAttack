@@ -6,11 +6,6 @@ public class PlayerManager : Singleton<PlayerManager>
 {
     public List<Player> players;
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-
     public int playerNumber
     {
         get { return players.Count; }

@@ -14,7 +14,6 @@ public class GameManager : Singleton<GameManager>
     {
         BuildManager.Instance().Init();
         IncomeManager.Instance().Init();
-        SoundManager.Instance().Init();
         SeamlessMap.Instance().Init();
         FogOfWarManager.Instance().Init();
 

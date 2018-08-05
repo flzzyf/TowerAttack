@@ -6,7 +6,14 @@ public class CameraRotateWithMouse : MonoBehaviour
 {
     public Vector2 cameraAngleLimit = new Vector2(2, 3);
 
-	void Update ()
+    private void Start()
+    {
+#if UNITY_IPHONE || UNITY_ANDROID
+        enabled = false;
+#endif
+    }
+
+    void Update ()
     {
         Vector2 mousePoint = Input.mousePosition;
         float mouseRateX = (mousePoint.x - Screen.width / 2) / Screen.width / 2;

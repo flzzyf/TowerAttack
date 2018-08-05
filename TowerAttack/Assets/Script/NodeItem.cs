@@ -11,8 +11,6 @@ public class NodeItem : MonoBehaviour
     [HideInInspector]
     public GameObject tower;
 
-    Color originColor;
-
     public Vector2Int pos;
     public Vector2Int absPos;
 
@@ -35,8 +33,6 @@ public class NodeItem : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
-        originColor = GetComponentInChildren<SpriteRenderer>().color;
-
         towerPlacement.SetActive(false);
 
         //ToggleFogOfWar(true);
@@ -44,13 +40,16 @@ public class NodeItem : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (animator != null)
-            animator.SetBool("hovered", true);
+#if UNITY_STANDALONE || UNITY_WEBGL
+        animator.SetBool("hovered", true);
+#endif
     }
 
     private void OnMouseExit()
     {
+#if UNITY_STANDALONE || UNITY_WEBGL
         animator.SetBool("hovered", false);
+#endif
     }
 
     private void OnMouseDown()
@@ -149,19 +148,6 @@ public class NodeItem : MonoBehaviour
             else
                 if (!text_force.activeSelf)
                 text_force.SetActive(true);
-        }
-    }
-
-    public void ChangeColor(Color _color = default(Color))
-    {
-        if (_color == default(Color))
-        {
-            GetComponentInChildren<SpriteRenderer>().color = originColor;
-        }
-        else
-        {
-            GetComponentInChildren<SpriteRenderer>().color = _color;
-
         }
     }
 
