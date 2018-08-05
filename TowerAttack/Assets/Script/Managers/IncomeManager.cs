@@ -6,22 +6,39 @@ using UnityEngine.UI;
 public class IncomeManager : Singleton<IncomeManager>
 {
     public Text text_money;
-    public Text text_rate;
-    public Text text_income;
+    public Text text_farmer;
+    public Text text_worker;
 
     public float globalIncomeTime = 10;
     float[] incomeTimeCounter;
     public float[] incomeTimeIncreaseRates;
 
-    public Slider paybackTimeSlider;
+    public Slider slider_paybackTime;
+    public Slider slider_farmer;
+    public Slider slider_worker;
 
     int[] income;
+
+    int[] population;
+    int[] population_worker;
+
+    public float sliderSpeed = 1;
 
     public void Init()
     {
         incomeTimeCounter = new float[PlayerManager.Instance().playerNumber];
         incomeTimeIncreaseRates = new float[PlayerManager.Instance().playerNumber];
         income = new int[PlayerManager.Instance().playerNumber];
+        population = new int[PlayerManager.Instance().playerNumber];
+        population_worker = new int[PlayerManager.Instance().playerNumber];
+
+        for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
+        {
+            population[i] = 10;
+        }
+
+        slider_farmer.value = 1;
+        slider_worker.value = 0;
     }
 
     void Update()
@@ -29,7 +46,7 @@ public class IncomeManager : Singleton<IncomeManager>
         for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
         {
             if (i == GameManager.Instance().player)
-                paybackTimeSlider.value = incomeTimeCounter[i];
+                slider_paybackTime.value = incomeTimeCounter[i];
 
             if (incomeTimeCounter[i] >= 1)
             {
@@ -41,8 +58,23 @@ public class IncomeManager : Singleton<IncomeManager>
             {
                 incomeTimeCounter[i] += (1 + incomeTimeIncreaseRates[i]) * Time.deltaTime / globalIncomeTime;
             }
+
+            if(i == GameManager.Instance().player)
+            {
+                //修改UI值
+                text_farmer.text = population[i] - population_worker[i] + "";
+                text_worker.text = population_worker[i] + "";
+                float ratio_farmer = (float)(population[i] - population_worker[i]) / population[i];
+                slider_farmer.value = Mathf.Lerp(slider_farmer.value, ratio_farmer, sliderSpeed * Time.deltaTime);
+                float ratio_worker = (float)population_worker[i] / population[i];
+                slider_worker.value = Mathf.Lerp(slider_worker.value, ratio_worker, sliderSpeed * Time.deltaTime);
+            }
         }
-        
+    }
+
+    public void ModifyWorker(int _player, int _number)
+    {
+        population_worker[_player] += _number;
     }
 
     void IncreaseMoney(int _player)
@@ -65,7 +97,7 @@ public class IncomeManager : Singleton<IncomeManager>
         if (_player == GameManager.Instance().player)
         {
             text_money.text = _amount.ToString();
-            text_income.text = income[_player] + "";
+            text_farmer.text = income[_player] + "";
 
         }
     }
@@ -82,11 +114,6 @@ public class IncomeManager : Singleton<IncomeManager>
     public void SetIncomeRate(int _player, float _amount)
     {
         incomeTimeIncreaseRates[_player] += _amount;
-        //现在只考虑单机模式，即玩家1才更新UI
-        if (_player == GameManager.Instance().player)
-        {
-            text_rate.text = (1 + incomeTimeIncreaseRates[_player]) * 100 + "%";
-        }
     }
 
 }

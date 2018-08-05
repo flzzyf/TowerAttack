@@ -81,6 +81,7 @@ public class BuildManager : Singleton<BuildManager>
         }
 
         IncomeManager.Instance().SetIncomeRate(_tower.GetComponent<Tower>().player, -0.5f);
+        IncomeManager.Instance().ModifyWorker(_player, 5);
 
         _tower.GetComponent<Tower>().Building();
 
@@ -113,6 +114,7 @@ public class BuildManager : Singleton<BuildManager>
         }
 
         IncomeManager.Instance().SetIncomeRate(_player, 0.5f);
+        IncomeManager.Instance().ModifyWorker(_player, -5);
 
     }
 

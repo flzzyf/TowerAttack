@@ -125,7 +125,8 @@ public class Tower : MonoBehaviour
     //塔被摧毁
     public void Death()
     {
-        SoundManager.Instance().Play("Boom");
+        if (player == GameManager.Instance().player)
+            SoundManager.Instance().Play("Tower_Death");
 
         node.GetComponent<NodeItem>().tower = null;
 
