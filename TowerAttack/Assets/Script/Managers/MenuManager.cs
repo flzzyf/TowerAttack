@@ -27,6 +27,13 @@ public class MenuManager : MonoBehaviour
 
     public List<Color> playerColor;
 
+    public GameObject panel_option;
+    public GameObject panel_option_mobile;
+
+    public Slider slider_volume_bgm_mobile;
+    public Slider slider_volume_effect_mobile;
+    public Dropdown dropdown_quality_mobile;
+
     public void Start()
     {
         SoundManager.Instance().Play("BGM");
@@ -66,8 +73,12 @@ public class MenuManager : MonoBehaviour
         dropdown_resolution.value = PlayerPrefs.GetInt("resolution");
         dropdown_quality.value = PlayerPrefs.GetInt("quality");
 
+        slider_volume_bgm_mobile.value = PlayerPrefs.GetFloat("volume_bgm");
+        slider_volume_effect_mobile.value = PlayerPrefs.GetFloat("volume_effect");
+        dropdown_quality_mobile.value = PlayerPrefs.GetInt("quality");
     }
 
+    //场景加载
     public void LoadScene(string _name)
     {
         panel_loading.SetActive(true);
@@ -181,6 +192,16 @@ public class MenuManager : MonoBehaviour
             PlayerManager.Instance().players.Add(player);
         }
         LoadScene("Game");
+    }
+
+    public void Button_Option()
+    {
+#if UNITY_IPHONE || UNITY_ANDROID
+        panel_option_mobile.SetActive(true);
+#else
+        panel_option.SetActive(true);
+#endif
+
     }
 
 }
