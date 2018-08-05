@@ -17,26 +17,46 @@ public class SoundManager : Singleton<SoundManager>
 	{
         foreach (Sound s in sounds)
         {
-            s.source = gameObject.AddComponent<AudioSource>();
-            if (s.audioMixerGroup != null)
-                s.source.outputAudioMixerGroup = s.audioMixerGroup;
-            s.source.clip = s.clip;
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
+            if (s.multipleSound)
+                continue;
+
+            CreateSoundComponent(s);
         }
     }
 
-    public void Play(string name)
+    AudioSource CreateSoundComponent(Sound s)
+    {
+        s.source = gameObject.AddComponent<AudioSource>();
+        if (s.audioMixerGroup != null)
+            s.source.outputAudioMixerGroup = s.audioMixerGroup;
+        s.source.clip = s.clip;
+        s.source.volume = s.volume;
+        s.source.pitch = s.pitch;
+        s.source.loop = s.loop;
+
+        return s.source;
+    }
+
+    public AudioSource Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " not found!");
-            return;
+            return null;
         }
 
-        s.source.Play();
+        if(!s.multipleSound)
+            s.source.Play();
+        else
+        {
+            //同时可能有多个的声音，而且会单独关闭
+            AudioSource source = CreateSoundComponent(s);
+            source.Play();
+            return source;
+        }
+
+        return null;
     }
 
     public void StopPlay(string name)
@@ -69,5 +89,7 @@ public class Sound
     public AudioSource source;
 
     public AudioMixerGroup audioMixerGroup;
+
+    public bool multipleSound;
 }
 

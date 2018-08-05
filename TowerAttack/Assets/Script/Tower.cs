@@ -102,6 +102,8 @@ public class Tower : MonoBehaviour
 
     public void Attack(GameObject _target)
     {
+        SoundManager.Instance().Play("Arrow_Launch");
+
         GameObject go = Instantiate(prefab_bullet, launchPos.position, Quaternion.identity, ParentManager.Instance().GetParent("Bullet"));
 
         float fixedDamage = damage * attackCD;

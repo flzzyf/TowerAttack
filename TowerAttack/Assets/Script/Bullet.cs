@@ -33,10 +33,17 @@ public class Bullet : MonoBehaviour
             yield return null;
         }
 
-        if(target != null)
-            target.GetComponent<Tower>().TakeDamage(damage);
+        SoundManager.Instance().Play("Arrow_Impact");
+
+        if (target != null)
+            Hit();
 
         Destroy(gameObject);
+    }
+
+    void Hit()
+    {
+        target.GetComponent<Tower>().TakeDamage(damage);
     }
 
     void FaceTarget2D(Vector2 _target)

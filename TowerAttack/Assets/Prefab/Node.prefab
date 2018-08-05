@@ -96,7 +96,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1184825847253004
 GameObject:
   m_ObjectHideFlags: 1
@@ -1236,6 +1236,7 @@ MonoBehaviour:
   gfx: {fileID: 212170202592132830}
   towerPlacement: {fileID: 1374905904150946}
   fog: {fileID: 1966502191549812}
+  playerVision: 
 --- !u!114 &114978894126168812
 MonoBehaviour:
   m_ObjectHideFlags: 1

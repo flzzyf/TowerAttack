@@ -48,9 +48,6 @@ public class BuildManager : Singleton<BuildManager>
 
     public GameObject Build(GameObject _node, int _player)
     {
-        if(_player == GameManager.Instance().player)
-            SoundManager.Instance().Play("Shoot");
-
         //创建塔
         GameObject go = Instantiate(prefab_tower, _node.transform.position, Quaternion.identity, _node.GetComponent<NodeItem>().invisibleThingsParent);
         _node.GetComponent<NodeItem>().tower = go;
@@ -75,6 +72,14 @@ public class BuildManager : Singleton<BuildManager>
     //开始建造
     IEnumerator Building(GameObject _tower, int _player, GameObject _node)
     {
+        AudioSource source = null;
+
+        if (_player == GameManager.Instance().player)
+        {
+            SoundManager.Instance().Play("Construct_Start");
+            source = SoundManager.Instance().Play("Construct_Loop");
+        }
+
         IncomeManager.Instance().SetIncomeRate(_tower.GetComponent<Tower>().player, -0.5f);
 
         _tower.GetComponent<Tower>().Building();
@@ -90,12 +95,21 @@ public class BuildManager : Singleton<BuildManager>
         //建造完成，还没被打爆
         if(_tower != null)
         {
+            if (_player == GameManager.Instance().player)
+                SoundManager.Instance().Play("JobDone");
+
             _tower.GetComponent<Tower>().BuildingFinish();
 
             _node.GetComponent<NodeItem>().BuildSetting(_player);
             //开视野
             FogOfWarManager.Instance().AddNodesWithinRangeToPlayerVision(_player, _node, 2);
 
+        }
+
+        if(source != null)
+        {
+            source.Stop();
+            Destroy(source);
         }
 
         IncomeManager.Instance().SetIncomeRate(_player, 0.5f);
@@ -107,6 +121,8 @@ public class BuildManager : Singleton<BuildManager>
         //确认二次点击
         if (desiredBuildTarget != _node)
         {
+            SoundManager.Instance().Play("Placement");
+
             if (desiredBuildTarget != null)
             {
                 desiredBuildTarget.GetComponent<NodeItem>().towerPlacement.SetActive(false);
