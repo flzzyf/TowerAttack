@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour 
 {
-    public int range = 2;
+    public int range = 1;
     public float hp = 3;
     float currentHp;
     public int damage = 1;
+    public int vision = 2;
 
     public GameObject prefab_bullet;
 
@@ -144,7 +145,6 @@ public class Tower : MonoBehaviour
         {
             item.sortingOrder = _order;
         }
-
     }
 
     //获取轰击点
@@ -161,6 +161,37 @@ public class Tower : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(impactAreaCenter, impactAreaSize);
+    }
+
+    //升级射程
+    public void Upgrade_Range()
+    {
+        range++;
+
+        //减少周围节点战力
+        foreach (var item in MapManager.Instance().GetNodesWithinRange(node, range - 1))
+        {
+            item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[player]--;
+        }
+        //增加周围节点战力
+        foreach (var item in MapManager.Instance().GetNodesWithinRange(node, range))
+        {
+            item.GetComponent<NodeItem>().GetComponent<NodeItem>().playerForce[player]++;
+        }
+        //更新边界和战力数字
+        foreach (var item in MapManager.Instance().GetNodesWithinRange(node, range + 1))
+        {
+            item.GetComponent<NodeItem>().UpdateBorders();
+            item.GetComponent<NodeItem>().UpdateForceText(player);
+        }
+    }
+
+    //升级视野
+    public void Upgrade_Vision()
+    {
+        vision++;
+        FogOfWarManager.Instance().AddNodesWithinRangeToPlayerVision(player, node, vision);
+        FogOfWarManager.Instance().RemoveNodesWithinRangeToPlayerVision(player, node, vision - 1);
     }
 
 }

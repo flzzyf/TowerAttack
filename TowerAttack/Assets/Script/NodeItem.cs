@@ -58,7 +58,6 @@ public class NodeItem : MonoBehaviour
 
     private void OnMouseDown()
     {
-
         mouseDownTime = Time.time;
     }
 
@@ -67,12 +66,19 @@ public class NodeItem : MonoBehaviour
         //非拖动的快速点击
         if (Time.time - mouseDownTime < clickConfirmDelay)
         {
+            //节点可见
             if(FogOfWarManager.Instance().NodeVisible(gameObject, GameManager.Instance().player))
             {
                 if (tower == null)
                 {
+                    //未有塔，建造
                     BuildManager.Instance().ClickNode(gameObject, GameManager.Instance().player);
-
+                }
+                else
+                {
+                    //已有塔，升级
+                    //tower.GetComponent<Tower>().Upgrade_Vision();
+                    tower.GetComponent<Tower>().Upgrade_Range();
                 }
             }
         }

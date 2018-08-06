@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour 
+public class Bullet : MonoBehaviour
 {
     public float speed = 1;
 
     public float damage = 1;
     public GameObject target;
+
+    public GameObject gfx;
 
     public void Launch(GameObject _target, float _damage)
     {
@@ -15,6 +17,15 @@ public class Bullet : MonoBehaviour
         damage = _damage;
 
         StartCoroutine(LaunchMissile());
+    }
+
+    void Update()
+    {
+        if (Mathf.Abs(target.transform.position.x - transform.position.x) > zyf.GetWorldScreenSize().y ||
+            Mathf.Abs(target.transform.position.y - transform.position.y) > zyf.GetWorldScreenSize().x)
+        {
+            gfx.SetActive(false);
+        }
     }
 
     IEnumerator LaunchMissile()
@@ -55,5 +66,7 @@ public class Bullet : MonoBehaviour
         targetAngle -= 90;
         transform.rotation = Quaternion.Euler(0, 0, targetAngle);
     }
+
+
 
 }

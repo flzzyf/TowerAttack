@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4629015367202294}
   - component: {fileID: 212517508597613316}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,6 +84,7 @@ MonoBehaviour:
   speed: 1.5
   damage: 1
   target: {fileID: 0}
+  gfx: {fileID: 1773235524401638}
 --- !u!212 &212517508597613316
 SpriteRenderer:
   m_ObjectHideFlags: 1
