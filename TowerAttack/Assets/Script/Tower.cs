@@ -184,6 +184,8 @@ public class Tower : MonoBehaviour
             item.GetComponent<NodeItem>().UpdateBorders();
             item.GetComponent<NodeItem>().UpdateForceText(player);
         }
+
+        SearchTarget();
     }
 
     //升级视野

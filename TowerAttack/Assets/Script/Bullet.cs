@@ -21,6 +21,9 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
+        if (target == null)
+            return;
+
         if (Mathf.Abs(target.transform.position.x - transform.position.x) > zyf.GetWorldScreenSize().y ||
             Mathf.Abs(target.transform.position.y - transform.position.y) > zyf.GetWorldScreenSize().x)
         {

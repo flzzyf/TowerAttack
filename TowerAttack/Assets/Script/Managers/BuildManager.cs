@@ -142,6 +142,12 @@ public class BuildManager : Singleton<BuildManager>
                 return;
             }
 
+            if(IncomeManager.Instance().population[_player] - IncomeManager.Instance().population_worker[_player] < 5)
+            {
+                print("工人不足");
+                return;
+            }
+
             IncomeManager.Instance().ModifyMoney(_player, -towerPrice);
 
             _node.GetComponent<NodeItem>().towerPlacement.SetActive(false);

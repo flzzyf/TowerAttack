@@ -77,7 +77,7 @@ public class NodeItem : MonoBehaviour
                 else
                 {
                     //已有塔，升级
-                    //tower.GetComponent<Tower>().Upgrade_Vision();
+                    tower.GetComponent<Tower>().Upgrade_Vision();
                     tower.GetComponent<Tower>().Upgrade_Range();
                 }
             }

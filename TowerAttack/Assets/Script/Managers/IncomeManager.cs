@@ -19,8 +19,10 @@ public class IncomeManager : Singleton<IncomeManager>
 
     int[] income;
 
-    int[] population;
-    int[] population_worker;
+    [HideInInspector]
+    public int[] population;
+    [HideInInspector]
+    public int[] population_worker;
 
     public float sliderSpeed = 1;
 
