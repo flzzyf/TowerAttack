@@ -13,6 +13,10 @@ public class SeamlessMap : Singleton<SeamlessMap>
 
     Vector2 mouseOrigin;
 
+    //RTS
+    public float panSpeed = 20f;
+    public float panBorderThickness = 10f;
+
     public void Init() 
 	{
         worldObject = ParentManager.Instance().grandparent;
@@ -41,10 +45,34 @@ public class SeamlessMap : Singleton<SeamlessMap>
                 for (int j = 0; j < NodeManager.Instance().nodeCountX; j++)
                 {
                     MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().pos = new Vector2Int(i, j);
-
                 }
             }
         }
+
+        //RTS
+        float x = 0, y = 0;
+
+        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)
+        {
+            y += panSpeed * Time.deltaTime;
+        }
+        if (Input.GetKey("s") || Input.mousePosition.y <= panBorderThickness)
+        {
+            y -= panSpeed * Time.deltaTime;
+        }
+        if (Input.GetKey("a") || Input.mousePosition.x <= panBorderThickness)
+        {
+            x -= panSpeed * Time.deltaTime;
+        }
+        if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorderThickness)
+        {
+            x += panSpeed * Time.deltaTime;
+        }
+
+        if (x != 0)
+            MoveRight(x);
+        if (y != 0)
+            MoveUp(y);
     }
 
     float offsetX;
@@ -122,6 +150,7 @@ public class SeamlessMap : Singleton<SeamlessMap>
             }
         }
     }
+
     //方块向右移动
     void MoveRight()
     {
