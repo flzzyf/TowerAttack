@@ -17,6 +17,8 @@ public class BuildManager : Singleton<BuildManager>
 
     public int towerPrice = 5;
 
+    public Building[] buildings;
+
     public void Init()
     {
         //初始化所有玩家建造速度
@@ -57,7 +59,7 @@ public class BuildManager : Singleton<BuildManager>
 
         towers.Add(go);
 
-        StartCoroutine(Building(go, _player, _node));
+        StartCoroutine(IEBuild(go, _player, _node));
 
         //所有塔开始搜索目标
         for (int i = 0; i < towers.Count; i++)
@@ -70,7 +72,7 @@ public class BuildManager : Singleton<BuildManager>
     }
 
     //开始建造
-    IEnumerator Building(GameObject _tower, int _player, GameObject _node)
+    IEnumerator IEBuild(GameObject _tower, int _player, GameObject _node)
     {
         AudioSource source = null;
 
@@ -157,5 +159,43 @@ public class BuildManager : Singleton<BuildManager>
             //确认建造
             Build(_node, GameManager.Instance().player);
         }
+    }
+    //建造可占领建筑
+    public void BuildOccupiableBuilding(string _name, GameObject _node)
+    {
+        GameObject prefab = GetBuilding(_name);
+        if(prefab == null)
+        {
+            print("无可建造物体");
+            return;
+        }
+
+        GameObject go = Instantiate(prefab, _node.transform.position, Quaternion.identity, _node.GetComponent<NodeItem>().invisibleThingsParent);
+        go.GetComponent<OccupiableBuilding>().BuildSetting(_node);
+        //设置图层
+        foreach (var item in go.GetComponentsInChildren<SpriteRenderer>(true))
+        {
+            int order = _node.GetComponent<NodeItem>().gfx.sortingOrder;
+            item.sortingOrder = order;
+        }
+    }
+
+    GameObject GetBuilding(string _name)
+    {
+        for (int i = 0; i < buildings.Length; i++)
+        {
+            if (buildings[i].name == _name)
+            {
+                return buildings[i].prefab;
+            }
+        }
+        return null;
+    }
+
+    [System.Serializable]
+    public class Building
+    {
+        public string name;
+        public GameObject prefab;
     }
 }

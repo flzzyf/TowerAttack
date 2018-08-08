@@ -24,14 +24,25 @@ public class GameManager : Singleton<GameManager>
     {
         if(Input.GetKeyDown(KeyCode.D))
         {
-            //foreach (GameObject item in MapManager.Instance().GetNearbyNodesWithinRange(new Vector2Int(6, 6), 2))
-            //{
-            //    item.SetActive(false);
-            //}
+            BuildManager.Instance().BuildOccupiableBuilding("WatchTower", MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(0, 0)));
+            BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(0, 1)), 0);
+            BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(2, 0)), 0);
 
-            
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(1, 0)), 1);
+
+            //所有塔开始搜索目标
+            for (int i = 0; i < BuildManager.Instance().towers.Count; i++)
+            {
+                GameObject tower = BuildManager.Instance().towers[i];
+                if (!tower.GetComponent<Tower>().building)
+                    tower.GetComponent<Tower>().SearchTarget();
+            }
+        }
+
     }
     //移动镜头到节点
     public void CameraMoveToPoint(Vector2Int _pos)

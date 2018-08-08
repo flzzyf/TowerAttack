@@ -79,6 +79,11 @@ public class IncomeManager : Singleton<IncomeManager>
         population_worker[_player] += _number;
     }
 
+    public void ModifyPopulation(int _player, int _number)
+    {
+        population[_player] += _number;
+    }
+
     void IncreaseMoney(int _player)
     {
         ModifyMoney(_player, income[_player]);

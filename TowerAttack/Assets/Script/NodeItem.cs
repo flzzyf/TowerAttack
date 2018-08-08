@@ -32,6 +32,11 @@ public class NodeItem : MonoBehaviour
 
     Animator animator;
 
+    //可占领节点的父级物体，农场之类
+    public GameObject occupiableNodeParent;
+
+    public NodeItemAppearence[] appearences;
+
     public void Init()
     {
         animator = GetComponent<Animator>();
@@ -97,6 +102,12 @@ public class NodeItem : MonoBehaviour
             item.GetComponent<NodeItem>().UpdateBorders();
             item.GetComponent<NodeItem>().UpdateForceText(_player);
         }
+
+        //可占领物体
+        if(occupiableNodeParent != null)
+        {
+            occupiableNodeParent.GetComponent<OccupiableBuilding>().Occupy(_player);
+        }
     }
     //塔被打掉
     public void TowerDestoryed(int _player)
@@ -114,6 +125,11 @@ public class NodeItem : MonoBehaviour
 
         FogOfWarManager.Instance().RemoveNodesWithinRangeToPlayerVision(_player, gameObject, 2);
 
+        //可占领物体
+        if (occupiableNodeParent != null)
+        {
+            occupiableNodeParent.GetComponent<OccupiableBuilding>().Liberate(_player);
+        }
     }
 
     int[] borderIndex = { 7, 1, 3, 5 };
@@ -175,11 +191,33 @@ public class NodeItem : MonoBehaviour
 
     public void SetOrderInLayer(int _order)
     {
-        foreach (var item in GetComponentsInChildren<SpriteRenderer>())
+        foreach (var item in GetComponentsInChildren<SpriteRenderer>(true))
         {
             item.sortingOrder = _order;
         }
 
         fog.GetComponentInChildren<SpriteRenderer>().sortingOrder = _order + 1;
+    }
+
+    [System.Serializable]
+    public class NodeItemAppearence
+    {
+        public string name;
+        public GameObject appearence;
+    }
+
+    public void ChangeNodeAppearence(string _name)
+    {
+        for (int i = 0; i < appearences.Length; i++)
+        {
+            if(appearences[i].name == _name)
+            {
+                appearences[i].appearence.SetActive(true);
+            }
+            else
+            {
+                appearences[i].appearence.SetActive(false);
+            }
+        }
     }
 }

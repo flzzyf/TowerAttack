@@ -13,6 +13,7 @@ public class Tower : MonoBehaviour
     public GameObject prefab_bullet;
 
     public GameObject flag;
+    public GameObject roof;
 
     public float searchTargetCD = 0.5f;
 
@@ -46,6 +47,7 @@ public class Tower : MonoBehaviour
         currentHp = hp;
 
         flag.GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[player].color;
+        roof.GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[player].color;
 
         //InvokeRepeating("SearchTarget", 0, searchTargetCD);
     }
