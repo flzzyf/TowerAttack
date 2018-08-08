@@ -122,19 +122,21 @@ public class BuildManager : Singleton<BuildManager>
 
     public void ClickNode(GameObject _node, int _player)
     {
-        //确认二次点击
+        //需要确认第二次点击
         if (desiredBuildTarget != _node)
         {
             SoundManager.Instance().Play("Placement");
 
             if (desiredBuildTarget != null)
             {
-                desiredBuildTarget.GetComponent<NodeItem>().towerPlacement.SetActive(false);
+                ToggleHighlightNode(desiredBuildTarget, false);
+
             }
 
             desiredBuildTarget = _node;
 
-            _node.GetComponent<NodeItem>().towerPlacement.SetActive(true);
+            ToggleHighlightNode(_node, true);
+
         }
         else
         {
@@ -152,7 +154,7 @@ public class BuildManager : Singleton<BuildManager>
 
             IncomeManager.Instance().ModifyMoney(_player, -towerPrice);
 
-            _node.GetComponent<NodeItem>().towerPlacement.SetActive(false);
+            ToggleHighlightNode(_node, false);
 
             desiredBuildTarget = null;
 
@@ -160,6 +162,15 @@ public class BuildManager : Singleton<BuildManager>
             Build(_node, GameManager.Instance().player);
         }
     }
+    public void ToggleHighlightNode(GameObject _node, bool _on)
+    {
+        _node.GetComponent<NodeItem>().towerPlacement.SetActive(_on);
+        foreach (var item in MapManager.Instance().GetNodesWithinRange(_node, 1))
+        {
+            item.GetComponent<NodeItem>().highlight.SetActive(_on);
+        }
+    }
+
     //建造可占领建筑
     public void BuildOccupiableBuilding(string _name, GameObject _node)
     {

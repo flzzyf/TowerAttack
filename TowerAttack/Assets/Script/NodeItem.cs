@@ -37,11 +37,14 @@ public class NodeItem : MonoBehaviour
 
     public NodeItemAppearence[] appearences;
 
+    public GameObject highlight;
+
     public void Init()
     {
         animator = GetComponent<Animator>();
 
         towerPlacement.SetActive(false);
+        highlight.SetActive(false);
 
         playerForce = new int[PlayerManager.Instance().playerNumber];
         playerVision = new int[PlayerManager.Instance().playerNumber];

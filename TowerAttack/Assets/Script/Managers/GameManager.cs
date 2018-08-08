@@ -24,9 +24,10 @@ public class GameManager : Singleton<GameManager>
     {
         if(Input.GetKeyDown(KeyCode.D))
         {
-            BuildManager.Instance().BuildOccupiableBuilding("WatchTower", MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(0, 0)));
-            BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(0, 1)), 0);
-            BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(2, 0)), 0);
+            //BuildManager.Instance().BuildOccupiableBuilding("WatchTower", MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(0, 0)));
+            BuildManager.Instance().BuildOccupiableBuilding("Farm", MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(0, 0)));
+            //BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(0, 1)), 0);
+            //BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(2, 0)), 0);
 
         }
 
