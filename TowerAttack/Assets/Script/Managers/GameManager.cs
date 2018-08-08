@@ -61,11 +61,34 @@ public class GameManager : Singleton<GameManager>
     {
         gaming = true;
 
-        NodeManager.Instance().nodeCountX = PlayerManager.Instance().playerNumber * 7;
-        NodeManager.Instance().nodeCountY = PlayerManager.Instance().playerNumber * 12;
+        int mapSize;
+        if (PlayerManager.Instance().playerNumber == 1)
+            mapSize = 1;
+        else
+             mapSize = (int)Mathf.Sqrt(PlayerManager.Instance().playerNumber) + 1;
+        NodeManager.Instance().nodeCountX = mapSize * 7;
+        NodeManager.Instance().nodeCountY = mapSize * 12;
 
         NodeManager.Instance().GenerateNodes();
         MapManager.Instance().GenerateMap();
+
+        //设置出生点，在所有可能点中取玩家数个
+        List<int> startingPointList = new List<int>();
+        for (int i = 0; i < mapSize * mapSize; i++)
+        {
+            startingPointList.Add(i);
+        }
+        for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
+        {
+            //随机取一个出生点
+            int a = startingPointList[Random.Range(0, startingPointList.Count - 1)];
+            startingPointList.Remove(a);
+            int y = a / mapSize;
+            int x = a % mapSize;
+
+            PlayerManager.Instance().players[i].startingPoint = new Vector2Int(12 * y, 7 * x);
+            print(new Vector2Int(12 * y, 7 * x));
+        }
 
         //设置玩家初始金钱
         for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)

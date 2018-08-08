@@ -14,6 +14,9 @@ public class PlayerManager : Singleton<PlayerManager>
     //判断两个玩家为敌对
     public bool isEnemy(int _player1, int _player2)
     {
+        //相同玩家，当然不是敌对
+        if (_player1 == _player2)
+            return false;
         //只要有一个是中立，则不是敌对
         if(players[_player1].team == 0 || players[_player2].team == 0)
         {

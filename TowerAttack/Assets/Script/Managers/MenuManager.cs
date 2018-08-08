@@ -188,7 +188,7 @@ public class MenuManager : MonoBehaviour
         for (int i = 0; i < panel_players.childCount; i++)
         {
             PlayerItem item = panel_players.GetChild(i).GetComponent<PlayerItem>();
-            Player player = new Player(i, item.dropdown_team.value, playerColor[item.dropdown_color.value], new Vector2Int(8 * (i + 1) / 2,  13 * (i + 1) / 2), item.isAI);
+            Player player = new Player(i, item.dropdown_team.value, playerColor[item.dropdown_color.value], new Vector2Int(0, 0), item.isAI);
             PlayerManager.Instance().players.Add(player);
         }
         LoadScene("Game");
