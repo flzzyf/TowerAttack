@@ -136,15 +136,35 @@ public class NodeItem : MonoBehaviour
     //更新边界
     public void UpdateBorders()
     {
-        for (int i = 0; i < 4; i++)
+        if(occupiableNodeParent == null)
         {
-            for (int j = 0; j < PlayerManager.Instance().playerNumber; j++)
+            //如果不是可占领建筑
+            for (int i = 0; i < 4; i++)
             {
-                if (playerForce[j] != 0 && MapManager.Instance().GetNearbyNode(gameObject, borderIndex[i]).GetComponent<NodeItem>().playerForce[j] == 0)
+                for (int j = 0; j < PlayerManager.Instance().playerNumber; j++)
+                {
+                    if (playerForce[j] != 0 && MapManager.Instance().GetNearbyNode(gameObject, borderIndex[i]).GetComponent<NodeItem>().playerForce[j] == 0)
+                    {
+                        borders[i].SetActive(true);
+                        borders[i].GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[j].color;
+                        break;
+                    }
+                    else
+                    {
+                        borders[i].SetActive(false);
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                //为可占领节点，周围不是
+                if (MapManager.Instance().GetNearbyNode(gameObject, borderIndex[i]).GetComponent<NodeItem>().occupiableNodeParent == null)
                 {
                     borders[i].SetActive(true);
-                    borders[i].GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[j].color;
-                    break;
+                    borders[i].GetComponent<SpriteRenderer>().color = Color.white;
                 }
                 else
                 {
@@ -152,7 +172,14 @@ public class NodeItem : MonoBehaviour
                 }
             }
         }
+        
     }
+    //可占领建筑，节点初始化设置
+    public void OccupiableBuildSetting()
+    {
+        UpdateBorders();
+    }
+
     public void UpdateForceText(int _player)
     {
         if(tower != null)

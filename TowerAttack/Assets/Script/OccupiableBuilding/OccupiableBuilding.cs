@@ -30,6 +30,11 @@ public class OccupiableBuilding : MonoBehaviour
             //周围节点父级可占领物体设为自己
             item.GetComponent<NodeItem>().occupiableNodeParent = gameObject;
         }
+        foreach (var item in nearbyNodes)
+        {
+            item.GetComponent<NodeItem>().OccupiableBuildSetting();
+        }
+
     }
 
     //占领
@@ -61,7 +66,7 @@ public class OccupiableBuilding : MonoBehaviour
     }
     public virtual void OccupiedEffect()
     {
-        print("占领:" + player);
+        //print("占领:" + player);
         isOccupied = true;
     }
 
@@ -97,7 +102,7 @@ public class OccupiableBuilding : MonoBehaviour
 
     public virtual void LiberatedEffect()
     {
-        print("解放:" + player);
+        //print("解放:" + player);
         isOccupied = false;
     }
 

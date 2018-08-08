@@ -8,11 +8,6 @@ public class WatchTower : OccupiableBuilding
     {
         base.BuildSetting(_node);
 
-        foreach (var item in nearbyNodes)
-        {
-            //将周围节点变为农场土地
-            //item.GetComponent<NodeItem>().ChangeNodeAppearence("Farm");
-        }
     }
 
     public override void OccupiedEffect()
