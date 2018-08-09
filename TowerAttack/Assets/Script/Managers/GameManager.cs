@@ -94,6 +94,10 @@ public class GameManager : Singleton<GameManager>
         {
             Vector2Int pos = PlayerManager.Instance().players[i].startingPoint;
             BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItem(pos), i);
+
+            BuildManager.Instance().BuildOccupiableBuilding("Farm", MapManager.Instance().GetNodeItem(pos + new Vector2Int(6, 0)));
+            BuildManager.Instance().BuildOccupiableBuilding("WatchTower", MapManager.Instance().GetNodeItem(pos + new Vector2Int(0, 4)));
+
         }
 
         //移动镜头到出生点

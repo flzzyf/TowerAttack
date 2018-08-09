@@ -36,11 +36,15 @@ public class Tower : MonoBehaviour
 
     public GameObject gfx_tower;
     public GameObject gfx_building;
+    public GameObject gfx_upgrading;
 
     [HideInInspector]
     public bool building;
 
     bool isDead;
+
+    public float upgradeTime = 3;
+    public bool[] upgraded = new bool[2];
 
     void Start () 
 	{
@@ -49,7 +53,6 @@ public class Tower : MonoBehaviour
         flag.GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[player].color;
         roof.GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[player].color;
 
-        //InvokeRepeating("SearchTarget", 0, searchTargetCD);
     }
     void Update () 
 	{
@@ -68,7 +71,8 @@ public class Tower : MonoBehaviour
 
     public void Building()
     {
-        gfx_building.SetActive(true);
+        ToggleParticles(gfx_building, true);
+
         gfx_tower.SetActive(false);
 
         building = true;
@@ -76,13 +80,7 @@ public class Tower : MonoBehaviour
 
     public void BuildingFinish()
     {
-        foreach (var item in GetComponentsInChildren<ParticleSystem>(true))
-        {
-            item.Stop();
-#pragma warning disable CS0618 // Type or member is obsolete
-            item.enableEmission = false;
-#pragma warning restore CS0618 // Type or member is obsolete
-        }
+        ToggleParticles(gfx_building, false);
 
         gfx_tower.SetActive(true);
 
@@ -165,6 +163,7 @@ public class Tower : MonoBehaviour
         Vector2 point;
         point.x = impactAreaCenter.x + Random.Range(-1, 1) * impactAreaSize.x / 2;
         point.y = impactAreaCenter.y + Random.Range(-1, 1) * impactAreaSize.y / 2;
+        point += (Vector2)transform.position;
 
         return point;
     }
@@ -172,7 +171,7 @@ public class Tower : MonoBehaviour
     //绘制线框
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(impactAreaCenter, impactAreaSize);
+        Gizmos.DrawWireCube((Vector2)transform.position + impactAreaCenter, impactAreaSize);
     }
 
     //升级射程
@@ -208,4 +207,81 @@ public class Tower : MonoBehaviour
         FogOfWarManager.Instance().RemoveNodesWithinRangeToPlayerVision(player, node, vision - 1);
     }
 
+    public void Upgrade(int _index)
+    {
+        target = null;
+
+        StartCoroutine(Upgrading(_index));
+    }
+
+    IEnumerator Upgrading(int _index)
+    {
+        float upgradeProgress = 0;
+
+        //建造前设置
+        ToggleParticles(gfx_upgrading, true);
+
+        building = true;
+
+        ScoreManager.Instance().ModifyWorker(player, 5);
+
+        AudioSource source = null;
+        if (player == GameManager.Instance().player)
+        {
+            SoundManager.Instance().Play("Construct_Start");
+            source = SoundManager.Instance().Play("Construct_Loop");
+        }
+
+        while (!isDead && upgradeProgress < upgradeTime)
+        {
+            upgradeProgress += Time.deltaTime;
+
+            yield return null;
+        }
+
+        //建造后设置
+        ToggleParticles(gfx_upgrading, false);
+        building = false;
+        ScoreManager.Instance().ModifyWorker(player, -5);
+        if (source != null)
+        {
+            source.Stop();
+            Destroy(source);
+        }
+        SoundManager.Instance().Play("UpgradeComplete");
+
+        if (!isDead)
+        {
+            upgraded[_index] = true;
+            if (_index == 0)
+                Upgrade_Range();
+            else
+                Upgrade_Vision();
+        }
+    }
+
+    void ToggleParticles(GameObject _go, bool _on)
+    {
+        _go.SetActive(_on);
+        if(_on)
+        {
+            foreach (var item in _go.GetComponentsInChildren<ParticleSystem>(true))
+            {
+                item.Play();
+#pragma warning disable CS0618 // Type or member is obsolete
+                item.enableEmission = true;
+#pragma warning restore CS0618 // Type or member is obsolete
+            }
+        }
+        else
+        {
+            foreach (var item in _go.GetComponentsInChildren<ParticleSystem>(true))
+            {
+                item.Stop();
+#pragma warning disable CS0618 // Type or member is obsolete
+                item.enableEmission = false;
+#pragma warning restore CS0618 // Type or member is obsolete
+            }
+        }
+    }
 }

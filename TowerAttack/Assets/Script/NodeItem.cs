@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class NodeItem : MonoBehaviour
 {
     public Transform invisibleThingsParent;
     [HideInInspector]
     public GameObject tower;
+    [HideInInspector]
+    public GameObject building;
 
     public Vector2Int pos;
     public Vector2Int absPos;
@@ -24,6 +27,8 @@ public class NodeItem : MonoBehaviour
     float mouseDownTime;
 
     public GameObject towerPlacement;
+    public GameObject towerUpgrade_Range;
+    public GameObject towerUpgrade_Vision;
 
     public GameObject fog;
 
@@ -44,6 +49,8 @@ public class NodeItem : MonoBehaviour
         animator = GetComponent<Animator>();
 
         towerPlacement.SetActive(false);
+        towerUpgrade_Range.SetActive(false);
+        towerUpgrade_Vision.SetActive(false);
         highlight.SetActive(false);
 
         playerForce = new int[PlayerManager.Instance().playerNumber];
@@ -53,6 +60,11 @@ public class NodeItem : MonoBehaviour
     private void OnMouseEnter()
     {
 #if UNITY_STANDALONE || UNITY_WEBGL
+        //点击在按UI钮上
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         animator.SetBool("hovered", true);
 #endif
     }
@@ -71,6 +83,12 @@ public class NodeItem : MonoBehaviour
 
     private void OnMouseUp()
     {
+        //点击在按UI钮上
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         //非拖动的快速点击
         if (Time.time - mouseDownTime < clickConfirmDelay)
         {
@@ -84,9 +102,14 @@ public class NodeItem : MonoBehaviour
                 }
                 else
                 {
+                    if (tower.GetComponent<Tower>().building)
+                        return;
+
                     //已有塔，升级
-                    tower.GetComponent<Tower>().Upgrade_Vision();
-                    tower.GetComponent<Tower>().Upgrade_Range();
+                    if(!tower.GetComponent<Tower>().upgraded[0])
+                        towerUpgrade_Range.SetActive(true);
+                    if(!tower.GetComponent<Tower>().upgraded[1])
+                        towerUpgrade_Vision.SetActive(true);
                 }
             }
         }
@@ -250,4 +273,32 @@ public class NodeItem : MonoBehaviour
             }
         }
     }
+
+    //升级射程
+    public void Upgrade_Range()
+    {
+        if (ScoreManager.Instance().population_farmer[tower.GetComponent<Tower>().player] < 5)
+        {
+            print("工人不足");
+            return;
+        }
+        towerUpgrade_Range.SetActive(false);
+        towerUpgrade_Vision.SetActive(false);
+
+        tower.GetComponent<Tower>().Upgrade(0);
+    }
+    //升级视野
+    public void Upgrade_Vision()
+    {
+        if (ScoreManager.Instance().population_farmer[tower.GetComponent<Tower>().player] < 5)
+        {
+            print("工人不足");
+            return;
+        }
+        towerUpgrade_Range.SetActive(false);
+        towerUpgrade_Vision.SetActive(false);
+
+        tower.GetComponent<Tower>().Upgrade(1);
+    }
+
 }

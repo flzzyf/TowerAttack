@@ -47,8 +47,6 @@ public class Player
     public bool isAI;
     public Vector2Int startingPoint;
 
-    public int money;
-
     public Player(int _id, int _team, Color _color, Vector2Int _startingPoint, bool _isAI)
     {
         id = _id;

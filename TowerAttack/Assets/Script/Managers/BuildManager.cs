@@ -19,6 +19,7 @@ public class BuildManager : Singleton<BuildManager>
 
     public Building[] buildings;
 
+
     public void Init()
     {
         //初始化所有玩家建造速度
@@ -137,12 +138,6 @@ public class BuildManager : Singleton<BuildManager>
         }
         else
         {
-            if (PlayerManager.Instance().players[_player].money < towerPrice)
-            {
-                print("金钱不足!");
-                return;
-            }
-
             if(ScoreManager.Instance().population_farmer[_player] < 5)
             {
                 print("工人不足");
@@ -178,6 +173,7 @@ public class BuildManager : Singleton<BuildManager>
 
         GameObject go = Instantiate(prefab, _node.transform.position, Quaternion.identity, _node.GetComponent<NodeItem>().invisibleThingsParent);
         go.GetComponent<OccupiableBuilding>().BuildSetting(_node);
+        _node.GetComponent<NodeItem>().building = go;
         //设置图层
         foreach (var item in go.GetComponentsInChildren<SpriteRenderer>(true))
         {

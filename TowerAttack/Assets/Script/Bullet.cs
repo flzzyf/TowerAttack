@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
         target = _target;
         damage = _damage;
 
-        Vector2 impactPos = (Vector2)_target.transform.position + _target.GetComponent<Tower>().GetImpactPoint();
+        Vector2 impactPos = target.GetComponent<Tower>().GetImpactPoint();
         StartCoroutine(LaunchMissile(impactPos));
     }
 
