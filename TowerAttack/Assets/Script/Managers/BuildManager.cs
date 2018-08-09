@@ -82,8 +82,7 @@ public class BuildManager : Singleton<BuildManager>
             source = SoundManager.Instance().Play("Construct_Loop");
         }
 
-        IncomeManager.Instance().SetIncomeRate(_tower.GetComponent<Tower>().player, -0.5f);
-        IncomeManager.Instance().ModifyWorker(_player, 5);
+        ScoreManager.Instance().ModifyWorker(_player, 5);
 
         _tower.GetComponent<Tower>().Building();
 
@@ -115,9 +114,7 @@ public class BuildManager : Singleton<BuildManager>
             Destroy(source);
         }
 
-        IncomeManager.Instance().SetIncomeRate(_player, 0.5f);
-        IncomeManager.Instance().ModifyWorker(_player, -5);
-
+        ScoreManager.Instance().ModifyWorker(_player, -5);
     }
 
     public void ClickNode(GameObject _node, int _player)
@@ -146,13 +143,11 @@ public class BuildManager : Singleton<BuildManager>
                 return;
             }
 
-            if(IncomeManager.Instance().population[_player] - IncomeManager.Instance().population_worker[_player] < 5)
+            if(ScoreManager.Instance().population_farmer[_player] < 5)
             {
                 print("工人不足");
                 return;
             }
-
-            IncomeManager.Instance().ModifyMoney(_player, -towerPrice);
 
             ToggleHighlightNode(_node, false);
 

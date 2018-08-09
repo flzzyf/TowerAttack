@@ -79,7 +79,9 @@ public class Tower : MonoBehaviour
         foreach (var item in GetComponentsInChildren<ParticleSystem>(true))
         {
             item.Stop();
+#pragma warning disable CS0618 // Type or member is obsolete
             item.enableEmission = false;
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         gfx_tower.SetActive(true);

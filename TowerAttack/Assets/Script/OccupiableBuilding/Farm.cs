@@ -19,13 +19,13 @@ public class Farm : OccupiableBuilding
     {
         base.OccupiedEffect();
 
-        IncomeManager.Instance().ModifyPopulation(player, 5);
+        ScoreManager.Instance().ModifyFarmer(player, 5);
     }
 
     public override void LiberatedEffect()
     {
         base.LiberatedEffect();
 
-        IncomeManager.Instance().ModifyPopulation(player, -5);
+        ScoreManager.Instance().ModifyFarmer(player, -5);
     }
 }

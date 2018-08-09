@@ -25,8 +25,6 @@ public class Bullet : MonoBehaviour
         Vector2 targetDir = _pos - (Vector2)transform.position;
         float time = targetDir.magnitude / speed;
         targetDir.Normalize();
-        print(time);
-        Vector2 movement = targetDir;
 
         FaceTarget2D(targetDir);
 
@@ -34,7 +32,7 @@ public class Bullet : MonoBehaviour
         {
             time -= Time.deltaTime;
             
-            transform.Translate(movement * speed * Time.deltaTime, Space.World);
+            transform.Translate(targetDir * speed * Time.deltaTime, Space.World);
 
             yield return null;
         }

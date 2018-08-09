@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager>
 	void Start ()
     {
         BuildManager.Instance().Init();
-        IncomeManager.Instance().Init();
+        ScoreManager.Instance().Init();
         SeamlessMap.Instance().Init();
         FogOfWarManager.Instance().Init();
 
@@ -87,12 +87,6 @@ public class GameManager : Singleton<GameManager>
             int x = a % mapSize;
 
             PlayerManager.Instance().players[i].startingPoint = new Vector2Int(12 * y, 7 * x);
-        }
-
-        //设置玩家初始金钱
-        for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
-        {
-            IncomeManager.Instance().SetMoney(i, 10);
         }
 
         //建造初始炮塔
