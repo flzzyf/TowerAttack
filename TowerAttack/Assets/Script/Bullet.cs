@@ -7,42 +7,34 @@ public class Bullet : MonoBehaviour
     public float speed = 1;
 
     public float damage = 1;
-    public GameObject target;
 
     public GameObject gfx;
+    GameObject target;
 
     public void Launch(GameObject _target, float _damage)
     {
         target = _target;
         damage = _damage;
 
-        StartCoroutine(LaunchMissile());
+        Vector2 impactPos = (Vector2)_target.transform.position + _target.GetComponent<Tower>().GetImpactPoint();
+        StartCoroutine(LaunchMissile(impactPos));
     }
 
-    void Update()
+    IEnumerator LaunchMissile(Vector2 _pos)
     {
-        if (target == null)
-            return;
+        Vector2 targetDir = _pos - (Vector2)transform.position;
+        float time = targetDir.magnitude / speed;
+        targetDir.Normalize();
+        print(time);
+        Vector2 movement = targetDir;
 
-        if (Mathf.Abs(target.transform.position.x - transform.position.x) > zyf.GetWorldScreenSize().y ||
-            Mathf.Abs(target.transform.position.y - transform.position.y) > zyf.GetWorldScreenSize().x)
+        FaceTarget2D(targetDir);
+
+        while (target != null && time > 0)
         {
-            gfx.SetActive(false);
-        }
-    }
-
-    IEnumerator LaunchMissile()
-    {
-        Vector2 targetPoint = (Vector2)target.transform.position + target.GetComponent<Tower>().GetImpactPoint();
-
-        FaceTarget2D(targetPoint);
-
-        while (target != null &&
-                Vector2.Distance(targetPoint, transform.position) > speed * Time.deltaTime)
-        {
-            Vector2 dir = targetPoint - (Vector2)transform.position;
-            dir.Normalize();
-            transform.Translate(dir * speed * Time.deltaTime, Space.World);
+            time -= Time.deltaTime;
+            
+            transform.Translate(movement * speed * Time.deltaTime, Space.World);
 
             yield return null;
         }
@@ -69,7 +61,5 @@ public class Bullet : MonoBehaviour
         targetAngle -= 90;
         transform.rotation = Quaternion.Euler(0, 0, targetAngle);
     }
-
-
 
 }

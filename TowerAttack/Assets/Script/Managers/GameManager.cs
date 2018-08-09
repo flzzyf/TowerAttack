@@ -22,16 +22,16 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.D))
+        if(Input.GetKeyDown(KeyCode.F))
         {
             //BuildManager.Instance().BuildOccupiableBuilding("WatchTower", MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(0, 0)));
             BuildManager.Instance().BuildOccupiableBuilding("Farm", MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(0, 0)));
             //BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(0, 1)), 0);
-            //BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(2, 0)), 0);
+            BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(2, 0)), 0);
 
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(1, 0)), 1);
 
@@ -87,7 +87,6 @@ public class GameManager : Singleton<GameManager>
             int x = a % mapSize;
 
             PlayerManager.Instance().players[i].startingPoint = new Vector2Int(12 * y, 7 * x);
-            print(new Vector2Int(12 * y, 7 * x));
         }
 
         //设置玩家初始金钱

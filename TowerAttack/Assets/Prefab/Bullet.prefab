@@ -83,7 +83,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.5
   damage: 1
-  target: {fileID: 0}
   gfx: {fileID: 1773235524401638}
 --- !u!212 &212517508597613316
 SpriteRenderer:

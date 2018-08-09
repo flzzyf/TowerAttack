@@ -167,6 +167,9 @@ public class MenuManager : MonoBehaviour
     //添加电脑玩家
     public void AddComputer()
     {
+        if (panel_players.transform.childCount >= 7)
+            return;
+
         AddPlayerItem("电脑", 0, 1, true);
     }
     //添加玩家项

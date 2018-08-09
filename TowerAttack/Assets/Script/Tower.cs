@@ -107,7 +107,7 @@ public class Tower : MonoBehaviour
     {
         SoundManager.Instance().Play("Arrow_Launch");
 
-        GameObject go = Instantiate(prefab_bullet, launchPos.position, Quaternion.identity, ParentManager.Instance().GetParent("Bullet"));
+        GameObject go = Instantiate(prefab_bullet, launchPos.position, Quaternion.identity, ParentManager.Instance().GetParent("Missile"));
 
         float fixedDamage = damage * attackCD;
 
@@ -139,6 +139,14 @@ public class Tower : MonoBehaviour
             node.GetComponent<NodeItem>().TowerDestoryed(player);
 
         DestroyImmediate(gameObject);
+
+        //所有塔开始搜索目标
+        for (int i = 0; i < BuildManager.Instance().towers.Count; i++)
+        {
+            GameObject tower = BuildManager.Instance().towers[i];
+            if (!tower.GetComponent<Tower>().building)
+                tower.GetComponent<Tower>().SearchTarget();
+        }
     }
 
     public void SetOrderInLayer(int _order)
