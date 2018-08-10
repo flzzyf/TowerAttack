@@ -199,8 +199,7 @@ public class BuildManager : Singleton<BuildManager>
         for (int i = 0; i < towers.Count; i++)
         {
             GameObject tower = towers[i];
-            if (!tower.GetComponent<Tower>().building)
-                tower.GetComponent<Tower>().SearchTarget();
+            tower.GetComponent<Tower>().SearchTarget();
         }
     }
 }

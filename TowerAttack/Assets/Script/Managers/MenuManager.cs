@@ -199,7 +199,7 @@ public class MenuManager : MonoBehaviour
 
     public void Button_Option()
     {
-#if UNITY_IPHONE || UNITY_ANDROID
+#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WEBGL
         panel_option_mobile.SetActive(true);
 #else
         panel_option.SetActive(true);

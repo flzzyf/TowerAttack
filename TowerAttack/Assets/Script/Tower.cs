@@ -95,7 +95,7 @@ public class Tower : MonoBehaviour
     //塔搜索目标
     public void SearchTarget()
     {
-        if (target != null)
+        if (building || target != null)
             return;
 
         foreach (var item in MapManager.Instance().GetNearbyNodesWithinRange(node, range))
@@ -194,7 +194,6 @@ public class Tower : MonoBehaviour
             item.GetComponent<NodeItem>().UpdateForceText(player);
         }
 
-        SearchTarget();
     }
 
     //升级视野
@@ -251,6 +250,9 @@ public class Tower : MonoBehaviour
         if (!isDead)
         {
             upgraded[_index] = true;
+
+            SearchTarget();
+
             if (_index == 0)
                 Upgrade_Range();
             else
