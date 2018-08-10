@@ -36,12 +36,7 @@ public class GameManager : Singleton<GameManager>
             BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItemFromAbsPos(new Vector2Int(1, 0)), 1);
 
             //所有塔开始搜索目标
-            for (int i = 0; i < BuildManager.Instance().towers.Count; i++)
-            {
-                GameObject tower = BuildManager.Instance().towers[i];
-                if (!tower.GetComponent<Tower>().building)
-                    tower.GetComponent<Tower>().SearchTarget();
-            }
+            BuildManager.Instance().AllTowerStartSearching();
         }
 
     }

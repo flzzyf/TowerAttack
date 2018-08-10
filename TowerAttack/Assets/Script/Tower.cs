@@ -71,6 +71,9 @@ public class Tower : MonoBehaviour
 
     public void Building()
     {
+        //所有塔开始搜索目标
+        BuildManager.Instance().AllTowerStartSearching();
+
         ToggleParticles(gfx_building, true);
 
         gfx_tower.SetActive(false);
@@ -141,12 +144,7 @@ public class Tower : MonoBehaviour
         DestroyImmediate(gameObject);
 
         //所有塔开始搜索目标
-        for (int i = 0; i < BuildManager.Instance().towers.Count; i++)
-        {
-            GameObject tower = BuildManager.Instance().towers[i];
-            if (!tower.GetComponent<Tower>().building)
-                tower.GetComponent<Tower>().SearchTarget();
-        }
+        BuildManager.Instance().AllTowerStartSearching();
     }
 
     public void SetOrderInLayer(int _order)

@@ -19,7 +19,6 @@ public class BuildManager : Singleton<BuildManager>
 
     public Building[] buildings;
 
-
     public void Init()
     {
         //初始化所有玩家建造速度
@@ -61,13 +60,6 @@ public class BuildManager : Singleton<BuildManager>
         towers.Add(go);
 
         StartCoroutine(IEBuild(go, _player, _node));
-
-        //所有塔开始搜索目标
-        for (int i = 0; i < towers.Count; i++)
-        {
-            if (!towers[i].GetComponent<Tower>().building)
-                towers[i].GetComponent<Tower>().SearchTarget();
-        }
 
         return go;
     }
@@ -199,5 +191,16 @@ public class BuildManager : Singleton<BuildManager>
     {
         public string name;
         public GameObject prefab;
+    }
+
+    //所有塔搜索敌人
+    public void AllTowerStartSearching()
+    {
+        for (int i = 0; i < towers.Count; i++)
+        {
+            GameObject tower = towers[i];
+            if (!tower.GetComponent<Tower>().building)
+                tower.GetComponent<Tower>().SearchTarget();
+        }
     }
 }

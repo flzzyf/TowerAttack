@@ -22,11 +22,10 @@ public class Bullet : MonoBehaviour
 
     IEnumerator LaunchMissile(Vector2 _pos)
     {
+        FaceTarget2D(_pos);
         Vector2 targetDir = _pos - (Vector2)transform.position;
         float time = targetDir.magnitude / speed;
         targetDir.Normalize();
-
-        FaceTarget2D(targetDir);
 
         while (target != null && time > 0)
         {
