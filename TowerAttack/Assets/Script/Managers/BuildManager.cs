@@ -38,7 +38,9 @@ public class BuildManager : Singleton<BuildManager>
         _node.GetComponent<NodeItem>().BuildSetting(_player);
         go.GetComponent<Tower>().node = _node;
         go.GetComponent<Tower>().player = _player;
-        go.GetComponent<Tower>().SetOrderInLayer(_node.GetComponent<NodeItem>().gfx.sortingOrder);
+        int order = _node.GetComponent<NodeItem>().gfx.GetComponentInChildren<SpriteRenderer>().sortingOrder;
+        go.GetComponent<Tower>().SetOrderInLayer(order);
+        go.GetComponent<Tower>().Init();
         
         towers.Add(go);
 
@@ -55,7 +57,9 @@ public class BuildManager : Singleton<BuildManager>
         _node.GetComponent<NodeItem>().tower = go;
         go.GetComponent<Tower>().node = _node;
         go.GetComponent<Tower>().player = _player;
-        go.GetComponent<Tower>().SetOrderInLayer(_node.GetComponent<NodeItem>().gfx.sortingOrder);
+        int order = _node.GetComponent<NodeItem>().gfx.GetComponentInChildren<SpriteRenderer>().sortingOrder;
+        go.GetComponent<Tower>().SetOrderInLayer(order);
+        go.GetComponent<Tower>().Init();
 
         towers.Add(go);
 
@@ -169,7 +173,7 @@ public class BuildManager : Singleton<BuildManager>
         //设置图层
         foreach (var item in go.GetComponentsInChildren<SpriteRenderer>(true))
         {
-            int order = _node.GetComponent<NodeItem>().gfx.sortingOrder;
+            int order = _node.GetComponent<NodeItem>().gfx.GetComponentInChildren<SpriteRenderer>().sortingOrder;
             item.sortingOrder = order;
         }
     }

@@ -59,9 +59,6 @@ TagManager:
   - name: Foreground
     uniqueID: 3751720539
     locked: 0
-  - name: TowerDecoration
-    uniqueID: 730359115
-    locked: 0
   - name: Missile
     uniqueID: 1414339689
     locked: 0

@@ -562,7 +562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1969733206859976
 GameObject:
   m_ObjectHideFlags: 1
@@ -1165,7 +1165,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: c035ab3d9ee81a443b8ad54cbc7873b0, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -1333,7 +1333,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: c035ab3d9ee81a443b8ad54cbc7873b0, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -1713,7 +1713,7 @@ MonoBehaviour:
   - {fileID: 1992983753562622}
   - {fileID: 1551093713255452}
   - {fileID: 1617130978697160}
-  gfx: {fileID: 212008973739030628}
+  gfx: {fileID: 1048764800998770}
   towerPlacement: {fileID: 1374905904150946}
   towerUpgrade_Range: {fileID: 1275203489221554}
   towerUpgrade_Vision: {fileID: 1021581351508740}
@@ -1851,7 +1851,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 730359115
-  m_SortingLayer: 6
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 976e740105bbba4499548d93a1c3709a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.4745098}
@@ -2035,7 +2035,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 730359115
-  m_SortingLayer: 6
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 25071a245d3f4294b84838ff480361ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.4745098}
@@ -2127,7 +2127,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 730359115
-  m_SortingLayer: 6
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300022, guid: fa0a3be41c12be84fab5a91cd3d6c514, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.4745098}
@@ -2173,7 +2173,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 730359115
-  m_SortingLayer: 6
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7226be7ad4fafce4cb4e6232773929f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.4745098}

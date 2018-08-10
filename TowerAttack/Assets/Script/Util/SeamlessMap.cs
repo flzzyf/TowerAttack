@@ -138,23 +138,8 @@ public class SeamlessMap : Singleton<SeamlessMap>
             {
                 for (int j = 0; j < NodeManager.Instance().nodeCountX; j++)
                 {
-                    MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().SetOrderInLayer(2 * (NodeManager.Instance().nodeCountY - i));
-
-                    //改变塔层级
-                    GameObject tower = MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().tower;
                     int order = NodeManager.Instance().nodeCountY - i;
-                    if (tower != null)
-                        tower.GetComponent<Tower>().SetOrderInLayer(order);
-
-                    GameObject building = MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().building;
-                    if (building != null)
-                    {
-                        foreach (var item in building.GetComponentsInChildren<SpriteRenderer>(true))
-                        {
-                            item.sortingOrder = order;
-                        }
-                    }
-                        
+                    MapManager.Instance().nodeItems[i, j].GetComponent<NodeItem>().SetOrderInLayer(order);
 
                 }
             }

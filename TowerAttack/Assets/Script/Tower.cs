@@ -35,6 +35,7 @@ public class Tower : MonoBehaviour
     public Vector2 impactAreaSize = new Vector2(1 ,1);
 
     public GameObject gfx_tower;
+    public GameObject gfx_tower_decoration;
     public GameObject gfx_building;
     public GameObject gfx_upgrading;
 
@@ -46,13 +47,14 @@ public class Tower : MonoBehaviour
     public float upgradeTime = 3;
     public bool[] upgraded = new bool[2];
 
-    void Start () 
+    public void Init () 
 	{
         currentHp = hp;
 
         flag.GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[player].color;
         roof.GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[player].color;
 
+        gfx_building.SetActive(false);
     }
     void Update () 
 	{
@@ -65,7 +67,6 @@ public class Tower : MonoBehaviour
                 currentAttackCD = attackCD;
                 Attack(target);
             }
-
         }
     }
 
@@ -147,11 +148,32 @@ public class Tower : MonoBehaviour
         BuildManager.Instance().AllTowerStartSearching();
     }
 
+    //设置图层顺序
     public void SetOrderInLayer(int _order)
     {
-        foreach (var item in GetComponentsInChildren<SpriteRenderer>(true))
+        //主体
+        foreach (var item in gfx_tower.GetComponentsInChildren<SpriteRenderer>(true))
         {
             item.sortingOrder = _order;
+        }
+        //建造中
+        foreach (var item in gfx_building.GetComponentsInChildren<SpriteRenderer>(true))
+        {
+            item.sortingOrder = _order;
+        }
+        //粒子
+        foreach (var item in gfx_building.GetComponentsInChildren<ParticleSystemRenderer>(true))
+        {
+            item.sortingOrder = _order;
+        }
+        foreach (var item in gfx_upgrading.GetComponentsInChildren<ParticleSystemRenderer>(true))
+        {
+            item.sortingOrder = _order;
+        }
+        //装饰物
+        foreach (var item in gfx_tower_decoration.GetComponentsInChildren<SpriteRenderer>(true))
+        {
+            item.sortingOrder = _order + 1;
         }
     }
 

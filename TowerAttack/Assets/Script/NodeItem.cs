@@ -21,7 +21,7 @@ public class NodeItem : MonoBehaviour
     public int[] playerForce;
     public GameObject[] borders;
 
-    public SpriteRenderer gfx;
+    public GameObject gfx;
 
     float clickConfirmDelay = .2f;
     float mouseDownTime;
@@ -242,14 +242,27 @@ public class NodeItem : MonoBehaviour
 
     }
 
+    //设置图层顺序
     public void SetOrderInLayer(int _order)
     {
+        int order = _order * 5;
         foreach (var item in GetComponentsInChildren<SpriteRenderer>(true))
         {
-            item.sortingOrder = _order;
+            item.sortingOrder = order;
         }
 
-        fog.GetComponentInChildren<SpriteRenderer>().sortingOrder = _order + 1;
+        fog.GetComponentInChildren<SpriteRenderer>().sortingOrder = order + 1;
+
+        if (tower != null)
+            tower.GetComponent<Tower>().SetOrderInLayer(order);
+
+        if (building != null)
+        {
+            foreach (var item in building.GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                item.sortingOrder = order;
+            }
+        }
     }
 
     [System.Serializable]
