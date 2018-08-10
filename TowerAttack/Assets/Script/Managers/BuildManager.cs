@@ -10,8 +10,10 @@ public class BuildManager : Singleton<BuildManager>
 
     [HideInInspector]
     public float[] buildingSpeed;
-
-    public static GameObject desiredBuildTarget;
+    [HideInInspector]
+    public GameObject desiredBuildTarget;
+    [HideInInspector]
+    public GameObject desiredUpgradeTarget;
     [HideInInspector]
     public List<GameObject> towers = new List<GameObject>();
 

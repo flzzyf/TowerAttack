@@ -99,14 +99,26 @@ public class NodeItem : MonoBehaviour
                 {
                     //未有塔，建造
                     BuildManager.Instance().ClickNode(gameObject, GameManager.Instance().player);
+
+                    if (BuildManager.Instance().desiredUpgradeTarget != null)
+                    {
+                        BuildManager.Instance().desiredUpgradeTarget.GetComponent<NodeItem>().towerUpgrade_Range.SetActive(false);
+                        BuildManager.Instance().desiredUpgradeTarget.GetComponent<NodeItem>().towerUpgrade_Vision.SetActive(false);
+                    }
                 }
                 else
                 {
                     if (tower.GetComponent<Tower>().building)
                         return;
 
+                    if(BuildManager.Instance().desiredUpgradeTarget != null)
+                    {
+                        BuildManager.Instance().desiredUpgradeTarget.GetComponent<NodeItem>().towerUpgrade_Range.SetActive(false);
+                        BuildManager.Instance().desiredUpgradeTarget.GetComponent<NodeItem>().towerUpgrade_Vision.SetActive(false);
+                    }
+                    BuildManager.Instance().desiredUpgradeTarget = gameObject;
                     //已有塔，升级
-                    if(!tower.GetComponent<Tower>().upgraded[0])
+                    if (!tower.GetComponent<Tower>().upgraded[0])
                         towerUpgrade_Range.SetActive(true);
                     if(!tower.GetComponent<Tower>().upgraded[1])
                         towerUpgrade_Vision.SetActive(true);

@@ -117,8 +117,7 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         playersOnScoreboard.Add(_player);
 
-        GameObject go = Instantiate(item_playerScore, panel_score.transform);
-        
+        Instantiate(item_playerScore, panel_score.transform);
     }
 
     public void ModifyWorker(int _player, int _number)

@@ -149,11 +149,15 @@ public class GameManager : Singleton<GameManager>
         {
             //胜利的玩家
             panel_gameWin.SetActive(true);
+
+            SoundManager.Instance().Play("Win");
         }
         else
         {
             //失败玩家
             panel_gameLose.SetActive(true);
+
+            SoundManager.Instance().Play("Lose");
         }
     }
 
