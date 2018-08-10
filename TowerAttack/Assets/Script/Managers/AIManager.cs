@@ -4,19 +4,6 @@ using UnityEngine;
 
 public class AIManager : Singleton<AIManager>
 {
-
-
-	void Start () 
-	{
-		
-	}
-	
-
-	void Update () 
-	{
-		
-	}
-
     public void AIStart(int _player)
     {
         StartCoroutine(AIStartAction(_player));

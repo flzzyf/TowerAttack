@@ -20,6 +20,9 @@ public class Bullet : MonoBehaviour
         damage = _damage;
 
         Vector2 impactPos = target.GetComponent<Tower>().GetImpactPoint();
+        if (Vector2.Distance(transform.position, impactPos) > 4)
+            gfx.SetActive(false);
+
         StartCoroutine(LaunchMissile(impactPos));
     }
 

@@ -68,6 +68,11 @@ public class OccupiableBuilding : MonoBehaviour
     {
         //print("占领:" + player);
         isOccupied = true;
+
+        foreach (var item in nearbyNodes)
+        {
+            item.GetComponent<NodeItem>().OccupiableBuildSetting();
+        }
     }
 
     //被解放
@@ -104,24 +109,30 @@ public class OccupiableBuilding : MonoBehaviour
     {
         //print("解放:" + player);
         isOccupied = false;
+        player = -1;
+
+        foreach (var item in nearbyNodes)
+        {
+            item.GetComponent<NodeItem>().OccupiableBuildSetting();
+        }
     }
 
     //只被一个玩家占领则返回他的ID，否则返回-1（被多个玩家占领)
     public int OnlyOccupiedByOnePlayer()
     {
-        int player = -1;
+        int p = -1;
         for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
         {
             if (occupiedCountByPlayer[i] > 0)
             {
-                if(player == -1)
-                    player = i;
+                if(p == -1)
+                    p = i;
                 else
                     return -1;
             }
         }
 
-        return player;
+        return p;
     }
 
     public int OccupiedPlayerCount()

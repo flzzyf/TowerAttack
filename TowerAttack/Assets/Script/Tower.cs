@@ -12,7 +12,7 @@ public class Tower : MonoBehaviour
 
     public GameObject prefab_bullet;
 
-    public GameObject flag;
+    public GameObject[] flag;
     public GameObject roof;
 
     public float searchTargetCD = 0.5f;
@@ -34,8 +34,8 @@ public class Tower : MonoBehaviour
     public Vector2 impactAreaCenter;
     public Vector2 impactAreaSize = new Vector2(1 ,1);
 
-    public GameObject gfx_tower;
-    public GameObject gfx_tower_decoration;
+    public GameObject[] gfx_tower;
+    public GameObject[] gfx_tower_decoration;
     public GameObject gfx_building;
     public GameObject gfx_upgrading;
 
@@ -51,7 +51,10 @@ public class Tower : MonoBehaviour
 	{
         currentHp = hp;
 
-        flag.GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[player].color;
+        for (int i = 0; i < flag.Length; i++)
+        {
+            flag[i].GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[player].color;
+        }
         roof.GetComponent<SpriteRenderer>().color = PlayerManager.Instance().players[player].color;
 
         gfx_building.SetActive(false);
@@ -77,7 +80,10 @@ public class Tower : MonoBehaviour
 
         ToggleParticles(gfx_building, true);
 
-        gfx_tower.SetActive(false);
+        for (int i = 0; i < gfx_tower.Length; i++)
+        {
+            gfx_tower[i].SetActive(false);
+        }
 
         building = true;
     }
@@ -86,7 +92,7 @@ public class Tower : MonoBehaviour
     {
         ToggleParticles(gfx_building, false);
 
-        gfx_tower.SetActive(true);
+        gfx_tower[0].SetActive(true);
 
         building = false;
 
@@ -159,10 +165,14 @@ public class Tower : MonoBehaviour
     public void SetOrderInLayer(int _order)
     {
         //主体
-        foreach (var item in gfx_tower.GetComponentsInChildren<SpriteRenderer>(true))
+        for (int i = 0; i < gfx_tower.Length; i++)
         {
-            item.sortingOrder = _order;
+            foreach (var item in gfx_tower[i].GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                item.sortingOrder = _order;
+            }
         }
+           
         //建造中
         foreach (var item in gfx_building.GetComponentsInChildren<SpriteRenderer>(true))
         {
@@ -178,9 +188,12 @@ public class Tower : MonoBehaviour
             item.sortingOrder = _order;
         }
         //装饰物
-        foreach (var item in gfx_tower_decoration.GetComponentsInChildren<SpriteRenderer>(true))
+        for (int i = 0; i < gfx_tower.Length; i++)
         {
-            item.sortingOrder = _order + 1;
+            foreach (var item in gfx_tower_decoration[i].GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                item.sortingOrder = _order + 1;
+            }
         }
     }
 
@@ -249,7 +262,7 @@ public class Tower : MonoBehaviour
 
         building = true;
 
-        ScoreManager.Instance().ModifyWorker(player, 5);
+        ScoreManager.Instance().ModifyWorker(player, 7);
 
         AudioSource source = null;
         if (player == GameManager.Instance().player)
@@ -268,7 +281,7 @@ public class Tower : MonoBehaviour
         //建造后设置
         ToggleParticles(gfx_upgrading, false);
         building = false;
-        ScoreManager.Instance().ModifyWorker(player, -5);
+        ScoreManager.Instance().ModifyWorker(player, -7);
         if (source != null)
         {
             source.Stop();
@@ -280,12 +293,21 @@ public class Tower : MonoBehaviour
         {
             upgraded[_index] = true;
 
-            SearchTarget();
-
             if (_index == 0)
                 Upgrade_Range();
             else
                 Upgrade_Vision();
+
+            SearchTarget();
+
+            if(upgraded[0] == true && upgraded[1] == true)
+            {
+                //升到最高级
+                gfx_tower[0].SetActive(false);
+                gfx_tower_decoration[0].SetActive(false);
+                gfx_tower[1].SetActive(true);
+                gfx_tower_decoration[1].SetActive(true);
+            }
         }
     }
 

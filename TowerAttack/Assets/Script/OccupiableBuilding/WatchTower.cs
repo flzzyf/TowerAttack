@@ -12,16 +12,15 @@ public class WatchTower : OccupiableBuilding
 
     public override void OccupiedEffect()
     {
-        base.OccupiedEffect();
-
         FogOfWarManager.Instance().AddNodesWithinRangeToPlayerVision(player, node, 3);
+        base.OccupiedEffect();
     }
 
     public override void LiberatedEffect()
     {
-        base.LiberatedEffect();
-
         FogOfWarManager.Instance().RemoveNodesWithinRangeToPlayerVision(player, node, 3);
+
+        base.LiberatedEffect();
 
     }
 }

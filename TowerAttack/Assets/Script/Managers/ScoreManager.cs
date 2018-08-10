@@ -48,7 +48,7 @@ public class ScoreManager : Singleton<ScoreManager>
             //增加得分
             for (int i = 0; i < PlayerManager.Instance().playerNumber; i++)
             {
-                score[i] += population_farmer[i];
+                ModifyScore(i, population_farmer[i]);
             }
         }
         else
@@ -95,6 +95,11 @@ public class ScoreManager : Singleton<ScoreManager>
     public void ModifyScore(int _player, int _number)
     {
         score[_player] += _number;
-    }
 
+        if(GameManager.gaming && score[_player] >= 1000)
+        {
+            GameManager.Instance().GameOver(_player);
+            
+        }
+    }
 }

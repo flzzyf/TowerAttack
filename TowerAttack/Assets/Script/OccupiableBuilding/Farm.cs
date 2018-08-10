@@ -17,15 +17,16 @@ public class Farm : OccupiableBuilding
 
     public override void OccupiedEffect()
     {
+        ScoreManager.Instance().ModifyFarmer(player, 5);
+
         base.OccupiedEffect();
 
-        ScoreManager.Instance().ModifyFarmer(player, 5);
     }
 
     public override void LiberatedEffect()
     {
-        base.LiberatedEffect();
-
         ScoreManager.Instance().ModifyFarmer(player, -5);
+
+        base.LiberatedEffect();
     }
 }

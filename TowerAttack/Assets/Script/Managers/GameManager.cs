@@ -9,8 +9,12 @@ public class GameManager : Singleton<GameManager>
     public static bool paused;
 
     public GameObject panel_menu;
+    public GameObject panel_gameWin;
+    public GameObject panel_gameLose;
 
-	void Start ()
+    public Vector2Int playerArea = new Vector2Int(7, 12);
+
+    void Start ()
     {
         BuildManager.Instance().Init();
         ScoreManager.Instance().Init();
@@ -61,8 +65,8 @@ public class GameManager : Singleton<GameManager>
             mapSize = 1;
         else
              mapSize = (int)Mathf.Sqrt(PlayerManager.Instance().playerNumber) + 1;
-        NodeManager.Instance().nodeCountX = mapSize * 7;
-        NodeManager.Instance().nodeCountY = mapSize * 12;
+        NodeManager.Instance().nodeCountX = mapSize * playerArea.x;
+        NodeManager.Instance().nodeCountY = mapSize * playerArea.y;
 
         NodeManager.Instance().GenerateNodes();
         MapManager.Instance().GenerateMap();
@@ -81,7 +85,7 @@ public class GameManager : Singleton<GameManager>
             int y = a / mapSize;
             int x = a % mapSize;
 
-            PlayerManager.Instance().players[i].startingPoint = new Vector2Int(12 * y, 7 * x);
+            PlayerManager.Instance().players[i].startingPoint = new Vector2Int(playerArea.y * y, playerArea.x * x);
         }
 
         //建造初始炮塔
@@ -90,7 +94,7 @@ public class GameManager : Singleton<GameManager>
             Vector2Int pos = PlayerManager.Instance().players[i].startingPoint;
             BuildManager.Instance().BuildInstantly(MapManager.Instance().GetNodeItem(pos), i);
 
-            BuildManager.Instance().BuildOccupiableBuilding("Farm", MapManager.Instance().GetNodeItem(pos + new Vector2Int(6, 0)));
+            BuildManager.Instance().BuildOccupiableBuilding("Farm", MapManager.Instance().GetNodeItem(pos + new Vector2Int(8, 0)));
             BuildManager.Instance().BuildOccupiableBuilding("WatchTower", MapManager.Instance().GetNodeItem(pos + new Vector2Int(0, 4)));
 
         }
@@ -107,7 +111,6 @@ public class GameManager : Singleton<GameManager>
                 AIManager.Instance().AIStart(PlayerManager.Instance().players[i].id);
             }
         }
-
     }
 
     public void OpenMenu()
@@ -132,6 +135,34 @@ public class GameManager : Singleton<GameManager>
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("Intro");
 
+    }
+
+    public void GameOver(int _winner)
+    {
+        //有人获胜
+        gaming = false;
+
+        Time.timeScale = 0;
+        paused = true;
+
+        if (player == _winner)
+        {
+            //胜利的玩家
+            panel_gameWin.SetActive(true);
+        }
+        else
+        {
+            //失败玩家
+            panel_gameLose.SetActive(true);
+        }
+    }
+
+    public void GameContinue()
+    {
+        Time.timeScale = 1;
+        paused = false;
+        panel_gameWin.SetActive(false);
+        panel_gameLose.SetActive(false);
     }
 
 }
