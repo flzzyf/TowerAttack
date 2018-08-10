@@ -65,10 +65,13 @@ public class Tower : MonoBehaviour
             currentAttackCD -= Time.deltaTime;
         else
         {
-            if (target != null)
+            if(!building)
             {
-                currentAttackCD = attackCD;
-                Attack(target);
+                if (target != null)
+                {
+                    currentAttackCD = attackCD;
+                    Attack(target);
+                }
             }
         }
     }
@@ -137,7 +140,7 @@ public class Tower : MonoBehaviour
             if(_sourcePlayer != -1)
             {
                 //击杀玩家得分
-                ScoreManager.Instance().ModifyScore(_sourcePlayer, 20);
+                ScoreManager.Instance().ModifyScore(_sourcePlayer, 25);
             }
         }
     }

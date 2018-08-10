@@ -41,6 +41,6 @@ public class zyf
     //a分之一概率事件
     public static bool IfItWins(int _a)
     {
-        return Random.Range(1, _a) == 1;
+        return Random.Range(0, _a) == 1;
     }
 }
