@@ -11,6 +11,9 @@ public class Bullet : MonoBehaviour
     public GameObject gfx;
     GameObject target;
 
+    [HideInInspector]
+    public int player;
+
     public void Launch(GameObject _target, float _damage)
     {
         target = _target;
@@ -46,7 +49,7 @@ public class Bullet : MonoBehaviour
 
     void Hit()
     {
-        target.GetComponent<Tower>().TakeDamage(damage);
+        target.GetComponent<Tower>().TakeDamage(damage, player);
     }
 
     void FaceTarget2D(Vector2 _target)

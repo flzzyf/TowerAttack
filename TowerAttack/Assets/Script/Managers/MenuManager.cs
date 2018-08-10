@@ -68,13 +68,17 @@ public class MenuManager : MonoBehaviour
 
         //根据用户数据进行初始设置
         toggle_fullScreen.isOn = PlayerPrefs.GetInt("fullScreen") == 1;
-        slider_volume_bgm.value = PlayerPrefs.GetFloat("volume_bgm");
-        slider_volume_effect.value = PlayerPrefs.GetFloat("volume_effect");
+        if(PlayerPrefs.GetFloat("volume_bgm") != 0)
+            slider_volume_bgm.value = PlayerPrefs.GetFloat("volume_bgm");
+        if(PlayerPrefs.GetFloat("volume_effect") != 0)
+            slider_volume_effect.value = PlayerPrefs.GetFloat("volume_effect");
         dropdown_resolution.value = PlayerPrefs.GetInt("resolution");
         dropdown_quality.value = PlayerPrefs.GetInt("quality");
 
-        slider_volume_bgm_mobile.value = PlayerPrefs.GetFloat("volume_bgm");
-        slider_volume_effect_mobile.value = PlayerPrefs.GetFloat("volume_effect");
+        if(PlayerPrefs.GetFloat("volume_bgm") != 0)
+            slider_volume_bgm_mobile.value = PlayerPrefs.GetFloat("volume_bgm");
+        if(PlayerPrefs.GetFloat("volume_effect") != 0)
+            slider_volume_effect_mobile.value = PlayerPrefs.GetFloat("volume_effect");
         dropdown_quality_mobile.value = PlayerPrefs.GetInt("quality");
     }
 

@@ -112,6 +112,7 @@ public class Tower : MonoBehaviour
         SoundManager.Instance().Play("Arrow_Launch");
 
         GameObject go = Instantiate(prefab_bullet, launchPos.position, Quaternion.identity, ParentManager.Instance().GetParent("Missile"));
+        go.GetComponent<Bullet>().player = player;
 
         float fixedDamage = damage * attackCD;
 
@@ -119,13 +120,19 @@ public class Tower : MonoBehaviour
     }
 
 
-    public void TakeDamage(float _amount)
+    public void TakeDamage(float _amount, int _sourcePlayer = -1)
     {
         currentHp -= _amount;
         if(!isDead && currentHp <= 0)
         {
             isDead = true;
             Death();
+
+            if(_sourcePlayer != -1)
+            {
+                //击杀玩家得分
+                ScoreManager.Instance().ModifyScore(_sourcePlayer, 20);
+            }
         }
     }
 

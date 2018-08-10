@@ -92,6 +92,9 @@ public class ScoreManager : Singleton<ScoreManager>
 
     }
 
-
+    public void ModifyScore(int _player, int _number)
+    {
+        score[_player] += _number;
+    }
 
 }
