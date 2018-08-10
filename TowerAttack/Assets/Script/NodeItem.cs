@@ -256,6 +256,9 @@ public class NodeItem : MonoBehaviour
             {
                 item.sortingOrder = order;
             }
+
+            if (building.GetComponent<Farm>() != null)
+                building.GetComponent<Farm>().SetOrderInLayer(order);
         }
     }
 

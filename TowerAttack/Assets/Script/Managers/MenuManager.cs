@@ -180,11 +180,11 @@ public class MenuManager : MonoBehaviour
     public void AddPlayerItem(string _name, int _skin, int _team, bool _isAI = false)
     {
         GameObject go = Instantiate(prefab_playerItem, panel_players);
-        go.GetComponent<PlayerItem>().text_name.text = _name;
-        go.GetComponent<PlayerItem>().dropdown_skin.value = _skin;
-        go.GetComponent<PlayerItem>().dropdown_team.value = _team;
-        go.GetComponent<PlayerItem>().dropdown_color.value = panel_players.childCount - 1;
-        go.GetComponent<PlayerItem>().isAI = _isAI;
+        go.GetComponent<Item_Player>().text_name.text = _name;
+        go.GetComponent<Item_Player>().dropdown_skin.value = _skin;
+        go.GetComponent<Item_Player>().dropdown_team.value = _team;
+        go.GetComponent<Item_Player>().dropdown_color.value = panel_players.childCount - 1;
+        go.GetComponent<Item_Player>().isAI = _isAI;
     }
 
     //游戏开始
@@ -194,8 +194,10 @@ public class MenuManager : MonoBehaviour
 
         for (int i = 0; i < panel_players.childCount; i++)
         {
-            PlayerItem item = panel_players.GetChild(i).GetComponent<PlayerItem>();
-            Player player = new Player(i, item.dropdown_team.value, playerColor[item.dropdown_color.value], new Vector2Int(0, 0), item.isAI);
+            Item_Player item = panel_players.GetChild(i).GetComponent<Item_Player>();
+            Player player = new Player(i, item.text_name.text, item.dropdown_team.value, 
+                playerColor[item.dropdown_color.value], new Vector2Int(0, 0), item.isAI);
+
             PlayerManager.Instance().players.Add(player);
         }
         LoadScene("Game");

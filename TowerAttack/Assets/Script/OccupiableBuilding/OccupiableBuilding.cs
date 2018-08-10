@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class OccupiableBuilding : MonoBehaviour
 {
+    [HideInInspector]
     public int player = -1;
     [HideInInspector]
     public GameObject node;

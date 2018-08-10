@@ -24,6 +24,10 @@ public class ScoreManager : Singleton<ScoreManager>
     [HideInInspector]
     public int[] population_worker;
 
+    public GameObject panel_score;
+    public GameObject item_playerScore;
+    List<int> playersOnScoreboard = new List<int>();
+
     public void Init()
     {
         score = new int[PlayerManager.Instance().playerNumber];
@@ -38,6 +42,8 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             population_farmer[i] = 10;
         }
+
+        Destroy(panel_score.transform.GetChild(0).gameObject);
     }
 
     void Update()
@@ -72,6 +78,47 @@ public class ScoreManager : Singleton<ScoreManager>
                 slider_worker.value = Mathf.Lerp(slider_worker.value, ratio_worker, sliderSpeed * Time.deltaTime);
             }
         }
+
+        //更新快完成玩家的分数
+        UpdateScoreboard();
+    }
+
+    //更新计分板
+    void UpdateScoreboard()
+    {
+        int[] s = new int[playersOnScoreboard.Count];
+
+        for (int i = 0; i < playersOnScoreboard.Count; i++)
+        {
+            s[i] = i;
+        }
+
+        for (int i = 0; i < playersOnScoreboard.Count - 1; i++)
+        {
+            for (int j = i; j < playersOnScoreboard.Count - 1; j++)
+            {
+                if (score[s[j]] < score[s[j + 1]])
+                {
+                    int temp = s[j];
+                    s[j] = s[j + 1];
+                    s[j + 1] = temp;
+                }
+            }
+        }
+
+        for (int i = 0; i < playersOnScoreboard.Count; i++)
+        {
+            panel_score.transform.GetChild(i).GetComponent<Item_PlayerScore>().SetItem(s[i]);
+        }
+
+    }
+    //添加玩家到计分板
+    void AddPlayerToScoreboard(int _player)
+    {
+        playersOnScoreboard.Add(_player);
+
+        GameObject go = Instantiate(item_playerScore, panel_score.transform);
+        
     }
 
     public void ModifyWorker(int _player, int _number)
@@ -99,7 +146,18 @@ public class ScoreManager : Singleton<ScoreManager>
         if(GameManager.gaming && score[_player] >= 1000)
         {
             GameManager.Instance().GameOver(_player);
-            
+        }
+        else
+        {
+            if(score[_player] >= 0)
+            {
+                //显示计分板
+                if (!panel_score.activeSelf)
+                    panel_score.SetActive(true);
+                //玩家不再计分板上
+                if (!playersOnScoreboard.Contains(_player))
+                    AddPlayerToScoreboard(_player);
+            }
         }
     }
 }

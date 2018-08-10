@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Farm : OccupiableBuilding
 {
+    public SpriteRenderer sprite_body;
+    public SpriteRenderer sprite_fan;
+    public SpriteRenderer sprite_fan_shadow;
+
     public override void BuildSetting(GameObject _node)
     {
         base.BuildSetting(_node);
@@ -28,5 +32,12 @@ public class Farm : OccupiableBuilding
         ScoreManager.Instance().ModifyFarmer(player, -5);
 
         base.LiberatedEffect();
+    }
+
+    public void SetOrderInLayer(int _order)
+    {
+        sprite_body.sortingOrder = _order;
+        sprite_fan_shadow.sortingOrder = _order + 1;
+        sprite_fan.sortingOrder = _order + 2;
     }
 }

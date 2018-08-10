@@ -47,9 +47,10 @@ public class Player
     public bool isAI;
     public Vector2Int startingPoint;
 
-    public Player(int _id, int _team, Color _color, Vector2Int _startingPoint, bool _isAI)
+    public Player(int _id, string _name, int _team, Color _color, Vector2Int _startingPoint, bool _isAI)
     {
         id = _id;
+        username = _name;
         team = _team;
         color = _color;
         startingPoint = _startingPoint;
