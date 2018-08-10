@@ -120,7 +120,7 @@ public class Tower : MonoBehaviour
     {
         SoundManager.Instance().Play("Arrow_Launch");
 
-        GameObject go = Instantiate(prefab_bullet, launchPos.position, Quaternion.identity, ParentManager.Instance().GetParent("Missile"));
+        GameObject go = ObjectPoolManager.Instance().SpawnObject("Missile", launchPos.position, Quaternion.identity);
         go.GetComponent<Bullet>().player = player;
 
         float fixedDamage = damage * attackCD;

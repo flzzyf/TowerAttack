@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : IPooledObject
 {
     public float speed = 1;
 
@@ -13,6 +13,13 @@ public class Bullet : MonoBehaviour
 
     [HideInInspector]
     public int player;
+
+    public override void OnObjectSpawned()
+    {
+        base.OnObjectSpawned();
+
+        gfx.SetActive(true);
+    }
 
     public void Launch(GameObject _target, float _damage)
     {
@@ -47,7 +54,7 @@ public class Bullet : MonoBehaviour
         if (target != null)
             Hit();
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     void Hit()

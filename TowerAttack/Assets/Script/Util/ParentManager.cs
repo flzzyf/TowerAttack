@@ -9,7 +9,7 @@ public class ParentManager : Singleton<ParentManager>
     [HideInInspector]
     public Transform grandparent;
 
-    private void Awake()
+    void Awake()
     {
         grandparent = new GameObject("ParentManager").transform;
     }
